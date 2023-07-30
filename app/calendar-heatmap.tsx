@@ -18,7 +18,7 @@ export default function HeatMap({startDate, endDate, values, eventsByDate}) {
             if (!value || value.count === 0) {
                 return 'color-empty';
             }
-            return `color-scale-${Math.floor(value.count)}`;
+            return `color-scale-${Math.min(Math.floor(value.count/3), 4)}`;
             }}
         />
         <Tooltip id="my-tooltip"/>
