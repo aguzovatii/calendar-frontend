@@ -59,13 +59,17 @@ export default async function Page() {
 }
 
 async function getCalendar(): Promise<Calendar> {
-  const res = await fetch('http://127.0.0.1:8080/calendar/aguzovatii', {cache: 'no-store'})
+  try {
+    const res = await fetch('http://127.0.0.1:8080/calendar/aguzovatii', {cache: 'no-store'})
 
-  if(!res.ok){
-    throw new Error('Failed to fetch data')
+    if(!res.ok){
+      throw new Error('Failed to fetch data')
+    }
+
+    return res.json()
+  } catch (err) {
+    return new Promise((resolve, reject) => { resolve({id: 'aguzovatii', events: []}); });
   }
-
-  return res.json()
 }
 
 interface Calendar {
