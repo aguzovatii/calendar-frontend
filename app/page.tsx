@@ -1,4 +1,5 @@
 import HeatMap from './calendar-heatmap';
+import EventCreator from './event-creator';
 
 // TODO: investigate why we are need to force to make the page dynamic
 // https://nextjs.org/docs/app/building-your-application/rendering/static-and-dynamic
@@ -52,6 +53,7 @@ export default async function Page() {
         values={values}
         eventsByDate={eventsByDate}
       />
+      <EventCreator/>
     </>
   )
 }
