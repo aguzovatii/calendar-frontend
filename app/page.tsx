@@ -1,5 +1,7 @@
 import HeatMap from './calendar-heatmap';
 
+// TODO: investigate why we are need to force to make the page dynamic
+// https://nextjs.org/docs/app/building-your-application/rendering/static-and-dynamic
 export const dynamic = 'force-dynamic'
 
 export default async function Page() {
