@@ -59,7 +59,6 @@ export default async function Page() {
 }
 
 async function getCalendar(): Promise<Calendar> {
-  try {
     const res = await fetch('http://3.77.31.134:8080/calendar/aguzovatii', {cache: 'no-store'})
 
     if(!res.ok){
@@ -67,9 +66,6 @@ async function getCalendar(): Promise<Calendar> {
     }
 
     return res.json()
-  } catch (err) {
-    return new Promise((resolve, reject) => { resolve({id: 'aguzovatii', events: []}); });
-  }
 }
 
 interface Calendar {
