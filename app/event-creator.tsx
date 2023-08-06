@@ -9,7 +9,7 @@ export default function EventCreator() {
     const [calendarId, setCalendarId] = React.useState("");
 
     function handleClick() {
-        let endpoint = 'http://localhost:8080/event';
+        let endpoint = 'http://3.77.31.134:8080/event';
 
         fetch(endpoint, {
             method: 'POST',
