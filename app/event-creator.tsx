@@ -6,58 +6,52 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 export default function EventCreator() {
 
-   
-
     const [name, setName] = React.useState("");
     const [date, setDate] = React.useState("");
     const [calendarId, setCalendarId] = React.useState("");
 
-
     function validateInput() {
 
         var valid = true;
+        var errstyle = "2px solid red";
+        var initstyle = "1px solid grey";
 
         if (name.length == 0) {
             const el = document.getElementById("name");
-            el.style.border = "2px solid red";
+            el.style.border = errstyle;
 
             valid = false;
-            el.onchange = () => {el.style.border = "1px solid grey"};
+            el.onchange = () => { el.style.border = initstyle, name => setName(name)};
         }
 
-        if (date.length == 0) {
+        if (date == null || date.length == 0) {
             const el = document.getElementById("date");
-            el.style.border = "2px solid red";
+            el.style.border = errstyle;
 
             valid = false;
-            el.onclick = () => { el.style.border = "1px solid grey" };
+            el.onclick = () => { el.style.border = initstyle, date => setDate(date) };
         }
 
         if (calendarId.length == 0) {
             const el = document.getElementById("calendar");
-            el.style.border = "2px solid red";
+            el.style.border = errstyle;
 
             valid = false;
-            el.onchange = () => { el.style.border = "1px solid grey" };
+            el.onchange = () => { el.style.border = initstyle, calendarId => setCalendarId(calendarId) };
         }
 
         if (!valid) {
-
             alert('Invalid Input')
             return;
         }
 
-
-        if (valid)
+        if (valid) {
             handleClick();
-
-
-
+        }
     }
 
     function handleClick() {
 
-        console.log("a mers");
         let endpoint = 'http://localhost:8080/event';
 
         fetch(endpoint, {
