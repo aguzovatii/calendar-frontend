@@ -1,14 +1,14 @@
 'use client'
 
-import React, { useState } from "react";
+import { useState } from "react";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-export default function EventCreator() {
+export default function EventCreator({ onEventCreated }) {
 
-    const [name, setName] = React.useState("");
-    const [date, setDate] = React.useState("");
-    const [calendarId, setCalendarId] = React.useState("");
+    const [name, setName] = useState("");
+    const [date, setDate] = useState("");
+    const [calendarId, setCalendarId] = useState("");
 
     function validateInput() {
 
@@ -21,7 +21,7 @@ export default function EventCreator() {
             el.style.border = errstyle;
 
             valid = false;
-            el.onchange = () => { el.style.border = initstyle, name => setName(name)};
+            el.onchange = () => { el.style.border = initstyle, name => setName(name) };
         }
 
         if (date == null || date.length == 0) {
@@ -40,46 +40,37 @@ export default function EventCreator() {
             el.onchange = () => { el.style.border = initstyle, calendarId => setCalendarId(calendarId) };
         }
 
-        if (!valid) {
-            alert('Invalid Input')
-            return;
-        }
-
-        if (valid) {
-            handleClick();
-        }
+        valid ? handleClick() : alert('Invalid Input');
     }
 
     function handleClick() {
 
-        let endpoint = 'http://localhost:8080/event';
-
-        fetch(endpoint, {
+        fetch('http://localhost:8080/event', {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json',
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify({name, "date_time":date, "calendar_id":calendarId}),
-          }).then(e => console.log(e))
+            body: JSON.stringify({ name, "date_time": date, "calendar_id": calendarId }),
+        }).then((response) => { response.ok ? onEventCreated() : alert('The event could not be created') })
     }
 
     return (
         <form autoComplete="off">
             <div>
-            <label>Name: </label>
+                <label>Name: </label>
                 <input id="name" type="text" value={name} onChange={e => { setName(e.currentTarget.value); }}></input>
             </div>
             <br />
             <div>
-            <label>Date: </label>
-                <DatePicker id = "date" selected={date} onChange={(date) => setDate(date)} />
+                <label>Date: </label>
+                <DatePicker id="date" selected={date} onChange={(date) => setDate(date)} />
             </div>
             <br />
             <div>
-            <label>Calendar: </label>
+                <label>Calendar: </label>
                 <input type="text" id="calendar" value={calendarId} onChange={e => { setCalendarId(e.currentTarget.value); }}></input>
             </div>
-            <br/>
+            <br />
             <button type="button" onClick={validateInput}>Create</button>
         </form>
     )
