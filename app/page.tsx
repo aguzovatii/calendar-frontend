@@ -15,7 +15,7 @@ export default function Page() {
   let endDate = new Date(now);
   endDate.setMonth(endDate.getMonth() + 6)
 
-  const { data, error, isLoading, mutate } = useSWR('http://127.0.0.1:8080/calendar/aguzovatii', fetcher)
+  const { data, error, isLoading, mutate } = useSWR(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + '/calendar/aguzovatii', fetcher)
 
   if (error) return <div>failed to load</div>
   if (isLoading) return <div>loading...</div>
