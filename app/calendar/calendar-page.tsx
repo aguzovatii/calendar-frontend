@@ -4,7 +4,7 @@ import EventCreator from "./event-creator";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
-export default function CalendarPage({ username, password }) {
+export default function CalendarPage({ username }) {
   const now = new Date();
 
   let startDate = new Date(now);
