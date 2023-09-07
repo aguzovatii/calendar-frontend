@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import CalendarPage from "./calendar/calendar-page";
-import Signup from "./user/user-creator";
+import Signup from "./user/signup/page";
 
 export default function Page() {
   const [username, setUsername] = useState("");
