@@ -26,8 +26,8 @@ export default function Signup({ onSignup }) {
           {" "}
           <label>Password: </label>{" "}
           <input
-            type="password"
             id="password"
+            type="password"
             value={password}
             onChange={(e) => {
               setPassword(e.currentTarget.value);
