@@ -31,7 +31,7 @@ export default function EventCreator({ username, onEventCreated }) {
       };
     }
 
-    if (calendarId.length == 0) {
+    if (calendarId.length === 0) {
       const el = document.getElementById("calendar");
       el.style.border = errstyle;
       valid = false;
