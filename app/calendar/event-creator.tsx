@@ -22,7 +22,7 @@ export default function EventCreator({ username, onEventCreated }) {
       };
     }
 
-    if (date == null || date.length == 0) {
+    if (date === null || date.length === 0) {
       const el = document.getElementById("date");
       el.style.border = errstyle;
       valid = false;
