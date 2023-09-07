@@ -69,7 +69,7 @@ export default function Signup({ onSignup }) {
   }
 
   function handleClick() {
-    fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + '/signup', {
+    fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + '/user', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
