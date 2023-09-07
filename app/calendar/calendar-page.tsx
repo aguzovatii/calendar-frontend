@@ -14,7 +14,7 @@ export default function CalendarPage({ username }) {
   endDate.setMonth(endDate.getMonth() + 6);
 
   const { data, error, isLoading, mutate } = useSWR(
-    "http://127.0.0.1:8080/calendar/" + username,
+    process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + '/calendar/' + username,
     fetcher
   );
 
