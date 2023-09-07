@@ -48,7 +48,7 @@ export default function Signup({ onSignup }) {
     var errstyle = "2px solid red";
     var initstyle = "1px solid grey";
 
-    if (username.length == 0) {
+    if (username.length === 0) {
       const el = document.getElementById("username");
       el.style.border = errstyle;
       valid = false;
