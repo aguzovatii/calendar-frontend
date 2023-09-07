@@ -57,7 +57,7 @@ export default function Signup({ onSignup }) {
       };
     }
 
-    if (password.length == 0) {
+    if (password.length === 0) {
       const el = document.getElementById("password");
       el.style.border = errstyle;
       valid = false;
