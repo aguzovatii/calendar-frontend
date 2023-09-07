@@ -13,7 +13,7 @@ export default function EventCreator({ username, onEventCreated }) {
     var errstyle = "2px solid red";
     var initstyle = "1px solid grey";
 
-    if (name.length == 0) {
+    if (name.length === 0) {
       const el = document.getElementById("name");
       el.style.border = errstyle;
       valid = false;
