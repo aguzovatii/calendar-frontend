@@ -14,8 +14,8 @@ export default function CalendarPage({ username }) {
   endDate.setMonth(endDate.getMonth() + 6);
 
   const { data, error, isLoading, mutate } = useSWR(
-    process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + '/calendar/' + username,
-    fetcher
+    process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/calendar/" + username,
+    fetcher,
   );
 
   if (error) return <div>failed to load</div>;

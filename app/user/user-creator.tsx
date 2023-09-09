@@ -72,7 +72,7 @@ export default function Signup({ onSignup }) {
         <button type="button" onClick={validateInput}>
           Create
         </button>
-      </form> 
+      </form>
     </>
   );
 
@@ -111,7 +111,8 @@ export default function Signup({ onSignup }) {
       el.style.border = errstyle;
       valid = false;
       el.onchange = () => {
-        (el.style.border = initstyle), (usernameLogin) => setUsernameLogin(usernameLogin);
+        (el.style.border = initstyle),
+          (usernameLogin) => setUsernameLogin(usernameLogin);
       };
     }
 
@@ -120,14 +121,15 @@ export default function Signup({ onSignup }) {
       el.style.border = errstyle;
       valid = false;
       el.onchange = () => {
-        (el.style.border = initstyle), (passwordLogin) => setPasswordLogin(passwordLogin);
+        (el.style.border = initstyle),
+          (passwordLogin) => setPasswordLogin(passwordLogin);
       };
     }
     valid ? handleClickLogin() : alert("Invalid Input");
   }
 
   function handleClick() {
-    fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + '/user', {
+    fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/user", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
@@ -139,10 +141,13 @@ export default function Signup({ onSignup }) {
   }
 
   function handleClickLogin() {
-    fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + '/login', {
+    fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username : usernameLogin, password : passwordLogin }),
+      body: JSON.stringify({
+        username: usernameLogin,
+        password: passwordLogin,
+      }),
     }).then((response) => {
       response.ok
         ? onSignup(usernameLogin, passwordLogin)

@@ -44,7 +44,7 @@ export default function EventCreator({ username, onEventCreated }) {
   }
 
   function handleClick() {
-    fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + '/event', {
+    fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/event", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
