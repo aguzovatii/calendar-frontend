@@ -24,7 +24,7 @@ export default function HeatMap({ startDate, endDate, events }) {
                   .slice(0, 10)} has count: ${
                   value.count
                 }. Events: ${eventsByDate.get(
-                  value.date.toISOString().slice(0, 10)
+                  value.date.toISOString().slice(0, 10),
                 )}`,
               }
             : {
