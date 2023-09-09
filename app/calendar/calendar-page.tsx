@@ -6,7 +6,7 @@ const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export default function CalendarPage({ username }) {
   const today = new Date();
-  today.setHours(0,0,0,0);
+  today.setHours(0, 0, 0, 0);
 
   let startDate = new Date(today);
   startDate.setMonth(startDate.getMonth() - 6);

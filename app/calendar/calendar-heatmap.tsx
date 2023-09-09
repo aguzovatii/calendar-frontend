@@ -19,7 +19,9 @@ export default function HeatMap({ startDate, endDate, events }) {
             ? {
                 "data-tooltip-id": "my-tooltip",
                 "data-tooltip-place": "top",
-		"data-tooltip-content": `${format(value.date)} has count: ${value.count}. Events: ${eventsByDate.get(format(value.date))}`,
+                "data-tooltip-content": `${format(value.date)} has count: ${
+                  value.count
+                }. Events: ${eventsByDate.get(format(value.date))}`,
               }
             : {
                 "data-tooltip-id": "my-tooltip",
@@ -28,7 +30,7 @@ export default function HeatMap({ startDate, endDate, events }) {
               };
         }}
         showWeekdayLabels={true}
-	weekdayLabels={['', 'Tue', '', 'Thu', '', 'Sat', '']}
+        weekdayLabels={["", "Tue", "", "Thu", "", "Sat", ""]}
         classForValue={(value) => {
           if (!value || value.count === 0) {
             return "color-empty";
@@ -78,9 +80,11 @@ export default function HeatMap({ startDate, endDate, events }) {
   }
 
   function format(date: Date): string {
-    let year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
-    let month = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(date);
-    let day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date);
-    return day + '-' + month + '-' + year;
+    let year = new Intl.DateTimeFormat("en", { year: "numeric" }).format(date);
+    let month = new Intl.DateTimeFormat("en", { month: "2-digit" }).format(
+      date,
+    );
+    let day = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(date);
+    return day + "-" + month + "-" + year;
   }
 }

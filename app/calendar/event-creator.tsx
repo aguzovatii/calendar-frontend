@@ -80,11 +80,11 @@ export default function EventCreator({ username, onEventCreated }) {
         {" "}
         <label>Date: </label>{" "}
         <DatePicker
-	  showTimeInput
+          showTimeInput
           id="date"
           selected={date}
           onChange={(date) => setDate(date)}
-	  shouldCloseOnSelect={false}
+          shouldCloseOnSelect={false}
         />{" "}
       </div>{" "}
       <br />{" "}
