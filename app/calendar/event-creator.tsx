@@ -24,7 +24,7 @@ export default function EventCreator({ username, onEventCreated }) {
       };
     }
 
-    if (date === null || date.length === 0) {
+    if (date === null) {
       const el = document.getElementById("date");
       el.style.border = errstyle;
       valid = false;
@@ -84,6 +84,7 @@ export default function EventCreator({ username, onEventCreated }) {
           id="date"
           selected={date}
           onChange={(date) => setDate(date)}
+	  shouldCloseOnSelect={false}
         />{" "}
       </div>{" "}
       <br />{" "}
