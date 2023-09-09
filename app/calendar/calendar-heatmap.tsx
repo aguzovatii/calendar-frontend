@@ -19,13 +19,9 @@ export default function HeatMap({ startDate, endDate, events }) {
             ? {
                 "data-tooltip-id": "my-tooltip",
                 "data-tooltip-place": "top",
-                "data-tooltip-content": `${value.date
-                  .toISOString()
-                  .slice(0, 10)} has count: ${
+                "data-tooltip-content": `${format(value.date)} has count: ${
                   value.count
-                }. Events: ${eventsByDate.get(
-                  value.date.toISOString().slice(0, 10),
-                )}`,
+                }. Events: ${eventsByDate.get(format(value.date))}`,
               }
             : {
                 "data-tooltip-id": "my-tooltip",
@@ -34,6 +30,7 @@ export default function HeatMap({ startDate, endDate, events }) {
               };
         }}
         showWeekdayLabels={true}
+        weekdayLabels={["", "Tue", "", "Thu", "", "Sat", ""]}
         classForValue={(value) => {
           if (!value || value.count === 0) {
             return "color-empty";
@@ -58,9 +55,9 @@ export default function HeatMap({ startDate, endDate, events }) {
       let count = 0;
       for (var event of events) {
         if (
-          event.date_time.getUTCFullYear() === d.getUTCFullYear() &&
-          event.date_time.getUTCMonth() === d.getUTCMonth() &&
-          event.date_time.getUTCDate() === d.getUTCDate()
+          event.date_time.getFullYear() === d.getFullYear() &&
+          event.date_time.getMonth() === d.getMonth() &&
+          event.date_time.getDate() === d.getDate()
         ) {
           count = count + 1;
         }
@@ -73,12 +70,21 @@ export default function HeatMap({ startDate, endDate, events }) {
   function getEventsByDate(events: Event[]) {
     let newEvents = new Map<string, string[]>();
     for (var event of events) {
-      let key = event.date_time.toISOString().slice(0, 10);
+      let key = format(event.date_time);
       if (!newEvents.has(key)) {
         newEvents.set(key, []);
       }
       newEvents.get(key).push(event.name);
     }
     return newEvents;
+  }
+
+  function format(date: Date): string {
+    let year = new Intl.DateTimeFormat("en", { year: "numeric" }).format(date);
+    let month = new Intl.DateTimeFormat("en", { month: "2-digit" }).format(
+      date,
+    );
+    let day = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(date);
+    return day + "-" + month + "-" + year;
   }
 }
