@@ -4,8 +4,10 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 export default function EventCreator({ username, onEventCreated }) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
   const [name, setName] = useState("");
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(today);
   const [calendarId, setCalendarId] = useState("");
 
   function validateInput() {
@@ -78,6 +80,7 @@ export default function EventCreator({ username, onEventCreated }) {
         {" "}
         <label>Date: </label>{" "}
         <DatePicker
+	  showTimeInput
           id="date"
           selected={date}
           onChange={(date) => setDate(date)}
