@@ -6,7 +6,7 @@
     "lint": "next lint"
   },
   "devDependencies": {
-    "@types/node": "20.4.4",
+    "@types/node": "20.6.0",
     "@types/react": "18.2.15",
     "@types/react-calendar-heatmap": "^1.6.3",
     "prettier": "3.0.3",
