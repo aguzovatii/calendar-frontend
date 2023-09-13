@@ -8,7 +8,6 @@ export default function EventCreator({ username, onEventCreated }) {
   today.setHours(0, 0, 0, 0);
   const [name, setName] = useState("");
   const [date, setDate] = useState(today);
-  const [calendarId, setCalendarId] = useState("");
 
   function validateInput() {
     var valid = true;
@@ -32,16 +31,6 @@ export default function EventCreator({ username, onEventCreated }) {
         (el.style.border = initstyle), (date) => setDate(date);
       };
     }
-
-    if (calendarId.length === 0) {
-      const el = document.getElementById("calendar");
-      el.style.border = errstyle;
-      valid = false;
-      el.onchange = () => {
-        (el.style.border = initstyle),
-          (calendarId) => setCalendarId(calendarId);
-      };
-    }
     valid ? handleClick() : alert("Invalid Input");
   }
 
@@ -53,7 +42,6 @@ export default function EventCreator({ username, onEventCreated }) {
         username,
         name,
         date_time: date,
-        calendar_id: calendarId,
       }),
     }).then((response) => {
       response.ok ? onEventCreated() : alert("The event could not be created");
@@ -86,19 +74,6 @@ export default function EventCreator({ username, onEventCreated }) {
           onChange={(date) => setDate(date)}
           shouldCloseOnSelect={false}
         />{" "}
-      </div>{" "}
-      <br />{" "}
-      <div>
-        {" "}
-        <label>Calendar: </label>{" "}
-        <input
-          type="text"
-          id="calendar"
-          value={calendarId}
-          onChange={(e) => {
-            setCalendarId(e.currentTarget.value);
-          }}
-        ></input>{" "}
       </div>{" "}
       <br />{" "}
       <button type="button" onClick={validateInput}>
