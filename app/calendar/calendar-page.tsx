@@ -4,7 +4,7 @@ import EventCreator from "./event-creator";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
-export default function CalendarPage({ username }) {
+export default function CalendarPage({ username, password }) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
@@ -25,7 +25,11 @@ export default function CalendarPage({ username }) {
   return (
     <>
       <HeatMap startDate={startDate} endDate={endDate} events={data.events} />
-      <EventCreator username={username} onEventCreated={() => mutate()} />
+      <EventCreator
+        username={username}
+        password={password}
+        onEventCreated={() => mutate()}
+      />
     </>
   );
 }

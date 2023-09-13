@@ -8,7 +8,7 @@ export default function Page() {
   const [password, setPassword] = useState("");
 
   if (username.length > 0) {
-    return <CalendarPage username={username} />;
+    return <CalendarPage username={username} password={password} />;
   }
 
   return (
