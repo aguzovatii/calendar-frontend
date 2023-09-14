@@ -2,8 +2,9 @@
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { Base64 } from "js-base64";
 
-export default function EventCreator({ username, onEventCreated }) {
+export default function EventCreator({ username, password, onEventCreated }) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const [name, setName] = useState("");
@@ -37,7 +38,10 @@ export default function EventCreator({ username, onEventCreated }) {
   function handleClick() {
     fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/event", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Basic " + Base64.encode(username + ":" + password),
+      },
       body: JSON.stringify({
         username,
         name,
