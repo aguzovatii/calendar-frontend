@@ -46,23 +46,32 @@ export default function HeatMap({ startDate, endDate, events }) {
     for (var event of events) {
       event.date_time = new Date(event.date_time);
     }
+
     let newValues = [];
-    for (
-      var d = new Date(startDate);
-      d <= endDate;
-      d.setDate(d.getDate() + 1)
-    ) {
-      let count = 0;
-      for (var event of events) {
-        if (
-          event.date_time.getFullYear() === d.getFullYear() &&
-          event.date_time.getMonth() === d.getMonth() &&
-          event.date_time.getDate() === d.getDate()
-        ) {
-          count = count + 1;
-        }
-      }
-      newValues.push({ date: new Date(d), count: count });
+    let map = new Map<string, number>();
+    for(
+      var D = new Date(startDate);
+      D <= endDate;
+      D.setDate(D.getDate() + 1)
+    ){
+      map[format(D)] = 0;
+    }
+    for (var event of events) {
+      var d = new Date();
+      d.setHours(0, 0, 0, 0);
+      d.setFullYear(event.date_time.getFullYear());
+      d.setMonth(event.date_time.getMonth());
+      d.setDate(event.date_time.getDate());
+
+      map[format(d)] = map[format(d)] + 1;
+    }
+
+    for(
+      var D = new Date(startDate);
+      D <= endDate;
+      D.setDate(D.getDate() + 1)
+    ){
+      newValues.push({date : new Date(D), count : map[format(D)]});
     }
     return newValues;
   }
