@@ -49,11 +49,11 @@ export default function HeatMap({ startDate, endDate, events }) {
 
     let newValues = [];
     let map = new Map<string, number>();
-    for(
+    for (
       var D = new Date(startDate);
       D <= endDate;
       D.setDate(D.getDate() + 1)
-    ){
+    ) {
       map[format(D)] = 0;
     }
     for (var event of events) {
@@ -66,12 +66,12 @@ export default function HeatMap({ startDate, endDate, events }) {
       map[format(d)] = map[format(d)] + 1;
     }
 
-    for(
+    for (
       var D = new Date(startDate);
       D <= endDate;
       D.setDate(D.getDate() + 1)
-    ){
-      newValues.push({date : new Date(D), count : map[format(D)]});
+    ) {
+      newValues.push({ date: new Date(D), count: map[format(D)] });
     }
     return newValues;
   }
