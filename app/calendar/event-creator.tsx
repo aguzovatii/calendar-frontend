@@ -4,23 +4,35 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Base64 } from "js-base64";
 
-export default function EventCreator({ username, password, onEventCreated }) {
+interface EmptyFunction {
+  (): void;
+}
+
+export default function EventCreator({
+  username,
+  password,
+  onEventCreated,
+}: {
+  username: string;
+  password: string;
+  onEventCreated: EmptyFunction;
+}) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const [name, setName] = useState("");
   const [date, setDate] = useState(today);
 
   function validateInput() {
-    var valid = true;
-    var errstyle = "2px solid red";
-    var initstyle = "1px solid grey";
+    let valid = true;
+    let errstyle = "2px solid red";
+    let initstyle = "1px solid grey";
 
     if (name.length === 0) {
       const el = document.getElementById("name");
       el.style.border = errstyle;
       valid = false;
       el.onchange = () => {
-        (el.style.border = initstyle), (name) => setName(name);
+        (el.style.border = initstyle), (name: string) => setName(name);
       };
     }
 
@@ -29,7 +41,7 @@ export default function EventCreator({ username, password, onEventCreated }) {
       el.style.border = errstyle;
       valid = false;
       el.onclick = () => {
-        (el.style.border = initstyle), (date) => setDate(date);
+        (el.style.border = initstyle), (date: Date) => setDate(date);
       };
     }
     valid ? handleClick() : alert("Invalid Input");
@@ -75,7 +87,7 @@ export default function EventCreator({ username, password, onEventCreated }) {
           showTimeInput
           id="date"
           selected={date}
-          onChange={(date) => setDate(date)}
+          onChange={(date: Date) => setDate(date)}
           shouldCloseOnSelect={false}
         />{" "}
       </div>{" "}
