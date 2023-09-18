@@ -1,6 +1,10 @@
 import { useState } from "react";
 
-export default function Signup({ onSignup }) {
+export default function Signup({
+  onSignup,
+}: {
+  onSignup: (username: string, password: string) => void;
+}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -77,16 +81,17 @@ export default function Signup({ onSignup }) {
   );
 
   function validateInput() {
-    var valid = true;
-    var errstyle = "2px solid red";
-    var initstyle = "1px solid grey";
+    let valid = true;
+    let errstyle = "2px solid red";
+    let initstyle = "1px solid grey";
 
     if (username.length === 0) {
       const el = document.getElementById("username");
       el.style.border = errstyle;
       valid = false;
       el.onchange = () => {
-        (el.style.border = initstyle), (username) => setUsername(username);
+        (el.style.border = initstyle),
+          (username: string) => setUsername(username);
       };
     }
 
@@ -95,7 +100,8 @@ export default function Signup({ onSignup }) {
       el.style.border = errstyle;
       valid = false;
       el.onchange = () => {
-        (el.style.border = initstyle), (password) => setPassword(password);
+        (el.style.border = initstyle),
+          (password: string) => setPassword(password);
       };
     }
     valid ? handleClick() : alert("Invalid Input");
@@ -112,7 +118,7 @@ export default function Signup({ onSignup }) {
       valid = false;
       el.onchange = () => {
         (el.style.border = initstyle),
-          (usernameLogin) => setUsernameLogin(usernameLogin);
+          (usernameLogin: string) => setUsernameLogin(usernameLogin);
       };
     }
 
@@ -122,7 +128,7 @@ export default function Signup({ onSignup }) {
       valid = false;
       el.onchange = () => {
         (el.style.border = initstyle),
-          (passwordLogin) => setPasswordLogin(passwordLogin);
+          (passwordLogin: string) => setPasswordLogin(passwordLogin);
       };
     }
     valid ? handleClickLogin() : alert("Invalid Input");

@@ -3,7 +3,20 @@ import CalendarHeatmap from "react-calendar-heatmap";
 import { Tooltip } from "react-tooltip";
 import "react-calendar-heatmap/dist/styles.css";
 
-export default function HeatMap({ startDate, endDate, events }) {
+interface Value {
+  date: Date;
+  count: number;
+}
+
+export default function HeatMap({
+  startDate,
+  endDate,
+  events,
+}: {
+  startDate: Date;
+  endDate: Date;
+  events: Event[];
+}) {
   const values = getValues(events);
   const eventsByDate = getEventsByDate(events);
 
@@ -14,7 +27,7 @@ export default function HeatMap({ startDate, endDate, events }) {
         startDate={startDate}
         endDate={endDate}
         values={values}
-        tooltipDataAttrs={(value) => {
+        tooltipDataAttrs={(value: Value) => {
           return value.date != null
             ? {
                 "data-tooltip-id": "my-tooltip",
@@ -42,29 +55,29 @@ export default function HeatMap({ startDate, endDate, events }) {
     </>
   );
 
-  function getValues(events: Event[]) {
-    for (var event of events) {
+  function getValues(events: Event[]): Value[] {
+    for (let event of events) {
       event.date_time = new Date(event.date_time);
     }
 
     let newValues = [];
     let map = new Map<string, number>();
     for (
-      var date = new Date(startDate);
+      let date = new Date(startDate);
       date <= endDate;
       date.setDate(date.getDate() + 1)
     ) {
       map[format(date)] = 0;
     }
-    for (var event of events) {
-      var date = new Date(event.date_time);
+    for (let event of events) {
+      let date = new Date(event.date_time);
       date.setHours(0, 0, 0, 0);
 
       map[format(date)] = map[format(date)] + 1;
     }
 
     for (
-      var date = new Date(startDate);
+      let date = new Date(startDate);
       date <= endDate;
       date.setDate(date.getDate() + 1)
     ) {
@@ -73,9 +86,9 @@ export default function HeatMap({ startDate, endDate, events }) {
     return newValues;
   }
 
-  function getEventsByDate(events: Event[]) {
+  function getEventsByDate(events: Event[]): Map<string, string[]> {
     let newEvents = new Map<string, string[]>();
-    for (var event of events) {
+    for (let event of events) {
       let key = format(event.date_time);
       if (!newEvents.has(key)) {
         newEvents.set(key, []);
