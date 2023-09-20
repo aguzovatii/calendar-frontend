@@ -6,7 +6,7 @@
     "lint": "next lint"
   },
   "devDependencies": {
-    "@types/node": "20.6.2",
+    "@types/node": "20.6.3",
     "@types/react": "18.2.22",
     "@types/react-calendar-heatmap": "^1.6.3",
     "@types/react-datepicker": "^4.15.0",
