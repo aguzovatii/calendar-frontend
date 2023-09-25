@@ -21,6 +21,6 @@
     "react-datepicker": "^4.18.0",
     "react-dom": "^18.2.0",
     "react-tooltip": "^5.21.4",
-    "swr": "^2.2.2"
+    "swr": "^2.2.4"
   }
 }
