@@ -56,7 +56,7 @@ export default function EventCreator({
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + Base64.encode(session.accessToken),
+        Authorization: "Bearer " + session.accessToken,
       },
       body: JSON.stringify({
         username,
