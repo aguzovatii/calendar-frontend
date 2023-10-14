@@ -3,7 +3,7 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Base64 } from "js-base64";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 
 interface EmptyFunction {
   (): void;
@@ -23,7 +23,8 @@ export default function EventCreator({
   const [name, setName] = useState("");
   const [date, setDate] = useState(today);
 
- // const { data: session, status } = useSession();
+  const { data: session, status } = useSession();
+  console.log("event - session: " + JSON.stringify(session.accessToken));
 
   function validateInput() {
     let valid = true;
@@ -55,7 +56,7 @@ export default function EventCreator({
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + Base64.encode(),
+        Authorization: "Bearer " + Base64.encode(session.accessToken),
       },
       body: JSON.stringify({
         username,
