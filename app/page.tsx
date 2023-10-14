@@ -9,11 +9,8 @@ export default function Page() {
   const [password, setPassword] = useState("");
   const { data: session, status } = useSession();
 
-  console.log("Status: " + status);
-  console.log("Session: " + ((session !== undefined && session !== null) ? session.user.name : "undefined"));
-
-  if (username.length > 0) {
-    return <CalendarPage username={username} password={password} />;
+  if (status === "authenticated") {
+    return <CalendarPage username={session.user.name} password={password} />;
   }
 
   return (

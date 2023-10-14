@@ -11,13 +11,21 @@ const handler = NextAuth({
         age: {label: "Age", type: "text"}
       },
       async authorize(credentials, req) {
-        const res = {ok: true};
-        const user = { id: 1, name: 'J Smith', email: 'jsmith@example.com' };
 
-        console.log("Am ajuns:" + credentials);
+        const res = await fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username: credentials.username,
+            password: credentials.password,
+          }),
+        });
 
-        if (res.ok && user) {
-          return user
+        console.log("Am ajuns:" + res);
+
+        if (res.ok) {
+          console.log("Am ajuns body:" + res.json);
+          return {name: credentials.username, jwt: res.json}
         }
 
         return null
