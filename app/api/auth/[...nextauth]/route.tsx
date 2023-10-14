@@ -1,5 +1,9 @@
-import NextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth, { User} from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials"
+
+interface CustomUser extends User {
+  jwt: string,
+}
 
 const handler = NextAuth({
   providers: [
@@ -10,22 +14,22 @@ const handler = NextAuth({
         password: { label: "Password", type: "password" },
         age: {label: "Age", type: "text"}
       },
-      async authorize(credentials, req) {
+      async authorize(credentials, _req):Promise<CustomUser> {
 
-        const res = await fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/login", {
+        const jwt: string = await fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             username: credentials.username,
             password: credentials.password,
           }),
+        }).then((response) => {
+          return response.ok ? response.json() : '';
         });
 
-        console.log("Am ajuns:" + res);
-
-        if (res.ok) {
-          console.log("Am ajuns body:" + res.json);
-          return {name: credentials.username, jwt: res.json}
+        if (jwt.length !== 0) {
+          console.log("Am ajuns body:" + jwt);
+          return {id: credentials.username, jwt: jwt}
         }
 
         return null

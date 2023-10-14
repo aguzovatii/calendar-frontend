@@ -23,10 +23,7 @@ export default function EventCreator({
   const [name, setName] = useState("");
   const [date, setDate] = useState(today);
 
-  const { data: session, status } = useSession();
-  console.log("Session: " + ((session !== undefined && session !== null) ? session.user.name : "undefined"));
-  const jwt = session.jwt;
-  console.log("event jwt " + jwt)
+ // const { data: session, status } = useSession();
 
   function validateInput() {
     let valid = true;

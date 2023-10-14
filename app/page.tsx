@@ -9,6 +9,8 @@ export default function Page() {
   const [password, setPassword] = useState("");
   const { data: session, status } = useSession();
 
+  console.log("JWT: " + session.user.jwt);
+
   if (status === "authenticated") {
     return <CalendarPage username={session.user.name} password={password} />;
   }
