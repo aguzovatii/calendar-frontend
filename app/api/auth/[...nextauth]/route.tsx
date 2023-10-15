@@ -17,6 +17,7 @@ interface CustomJWT extends JWT {
 const handler = NextAuth({
   providers: [
     CredentialsProvider({
+      id: 'signin',
       name: 'Credentials',
       credentials: {
         username: { label: "Username", type: "text" },
@@ -43,6 +44,9 @@ const handler = NextAuth({
       },
     })
   ],
+  pages: {
+    signIn: '/auth/signin',
+  },
 
   callbacks:{
     async jwt({ token, user} : {token: CustomJWT, user: CustomUser}) {
