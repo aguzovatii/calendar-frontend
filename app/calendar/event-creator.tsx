@@ -2,7 +2,6 @@
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Base64 } from "js-base64";
 import { getSession, useSession } from "next-auth/react";
 
 interface EmptyFunction {
@@ -10,21 +9,15 @@ interface EmptyFunction {
 }
 
 export default function EventCreator({
-  username,
-  password,
   onEventCreated,
 }: {
-  username: string;
-  password: string;
   onEventCreated: EmptyFunction;
 }) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const [name, setName] = useState("");
   const [date, setDate] = useState(today);
-
-  const { data: session, status } = useSession();
-  console.log("event - session: " + JSON.stringify(session.accessToken));
+  const { data: session } = useSession();
 
   function validateInput() {
     let valid = true;
@@ -59,7 +52,6 @@ export default function EventCreator({
         Authorization: "Bearer " + session.accessToken,
       },
       body: JSON.stringify({
-        username,
         name,
         date_time: date,
       }),

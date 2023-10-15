@@ -1,14 +1,17 @@
-import NextAuth, { Session, User} from "next-auth";
-import { AdapterUser } from "next-auth/adapters";
-import { JWT } from "next-auth/jwt";
+import NextAuth, { Session, User } from "next-auth";
+import { JWT } from "next-auth/jwt/types";
 import CredentialsProvider from "next-auth/providers/credentials"
 
 interface CustomUser extends User {
-  jwt: string,
+  jwt?: string,
 }
 
 interface CustomSession extends Session {
-  accessToken: string,
+  accessToken?: string,
+}
+
+interface CustomJWT extends JWT {
+  accessToken?: string,
 }
 
 const handler = NextAuth({
@@ -16,7 +19,7 @@ const handler = NextAuth({
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "jsmith" },
+        username: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, _req):Promise<CustomUser> {
@@ -33,8 +36,7 @@ const handler = NextAuth({
         });
 
         if (jwt.length !== 0) {
-          console.log("Am ajuns body:" + jwt);
-          return {id: credentials.username + "abc", jwt: jwt.token, name: credentials.username}
+          return {id: credentials.username, jwt: jwt.token, name: credentials.username}
         }
 
         return null
@@ -43,30 +45,18 @@ const handler = NextAuth({
   ],
 
   callbacks:{
-    async jwt({ token, account, profile, user} : {token: any, account:any, profile: any, user: CustomUser}) {
+    async jwt({ token, user} : {token: CustomJWT, user: CustomUser}) {
       if (user) {
-        token.accessToken = user.jwt
+        token.accessToken = user.jwt;
       }
-      console.log("profile: " +  JSON.stringify(profile));
-      console.log("account: " + JSON.stringify(account));
-      console.log("token: " + JSON.stringify(token));
-      console.log("user: " + JSON.stringify(user));
 
       return token
     },
-    async session({ session, token, user }) {
-      // Send properties to the client, like an access_token and user id from a provider.
-      session.accessToken = token.accessToken
-      //session.user.id = token.id
-      
-      console.log("session: " +  JSON.stringify(session));
-      console.log("user: " + JSON.stringify(user));
-      console.log("token: " + JSON.stringify(token));
-
-      return session
+    async session({ session, token } : {session: CustomSession, token : CustomJWT}) {
+      session.accessToken = token.accessToken;
+      return session;
     },
   },
 });
 
 export { handler as GET, handler as POST };
-

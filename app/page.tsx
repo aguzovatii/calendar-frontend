@@ -1,24 +1,18 @@
 "use client";
-import { useState } from "react";
 import CalendarPage from "./calendar/calendar-page";
+import { useSession} from "next-auth/react"
 import Signup from "./user/user-creator";
-import { useSession, getSession } from "next-auth/react"
 
 export default function Page() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   if (status === "authenticated") {
-    console.log("page - user: " + JSON.stringify(session.user));
-    return <CalendarPage username={session.user.name} password={password} />;
+    return <CalendarPage/>;
   }
 
-  return (
-    <Signup
-      onSignup={(username: string, password: string) => {
-        setUsername(username), setPassword(password);
-      }}
-    />
-  );
+  if(status === "unauthenticated"){
+    return <Signup/>
+  }
+
+  return <div>{status}</div>;
 }
