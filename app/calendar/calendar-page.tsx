@@ -2,6 +2,7 @@ import useSWR from "swr";
 import HeatMap from "./calendar-heatmap";
 import EventCreator from "./event-creator";
 import { useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 
 const fetcher = ([url, token]) => fetch(url, {headers: {Authorization: "Bearer " + token},}).then((res) => res.json());
 
@@ -34,6 +35,7 @@ export default function CalendarPage() {
     <>
       <HeatMap startDate={startDate} endDate={endDate} events={data.events} />
       <EventCreator onEventCreated={() => mutate()}/>
+      <button onClick={() => signOut()}>Sign out</button>
     </>
   );
 }

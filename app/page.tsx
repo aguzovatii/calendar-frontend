@@ -1,7 +1,7 @@
 "use client";
 import CalendarPage from "./calendar/calendar-page";
 import { useSession} from "next-auth/react"
-import Signup from "./user/user-creator";
+import { redirect } from "next/navigation";
 
 export default function Page() {
   const { status } = useSession();
@@ -11,7 +11,7 @@ export default function Page() {
   }
 
   if(status === "unauthenticated"){
-    return <Signup/>
+    redirect('/auth/signin')
   }
 
   return <div>{status}</div>;

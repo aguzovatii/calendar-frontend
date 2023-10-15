@@ -2,15 +2,14 @@
 
 import { useState } from "react";
 import { signIn } from "next-auth/react";
-import Link from "next/link";
 
-export default function Signin() {
+export default function Signup() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   return (
     <>
-      <h1>Signin</h1>
+      <h1>Signup</h1>
       <form autoComplete="off">
         <div>
           <label>Username: </label>
@@ -37,11 +36,9 @@ export default function Signin() {
         </div>
         <br />
         <button type="button" onClick={validateInput}>
-          Signin
+          Signup
         </button>
       </form>
-
-      <Link href = "/auth/signup">Signup</Link>
     </>
   );
 
@@ -73,6 +70,6 @@ export default function Signin() {
   }
 
   function handleClick() {
-	signIn("signin", {username: username, password: password, callbackUrl: "/"});
+	signIn("signup", {username: username, password: password, callbackUrl: "/"});
   }
 }

@@ -42,6 +42,33 @@ const handler = NextAuth({
 
         return null
       },
+    }),
+    CredentialsProvider({
+      id: 'signup',
+      name: 'Credentials',
+      credentials: {
+        username: { label: "Username", type: "text" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials, _req):Promise<CustomUser> {
+
+        const jwt: string = await fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/user", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username: credentials.username,
+            password: credentials.password,
+          }),
+        }).then((response) => {
+          return response.ok ? response.json() : '';
+        });
+
+        if (jwt.length !== 0) {
+          return {id: credentials.username, jwt: jwt.token, name: credentials.username}
+        }
+
+        return null
+      },
     })
   ],
   pages: {
