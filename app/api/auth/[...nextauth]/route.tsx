@@ -6,10 +6,6 @@ interface CustomUser extends User {
   jwt?: string;
 }
 
-interface CustomSession extends Session {
-  accessToken?: string;
-}
-
 interface CustomJWT extends JWT {
   accessToken?: string;
 }
@@ -18,13 +14,12 @@ const handler = NextAuth({
   providers: [
     CredentialsProvider({
       id: "signin",
-      name: "Credentials",
       credentials: {
         username: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, _req): Promise<CustomUser> {
-        const jwt: string = await fetch(
+        return await fetch(
           process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/login",
           {
             method: "POST",
@@ -34,30 +29,31 @@ const handler = NextAuth({
               password: credentials.password,
             }),
           },
-        ).then((response) => {
-          return response.ok ? response.json() : "";
-        });
+        )
+          .then((response) => {
+            return response.ok ? response.json() : { token: "" };
+          })
+          .then((jwt) => {
+            if (jwt.token.length === 0) {
+              return null;
+            }
 
-        if (jwt.length !== 0) {
-          return {
-            id: credentials.username,
-            jwt: jwt.token,
-            name: credentials.username,
-          };
-        }
-
-        return null;
+            return {
+              id: credentials.username,
+              jwt: jwt.token,
+              name: credentials.username,
+            };
+          });
       },
     }),
     CredentialsProvider({
       id: "signup",
-      name: "Credentials",
       credentials: {
         username: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, _req): Promise<CustomUser> {
-        const jwt: string = await fetch(
+        return await fetch(
           process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/user",
           {
             method: "POST",
@@ -67,26 +63,27 @@ const handler = NextAuth({
               password: credentials.password,
             }),
           },
-        ).then((response) => {
-          return response.ok ? response.json() : "";
-        });
+        )
+          .then((response) => {
+            return response.ok ? response.json() : { token: "" };
+          })
+          .then((jwt) => {
+            if (jwt.token.length === 0) {
+              return null;
+            }
 
-        if (jwt.length !== 0) {
-          return {
-            id: credentials.username,
-            jwt: jwt.token,
-            name: credentials.username,
-          };
-        }
-
-        return null;
+            return {
+              id: credentials.username,
+              jwt: jwt.token,
+              name: credentials.username,
+            };
+          });
       },
     }),
   ],
   pages: {
     signIn: "/auth/signin",
   },
-
   callbacks: {
     async jwt({ token, user }: { token: CustomJWT; user: CustomUser }) {
       if (user) {
@@ -95,13 +92,7 @@ const handler = NextAuth({
 
       return token;
     },
-    async session({
-      session,
-      token,
-    }: {
-      session: CustomSession;
-      token: CustomJWT;
-    }) {
+    async session({ session, token }: { session: Session; token: CustomJWT }) {
       session.accessToken = token.accessToken;
       return session;
     },
