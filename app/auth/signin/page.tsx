@@ -41,7 +41,7 @@ export default function Signin() {
         </button>
       </form>
 
-      <Link href = "/auth/signup">Signup</Link>
+      <Link href="/auth/signup">Signup</Link>
     </>
   );
 
@@ -73,6 +73,10 @@ export default function Signin() {
   }
 
   function handleClick() {
-	signIn("signin", {username: username, password: password, callbackUrl: "/"});
+    signIn("signin", {
+      username: username,
+      password: password,
+      callbackUrl: "/",
+    });
   }
 }

@@ -70,6 +70,10 @@ export default function Signup() {
   }
 
   function handleClick() {
-	signIn("signup", {username: username, password: password, callbackUrl: "/"});
+    signIn("signup", {
+      username: username,
+      password: password,
+      callbackUrl: "/",
+    });
   }
 }
