@@ -1,21 +1,18 @@
 "use client";
-import { useState } from "react";
 import CalendarPage from "./calendar/calendar-page";
-import Signup from "./user/user-creator";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 export default function Page() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const { status } = useSession();
 
-  if (username.length > 0) {
-    return <CalendarPage username={username} password={password} />;
+  if (status === "authenticated") {
+    return <CalendarPage />;
   }
 
-  return (
-    <Signup
-      onSignup={(username: string, password: string) => {
-        setUsername(username), setPassword(password);
-      }}
-    />
-  );
+  if (status === "unauthenticated") {
+    redirect("/auth/signin");
+  }
+
+  return <div>{status}</div>;
 }

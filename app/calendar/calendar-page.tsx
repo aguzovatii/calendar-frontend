@@ -1,16 +1,15 @@
 import useSWR from "swr";
 import HeatMap from "./calendar-heatmap";
 import EventCreator from "./event-creator";
+import { useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
+const fetcher = ([url, token]) =>
+  fetch(url, { headers: { Authorization: "Bearer " + token } }).then((res) =>
+    res.json(),
+  );
 
-export default function CalendarPage({
-  username,
-  password,
-}: {
-  username: string;
-  password: string;
-}) {
+export default function CalendarPage() {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
@@ -20,8 +19,17 @@ export default function CalendarPage({
   let endDate = new Date(today);
   endDate.setMonth(endDate.getMonth() + 6);
 
+  const { data: session, status } = useSession();
+
+  if (status !== "authenticated") {
+    return <div>{status}</div>;
+  }
+
   const { data, error, isLoading, mutate } = useSWR(
-    process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/calendar/" + username,
+    [
+      process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/calendar",
+      session.accessToken,
+    ],
     fetcher,
   );
 
@@ -31,11 +39,8 @@ export default function CalendarPage({
   return (
     <>
       <HeatMap startDate={startDate} endDate={endDate} events={data.events} />
-      <EventCreator
-        username={username}
-        password={password}
-        onEventCreated={() => mutate()}
-      />
+      <EventCreator onEventCreated={() => mutate()} />
+      <button onClick={() => signOut()}>Sign out</button>
     </>
   );
 }

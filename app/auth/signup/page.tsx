@@ -1,4 +1,7 @@
+"use client";
+
 import { useState } from "react";
+import { signIn } from "next-auth/react";
 
 export default function Signup() {
   const [username, setUsername] = useState("");
@@ -33,7 +36,7 @@ export default function Signup() {
         </div>
         <br />
         <button type="button" onClick={validateInput}>
-          Create
+          Signup
         </button>
       </form>
     </>
@@ -67,14 +70,10 @@ export default function Signup() {
   }
 
   function handleClick() {
-    fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/user", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    }).then((response) => {
-      response.ok
-        ? alert("Successfully created the user")
-        : alert("There was an error. Please try again later");
+    signIn("signup", {
+      username: username,
+      password: password,
+      callbackUrl: "/",
     });
   }
 }
