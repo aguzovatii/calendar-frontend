@@ -7,7 +7,7 @@
   },
   "devDependencies": {
     "@types/node": "20.8.7",
-    "@types/react": "18.2.28",
+    "@types/react": "18.2.30",
     "@types/react-calendar-heatmap": "^1.6.5",
     "@types/react-datepicker": "^4.19.1",
     "prettier": "3.0.3",
