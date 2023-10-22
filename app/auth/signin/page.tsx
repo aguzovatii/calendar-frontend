@@ -3,46 +3,73 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+
+type SignInErrorTypes =
+  | "Signin"
+  | "CredentialsSignin"
+  | "SessionRequired"
+  | "default";
 
 export default function Signin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const params = useSearchParams();
+
+  const errors: Record<SignInErrorTypes, string> = {
+    Signin: "Try signing in with a different account.",
+    CredentialsSignin: "Sign in failed. Wrong username and/or password.",
+    SessionRequired: "Please sign in to access this page.",
+    default: "Unable to sign in.",
+  };
+
+  const errorType = params.get("error");
+  const error = errorType && (errors[errorType] ?? errors.default);
 
   return (
-    <>
-      <h1>Signin</h1>
-      <form autoComplete="off">
-        <div>
-          <label>Username: </label>
-          <input
-            id="username"
-            type="text"
-            value={username}
-            onChange={(e) => {
-              setUsername(e.currentTarget.value);
-            }}
-          ></input>
-        </div>
-        <br />
-        <div>
-          <label>Password: </label>
-          <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.currentTarget.value);
-            }}
-          ></input>
-        </div>
-        <br />
-        <button type="button" onClick={validateInput}>
-          Signin
-        </button>
-      </form>
+    <div className="page">
+      <div className="signin">
+        <div className="card">
+          <h1>Sign in</h1>
+          {error && (
+            <div className="error">
+              <p>{error}</p>
+            </div>
+          )}
+          <form autoComplete="off">
+            <div>
+              <label>Username</label>
+              <input
+                id="username"
+                type="text"
+                value={username}
+                onChange={(e) => {
+                  setUsername(e.currentTarget.value);
+                }}
+              ></input>
+            </div>
+            <br />
+            <div>
+              <label>Password</label>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.currentTarget.value);
+                }}
+              ></input>
+            </div>
+            <br />
+            <button type="button" onClick={validateInput}>
+              Sign in
+            </button>
+          </form>
 
-      <Link href="/auth/signup">Signup</Link>
-    </>
+          <Link href="/auth/signup">Sign up</Link>
+        </div>
+      </div>
+    </div>
   );
 
   function validateInput() {

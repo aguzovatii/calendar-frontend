@@ -8,38 +8,42 @@ export default function Signup() {
   const [password, setPassword] = useState("");
 
   return (
-    <>
-      <h1>Signup</h1>
-      <form autoComplete="off">
-        <div>
-          <label>Username: </label>
-          <input
-            id="username"
-            type="text"
-            value={username}
-            onChange={(e) => {
-              setUsername(e.currentTarget.value);
-            }}
-          ></input>
+    <div className="page">
+      <div className="signin">
+        <div className="card">
+          <h1>Sign up</h1>
+          <form autoComplete="off">
+            <div>
+              <label>Username</label>
+              <input
+                id="username"
+                type="text"
+                value={username}
+                onChange={(e) => {
+                  setUsername(e.currentTarget.value);
+                }}
+              ></input>
+            </div>
+            <br />
+            <div>
+              <label>Password</label>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.currentTarget.value);
+                }}
+              ></input>
+            </div>
+            <br />
+            <button type="button" onClick={validateInput}>
+              Sign up
+            </button>
+          </form>
         </div>
-        <br />
-        <div>
-          <label>Password: </label>
-          <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.currentTarget.value);
-            }}
-          ></input>
-        </div>
-        <br />
-        <button type="button" onClick={validateInput}>
-          Signup
-        </button>
-      </form>
-    </>
+      </div>
+    </div>
   );
 
   function validateInput() {
