@@ -4,26 +4,36 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
-type SignInErrorTypes =
-  | "Signin"
-  | "CredentialsSignin"
-  | "SessionRequired"
-  | "default";
+type SignInErrorTypes = "CredentialsSignin" | "default";
+
+const errors: Record<SignInErrorTypes, string> = {
+  CredentialsSignin: "Sign in failed. Wrong username and/or password.",
+  default: "Unable to sign in. Please try again later.",
+};
 
 export default function Signin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const params = useSearchParams();
+  const [errorType, setErrorType] = useState(null);
+  const [signedIn, setSignedIn] = useState(false);
+  const [redirectUrl, setRedirectUrl] = useState(null);
+  const { status } = useSession();
 
-  const errors: Record<SignInErrorTypes, string> = {
-    Signin: "Try signing in with a different account.",
-    CredentialsSignin: "Sign in failed. Wrong username and/or password.",
-    SessionRequired: "Please sign in to access this page.",
-    default: "Unable to sign in.",
-  };
+  if (status === "loading") {
+    return <div>loading</div>;
+  }
 
-  const errorType = params.get("error");
+  if (status === "authenticated") {
+    redirect("/");
+  }
+
+  if (signedIn) {
+    redirect(redirectUrl);
+  }
+
   const error = errorType && (errors[errorType] ?? errors.default);
 
   return (
@@ -65,7 +75,7 @@ export default function Signin() {
               Sign in
             </button>
           </form>
-
+          <br />
           <Link href="/auth/signup">Sign up</Link>
         </div>
       </div>
@@ -96,14 +106,31 @@ export default function Signin() {
           (password: string) => setPassword(password);
       };
     }
-    valid ? handleClick() : alert("Invalid Input");
+    if (valid) {
+      handleClick();
+    }
   }
 
   function handleClick() {
     signIn("signin", {
+      redirect: false,
       username: username,
       password: password,
       callbackUrl: "/",
+    }).then((response) => {
+      const error = response.error;
+
+      if (error) {
+        setErrorType(error);
+        return;
+      }
+
+      const ok = response.ok;
+      const redirectUrl = response.url;
+      if (ok) {
+        setSignedIn(ok);
+        setRedirectUrl(redirectUrl);
+      }
     });
   }
 }
