@@ -25,7 +25,7 @@
   fill: #1e6823;
 }
 
-input[type] {
+input {
   box-sizing: border-box;
   display: block;
   width: 100%;
@@ -35,10 +35,6 @@ input[type] {
   font-size: 1rem;
   border-radius: var(--border-radius);
   color: var(--color-text);
-
-  &:focus {
-    box-shadow: none;
-  }
 }
 
 .page {
@@ -50,7 +46,7 @@ input[type] {
   margin: 0;
   padding: 0;
 
-  > div {
+  & div {
     text-align: center;
   }
 }
@@ -64,21 +60,21 @@ label {
 }
 
 .signin {
-  input {
+  & input {
     margin-left: auto;
     margin-right: auto;
     display: block;
   }
 
   > div,
-  form {
+  & form {
     display: block;
 
-    input[type] {
+    & input {
       margin-bottom: 0.5rem;
     }
 
-    button {
+    & button {
       width: 100%;
     }
 
@@ -107,7 +103,7 @@ label {
     border-radius: 0.3rem;
     background: var(--color-error);
 
-    p {
+    & p {
       text-align: left;
       padding: 0.5rem 1rem;
       font-size: 0.9rem;
