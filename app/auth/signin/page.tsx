@@ -18,7 +18,7 @@ export default function Signin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorType, setErrorType] = useState(null);
-  const [status, setStatus] = useState({signedIn: false, redirectUrl: ""});
+  const [status, setStatus] = useState({ signedIn: false, redirectUrl: "" });
 
   if (sessionStatus === "loading") {
     return <div>loading</div>;
@@ -122,7 +122,7 @@ export default function Signin() {
       }
 
       if (response.ok) {
-        setStatus({signedIn: true, redirectUrl: response.url});
+        setStatus({ signedIn: true, redirectUrl: response.url });
       }
     });
   }
