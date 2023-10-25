@@ -70,20 +70,6 @@ label {
     display: block;
   }
 
-  .error {
-    font-weight: 500;
-    border-radius: 0.3rem;
-    background: var(--color-error);
-
-    p {
-      text-align: left;
-      padding: 0.5rem 1rem;
-      font-size: 0.9rem;
-      line-height: 1.2rem;
-      color: var(--color-info-text);
-    }
-  }
-
   > div,
   form {
     display: block;
@@ -114,5 +100,19 @@ label {
 
   .header {
     color: var(--color-primary);
+  }
+
+  .error {
+    font-weight: 500;
+    border-radius: 0.3rem;
+    background: var(--color-error);
+
+    p {
+      text-align: left;
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+      line-height: 1.2rem;
+      color: var(--color-info-text);
+    }
   }
 }
