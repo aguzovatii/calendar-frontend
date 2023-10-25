@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 
@@ -15,23 +14,22 @@ const errors: Record<SignInErrorTypes, string> = {
 };
 
 export default function Signin() {
+  const { status: sessionStatus } = useSession();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorType, setErrorType] = useState(null);
-  const [signedIn, setSignedIn] = useState(false);
-  const [redirectUrl, setRedirectUrl] = useState(null);
-  const { status } = useSession();
+  const [status, setStatus] = useState({signedIn: false, redirectUrl: ""});
 
-  if (status === "loading") {
+  if (sessionStatus === "loading") {
     return <div>loading</div>;
   }
 
-  if (status === "authenticated") {
+  if (sessionStatus === "authenticated") {
     redirect("/");
   }
 
-  if (signedIn) {
-    redirect(redirectUrl);
+  if (status.signedIn) {
+    redirect(status.redirectUrl);
   }
 
   const error = errorType && (errors[errorType] ?? errors.default);
@@ -118,18 +116,13 @@ export default function Signin() {
       password: password,
       callbackUrl: "/",
     }).then((response) => {
-      const error = response.error;
-
-      if (error) {
-        setErrorType(error);
+      if (response.error) {
+        setErrorType(response.error);
         return;
       }
 
-      const ok = response.ok;
-      const redirectUrl = response.url;
-      if (ok) {
-        setSignedIn(ok);
-        setRedirectUrl(redirectUrl);
+      if (response.ok) {
+        setStatus({signedIn: true, redirectUrl: response.url});
       }
     });
   }
