@@ -1,3 +1,14 @@
+:root {
+  --color-error: #c94b4b;
+  --color-info-text: #fff;
+  --color-text: #000;
+  --color-background-card: #fff;
+  --color-primary: #ccc;
+  --border-width: 1px;
+  --color-control-border: #bbb;
+  --border-radius: 0.5rem;
+}
+
 .react-calendar-heatmap .color-scale-0 {
   fill: #f6ffca;
 }
@@ -12,4 +23,92 @@
 }
 .react-calendar-heatmap .color-scale-4 {
   fill: #1e6823;
+}
+
+input {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border: var(--border-width) solid var(--color-control-border);
+  background: var(--color-background-card);
+  font-size: 1rem;
+  border-radius: var(--border-radius);
+  color: var(--color-text);
+}
+
+.page {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 0;
+
+  & div {
+    text-align: center;
+  }
+}
+
+label {
+  font-weight: 500;
+  text-align: left;
+  margin-bottom: 0.25rem;
+  display: block;
+  color: var(--color-text);
+}
+
+.signin {
+  & input {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+
+  > div,
+  & form {
+    display: block;
+
+    & input {
+      margin-bottom: 0.5rem;
+    }
+
+    & button {
+      width: 100%;
+    }
+
+    max-width: 300px;
+  }
+}
+
+.card {
+  @media screen and (min-width: 450px) {
+    width: 350px;
+  }
+  @media screen and (max-width: 450px) {
+    width: 200px;
+  }
+  margin: 20px 0 20px 0;
+  background-color: var(--color-background-card);
+  border-radius: 30px;
+  padding: 20px 50px;
+
+  .header {
+    color: var(--color-primary);
+  }
+
+  .error {
+    font-weight: 500;
+    border-radius: 0.3rem;
+    background: var(--color-error);
+
+    & p {
+      text-align: left;
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+      line-height: 1.2rem;
+      color: var(--color-info-text);
+    }
+  }
 }
