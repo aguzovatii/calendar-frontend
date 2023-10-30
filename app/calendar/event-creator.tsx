@@ -11,8 +11,8 @@ interface EmptyFunction {
 export default function EventCreator({
   onEventCreated,
 }: {
-    onEventCreated: EmptyFunction;
-  }) {
+  onEventCreated: EmptyFunction;
+}) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const [name, setName] = useState("");
@@ -60,8 +60,8 @@ export default function EventCreator({
         date_time: date,
       }),
     }).then((response) => {
-        response.ok ? onEventCreated() : alert("The event could not be created");
-      });
+      response.ok ? onEventCreated() : alert("The event could not be created");
+    });
   }
 
   return (

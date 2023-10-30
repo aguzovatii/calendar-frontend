@@ -82,7 +82,10 @@ export default function HeatMap({
       date <= endDate;
       date.setDate(date.getDate() + 1)
     ) {
-      newValues.push({ date: new Date(date), count: map.get(format(date)) ?? 1 });
+      newValues.push({
+        date: new Date(date),
+        count: map.get(format(date)) ?? 1,
+      });
     }
     return newValues;
   }

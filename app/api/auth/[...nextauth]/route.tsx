@@ -10,7 +10,9 @@ const handler = NextAuth({
         username: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials: Record<"username" | "password", string> | undefined): Promise<User | null> {
+      async authorize(
+        credentials: Record<"username" | "password", string> | undefined,
+      ): Promise<User | null> {
         if (credentials === undefined) {
           return new Promise((resolve) => {
             resolve(null);
@@ -30,7 +32,7 @@ const handler = NextAuth({
           .then((response) => {
             return response.ok ? response.json() : { token: "" };
           })
-          .then(({jwt}: {jwt: {token : string}}) => {
+          .then(({ jwt }: { jwt: { token: string } }) => {
             if (jwt.token.length === 0) {
               return null;
             }
@@ -49,7 +51,9 @@ const handler = NextAuth({
         username: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials: Record<"username" | "password", string> | undefined): Promise<User | null> {
+      async authorize(
+        credentials: Record<"username" | "password", string> | undefined,
+      ): Promise<User | null> {
         if (credentials === undefined) {
           return new Promise((resolve) => {
             resolve(null);
@@ -94,7 +98,7 @@ const handler = NextAuth({
 
       return token;
     },
-    async session({ session, token }: { session: Session; token: JWT}) {
+    async session({ session, token }: { session: Session; token: JWT }) {
       session.accessToken = token.accessToken;
       return session;
     },

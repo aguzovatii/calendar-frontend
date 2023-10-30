@@ -17,7 +17,9 @@ export default function Signin() {
   const { status: sessionStatus } = useSession();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [status, setStatus] = useState<{errorType: SignInErrorTypes | null}>({ errorType: null });
+  const [status, setStatus] = useState<{ errorType: SignInErrorTypes | null }>({
+    errorType: null,
+  });
 
   if (sessionStatus === "loading") {
     return <div>loading</div>;
@@ -27,7 +29,8 @@ export default function Signin() {
     redirect("/");
   }
 
-  const error = status.errorType && (errors[status.errorType] ?? errors.default);
+  const error =
+    status.errorType && (errors[status.errorType] ?? errors.default);
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -134,7 +137,7 @@ export default function Signin() {
         valid = false;
         el.onchange = () => {
           (el.style.border = initstyle),
-          (username: string) => setUsername(username);
+            (username: string) => setUsername(username);
         };
       }
     }
@@ -146,7 +149,7 @@ export default function Signin() {
         valid = false;
         el.onchange = () => {
           (el.style.border = initstyle),
-          (password: string) => setPassword(password);
+            (password: string) => setPassword(password);
         };
       }
     }
@@ -162,22 +165,22 @@ export default function Signin() {
       password: password,
       callbackUrl: "/",
     }).then((response) => {
-        if (response === undefined) {
-          setStatus({ errorType: "default"});
-          return;
-        }
+      if (response === undefined) {
+        setStatus({ errorType: "default" });
+        return;
+      }
 
-        if (response.ok) {
-          redirect(response.url === null ? "/" : response.url);
-        }
+      if (response.ok) {
+        redirect(response.url === null ? "/" : response.url);
+      }
 
-        if (response.error == "CredentialsSignin") {
-          setStatus({ errorType: "CredentialsSignin"});
-          return;
-        } else {
-          setStatus({ errorType: "default"});
-          return;
-        }
-      });
+      if (response.error == "CredentialsSignin") {
+        setStatus({ errorType: "CredentialsSignin" });
+        return;
+      } else {
+        setStatus({ errorType: "default" });
+        return;
+      }
+    });
   }
 }
