@@ -17,8 +17,7 @@ export default function Signin() {
   const { status: sessionStatus } = useSession();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errorType, setErrorType] = useState(null);
-  const [status, setStatus] = useState({ signedIn: false, redirectUrl: "" });
+  const [status, setStatus] = useState<{errorType: SignInErrorTypes | null}>({ errorType: null });
 
   if (sessionStatus === "loading") {
     return <div>loading</div>;
@@ -28,11 +27,7 @@ export default function Signin() {
     redirect("/");
   }
 
-  if (status.signedIn) {
-    redirect(status.redirectUrl);
-  }
-
-  const error = errorType && (errors[errorType] ?? errors.default);
+  const error = status.errorType && (errors[status.errorType] ?? errors.default);
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -134,22 +129,26 @@ export default function Signin() {
 
     if (username.length === 0) {
       const el = document.getElementById("username");
-      el.style.border = errstyle;
-      valid = false;
-      el.onchange = () => {
-        (el.style.border = initstyle),
+      if (el !== null) {
+        el.style.border = errstyle;
+        valid = false;
+        el.onchange = () => {
+          (el.style.border = initstyle),
           (username: string) => setUsername(username);
-      };
+        };
+      }
     }
 
     if (password.length === 0) {
       const el = document.getElementById("password");
-      el.style.border = errstyle;
-      valid = false;
-      el.onchange = () => {
-        (el.style.border = initstyle),
+      if (el !== null) {
+        el.style.border = errstyle;
+        valid = false;
+        el.onchange = () => {
+          (el.style.border = initstyle),
           (password: string) => setPassword(password);
-      };
+        };
+      }
     }
     if (valid) {
       handleClick();
@@ -163,14 +162,22 @@ export default function Signin() {
       password: password,
       callbackUrl: "/",
     }).then((response) => {
-      if (response.error) {
-        setErrorType(response.error);
-        return;
-      }
+        if (response === undefined) {
+          setStatus({ errorType: "default"});
+          return;
+        }
 
-      if (response.ok) {
-        setStatus({ signedIn: true, redirectUrl: response.url });
-      }
-    });
+        if (response.ok) {
+          redirect(response.url === null ? "/" : response.url);
+        }
+
+        if (response.error == "CredentialsSignin") {
+          setStatus({ errorType: "CredentialsSignin"});
+          return;
+        } else {
+          setStatus({ errorType: "default"});
+          return;
+        }
+      });
   }
 }
