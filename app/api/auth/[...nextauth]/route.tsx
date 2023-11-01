@@ -32,7 +32,7 @@ const handler = NextAuth({
           .then((response) => {
             return response.ok ? response.json() : { token: "" };
           })
-          .then(({ jwt }: { jwt: { token: string } }) => {
+          .then((jwt: { token: string }) => {
             if (jwt.token.length === 0) {
               return null;
             }
@@ -73,7 +73,7 @@ const handler = NextAuth({
           .then((response) => {
             return response.ok ? response.json() : { token: "" };
           })
-          .then((jwt) => {
+          .then((jwt: { token: string }) => {
             if (jwt.token.length === 0) {
               return null;
             }

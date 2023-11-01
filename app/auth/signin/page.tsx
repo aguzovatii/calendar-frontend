@@ -17,9 +17,7 @@ export default function Signin() {
   const { status: sessionStatus } = useSession();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [status, setStatus] = useState<{ errorType: SignInErrorTypes | null }>({
-    errorType: null,
-  });
+  const [errorType, setErrorType] = useState<SignInErrorTypes | null>(null);
 
   if (sessionStatus === "loading") {
     return <div>loading</div>;
@@ -29,8 +27,7 @@ export default function Signin() {
     redirect("/");
   }
 
-  const error =
-    status.errorType && (errors[status.errorType] ?? errors.default);
+  const error = errorType && (errors[errorType] ?? errors.default);
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -163,22 +160,22 @@ export default function Signin() {
       redirect: false,
       username: username,
       password: password,
-      callbackUrl: "/",
     }).then((response) => {
       if (response === undefined) {
-        setStatus({ errorType: "default" });
+        setErrorType("default");
         return;
       }
 
       if (response.ok) {
-        redirect(response.url === null ? "/" : response.url);
+        setErrorType(null);
+        return;
       }
 
       if (response.error == "CredentialsSignin") {
-        setStatus({ errorType: "CredentialsSignin" });
+        setErrorType("CredentialsSignin");
         return;
       } else {
-        setStatus({ errorType: "default" });
+        setErrorType("default");
         return;
       }
     });
