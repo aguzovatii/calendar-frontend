@@ -2,7 +2,7 @@
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { getSession, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 interface EmptyFunction {
   (): void;
@@ -26,20 +26,24 @@ export default function EventCreator({
 
     if (name.length === 0) {
       const el = document.getElementById("name");
-      el.style.border = errstyle;
-      valid = false;
-      el.onchange = () => {
-        (el.style.border = initstyle), (name: string) => setName(name);
-      };
+      if (el !== null) {
+        el.style.border = errstyle;
+        valid = false;
+        el.onchange = () => {
+          (el.style.border = initstyle), (name: string) => setName(name);
+        };
+      }
     }
 
     if (date === null) {
       const el = document.getElementById("date");
-      el.style.border = errstyle;
-      valid = false;
-      el.onclick = () => {
-        (el.style.border = initstyle), (date: Date) => setDate(date);
-      };
+      if (el !== null) {
+        el.style.border = errstyle;
+        valid = false;
+        el.onclick = () => {
+          (el.style.border = initstyle), (date: Date) => setDate(date);
+        };
+      }
     }
     valid ? handleClick() : alert("Invalid Input");
   }
@@ -49,7 +53,7 @@ export default function EventCreator({
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + session.accessToken,
+        Authorization: "Bearer " + session!.accessToken,
       },
       body: JSON.stringify({
         name,

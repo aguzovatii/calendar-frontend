@@ -1,14 +1,6 @@
 import NextAuth, { Session, User } from "next-auth";
-import { JWT } from "next-auth/jwt/types";
+import { JWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
-
-interface CustomUser extends User {
-  jwt?: string;
-}
-
-interface CustomJWT extends JWT {
-  accessToken?: string;
-}
 
 const handler = NextAuth({
   providers: [
@@ -18,7 +10,14 @@ const handler = NextAuth({
         username: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, _req): Promise<CustomUser> {
+      async authorize(
+        credentials: Record<"username" | "password", string> | undefined,
+      ): Promise<User | null> {
+        if (credentials === undefined) {
+          return new Promise((resolve) => {
+            resolve(null);
+          });
+        }
         return await fetch(
           process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/login",
           {
@@ -33,7 +32,7 @@ const handler = NextAuth({
           .then((response) => {
             return response.ok ? response.json() : { token: "" };
           })
-          .then((jwt) => {
+          .then((jwt: { token: string }) => {
             if (jwt.token.length === 0) {
               return null;
             }
@@ -52,7 +51,14 @@ const handler = NextAuth({
         username: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, _req): Promise<CustomUser> {
+      async authorize(
+        credentials: Record<"username" | "password", string> | undefined,
+      ): Promise<User | null> {
+        if (credentials === undefined) {
+          return new Promise((resolve) => {
+            resolve(null);
+          });
+        }
         return await fetch(
           process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/user",
           {
@@ -67,7 +73,7 @@ const handler = NextAuth({
           .then((response) => {
             return response.ok ? response.json() : { token: "" };
           })
-          .then((jwt) => {
+          .then((jwt: { token: string }) => {
             if (jwt.token.length === 0) {
               return null;
             }
@@ -85,14 +91,14 @@ const handler = NextAuth({
     signIn: "/auth/signin",
   },
   callbacks: {
-    async jwt({ token, user }: { token: CustomJWT; user: CustomUser }) {
+    async jwt({ token, user }: { token: JWT; user: User }) {
       if (user) {
         token.accessToken = user.jwt;
       }
 
       return token;
     },
-    async session({ session, token }: { session: Session; token: CustomJWT }) {
+    async session({ session, token }: { session: Session; token: JWT }) {
       session.accessToken = token.accessToken;
       return session;
     },

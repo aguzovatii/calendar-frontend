@@ -67,13 +67,14 @@ export default function HeatMap({
       date <= endDate;
       date.setDate(date.getDate() + 1)
     ) {
-      map[format(date)] = 0;
+      map.set(format(date), 0);
     }
     for (let event of events) {
       let date = new Date(event.date_time);
       date.setHours(0, 0, 0, 0);
 
-      map[format(date)] = map[format(date)] + 1;
+      const key = format(date);
+      map.set(key, (map.get(key) ?? 1) + 1);
     }
 
     for (
@@ -81,7 +82,10 @@ export default function HeatMap({
       date <= endDate;
       date.setDate(date.getDate() + 1)
     ) {
-      newValues.push({ date: new Date(date), count: map[format(date)] });
+      newValues.push({
+        date: new Date(date),
+        count: map.get(format(date)) ?? 1,
+      });
     }
     return newValues;
   }
@@ -93,7 +97,7 @@ export default function HeatMap({
       if (!newEvents.has(key)) {
         newEvents.set(key, []);
       }
-      newEvents.get(key).push(event.name);
+      newEvents.get(key)?.push(event.name);
     }
     return newEvents;
   }

@@ -6,9 +6,9 @@ import { signIn } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 
-type SignInErrorTypes = "CredentialsSignin" | "default";
+type SignUpErrorTypes = "CredentialsSignin" | "default";
 
-const errors: Record<SignInErrorTypes, string> = {
+const errors: Record<SignUpErrorTypes, string> = {
   CredentialsSignin: "Sign up failed.",
   default: "Unable to sign up. Please try again later.",
 };
@@ -17,8 +17,7 @@ export default function Signin() {
   const { status: sessionStatus } = useSession();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errorType, setErrorType] = useState(null);
-  const [status, setStatus] = useState({ signedIn: false, redirectUrl: "" });
+  const [errorType, setErrorType] = useState<SignUpErrorTypes | null>(null);
 
   if (sessionStatus === "loading") {
     return <div>loading</div>;
@@ -26,10 +25,6 @@ export default function Signin() {
 
   if (sessionStatus === "authenticated") {
     redirect("/");
-  }
-
-  if (status.signedIn) {
-    redirect(status.redirectUrl);
   }
 
   const error = errorType && (errors[errorType] ?? errors.default);
@@ -134,22 +129,26 @@ export default function Signin() {
 
     if (username.length === 0) {
       const el = document.getElementById("username");
-      el.style.border = errstyle;
-      valid = false;
-      el.onchange = () => {
-        (el.style.border = initstyle),
-          (username: string) => setUsername(username);
-      };
+      if (el !== null) {
+        el.style.border = errstyle;
+        valid = false;
+        el.onchange = () => {
+          (el.style.border = initstyle),
+            (username: string) => setUsername(username);
+        };
+      }
     }
 
     if (password.length === 0) {
       const el = document.getElementById("password");
-      el.style.border = errstyle;
-      valid = false;
-      el.onchange = () => {
-        (el.style.border = initstyle),
-          (password: string) => setPassword(password);
-      };
+      if (el !== null) {
+        el.style.border = errstyle;
+        valid = false;
+        el.onchange = () => {
+          (el.style.border = initstyle),
+            (password: string) => setPassword(password);
+        };
+      }
     }
     if (valid) {
       handleClick();
@@ -161,15 +160,23 @@ export default function Signin() {
       redirect: false,
       username: username,
       password: password,
-      callbackUrl: "/",
     }).then((response) => {
-      if (response.error) {
-        setErrorType(response.error);
+      if (response === undefined) {
+        setErrorType("default");
         return;
       }
 
       if (response.ok) {
-        setStatus({ signedIn: true, redirectUrl: response.url });
+        setErrorType(null);
+        return;
+      }
+
+      if (response.error == "CredentialsSignin") {
+        setErrorType("CredentialsSignin");
+        return;
+      } else {
+        setErrorType("default");
+        return;
       }
     });
   }
