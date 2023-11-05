@@ -3,6 +3,14 @@ import HeatMap from "./calendar-heatmap";
 import EventCreator from "./event-creator";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 interface Events {
   events: Event[];
@@ -45,6 +53,20 @@ export default function CalendarPage() {
       <HeatMap startDate={startDate} endDate={endDate} events={data!.events} />
       <EventCreator onEventCreated={() => mutate()} />
       <button onClick={() => signOut()}>Sign out</button>
+      <div>
+      <Dialog>
+        <DialogTrigger>Open</DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Are you sure absolutely sure?</DialogTitle>
+            <DialogDescription>
+              This action cannot be undone. This will permanently delete your
+              account and remove your data from our servers.
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+      </div>
     </>
   );
 }
