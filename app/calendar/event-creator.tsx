@@ -13,6 +13,7 @@ export default function EventCreator({
 }: {
   onEventCreated: EmptyFunction;
 }) {
+  console.log("eventCreator");
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const [name, setName] = useState("");

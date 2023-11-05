@@ -1,20 +1,8 @@
 import useSWR, { Fetcher } from "swr";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import HeatMap from "./calendar-heatmap";
 import EventCreator from "./event-creator";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { useState } from "react";
 
 interface Events {
   events: Event[];
@@ -26,9 +14,7 @@ const fetcher: Fetcher<Events, [string, string]> = ([url, token]) =>
   );
 
 export default function CalendarPage() {
-  const [open, setOpen] = useState(false);
-  const [habitName, setHabitName] = useState("");
-
+  console.log("calendarPage")
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
@@ -60,53 +46,6 @@ export default function CalendarPage() {
       <HeatMap startDate={startDate} endDate={endDate} events={data!.events} />
       <EventCreator onEventCreated={() => mutate()} />
       <button onClick={() => signOut()}>Sign out</button>
-      <div>
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger>
-            <Button variant="outline">Add new habit</Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Add new habit</DialogTitle>
-            </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="name" className="text-right">
-                  Name
-                </Label>
-                <Input
-                  id="name"
-                  className="col-span-3"
-                  value={habitName}
-                  onChange={(e) => {
-                    setHabitName(e.currentTarget.value);
-                  }}
-                />
-              </div>
-            </div>
-            <DialogFooter>
-              <Button type="submit" onClick={addHabit}>
-                Done
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      </div>
     </>
   );
-
-  function addHabit() {
-    fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/habit", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + session!.accessToken,
-      },
-      body: JSON.stringify({
-        habitName,
-      }),
-    }).then((response) => {
-      response.ok ? setOpen(false) : alert("The event could not be created");
-    });
-  }
 }

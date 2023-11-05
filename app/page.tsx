@@ -2,12 +2,25 @@
 import CalendarPage from "./calendar/calendar-page";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
+import HabitPage from "./calendar/habit-creator";
 
 export default function Page() {
-  const { status } = useSession();
+  const { data: session, status } = useSession();
 
   if (status === "authenticated") {
-    return <CalendarPage />;
+    return(
+    <div>
+      <div>
+      <div>
+        
+      </div>
+      <div>
+        <HabitPage />
+      </div>
+      </div>
+      <CalendarPage />
+    </div>
+    );
   }
 
   if (status === "unauthenticated") {
