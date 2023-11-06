@@ -28,10 +28,10 @@ export default function HabitPage() {
 
   return(
     <div className="h-full flex flex-col">
-      <div className="basis-11/12">
+      <div className="h-[93%]">
         <HabitList habits={!isLoading ? data! : []}/>
       </div>
-      <div className="basis-1/12 flex flex-col-reverse">
+      <div className="h-[7%] flex flex-col-reverse">
           <HabitCreator onHabitCreated={() => mutate()} />
       </div>
     </div>

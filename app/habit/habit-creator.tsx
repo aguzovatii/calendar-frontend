@@ -25,7 +25,7 @@ export default function HabitCreator({
     return (
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger>
-            <Button variant="outline">Add new habit</Button>
+            <Button variant="outline" className="m-2">Add new habit</Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
