@@ -3,3 +3,11 @@ interface Event {
   id: string;
   name: string;
 }
+
+interface Habit {
+  name: string;
+}
+
+interface EmptyFunction {
+  (): void;
+}

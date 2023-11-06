@@ -14,7 +14,6 @@ const fetcher: Fetcher<Events, [string, string]> = ([url, token]) =>
   );
 
 export default function CalendarPage() {
-  console.log("calendarPage")
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 

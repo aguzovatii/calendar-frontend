@@ -4,10 +4,6 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useSession } from "next-auth/react";
 
-interface EmptyFunction {
-  (): void;
-}
-
 export default function EventCreator({
   onEventCreated,
 }: {

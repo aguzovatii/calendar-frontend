@@ -12,7 +12,11 @@ import {
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 
-export default function HabitPage() {
+export default function HabitCreator({
+  onHabitCreated,
+}: {
+  onHabitCreated: EmptyFunction;
+}) {
 
     const { data: session } = useSession();
     const [open, setOpen] = useState(false);
@@ -62,7 +66,12 @@ export default function HabitPage() {
             name: habitName,
           }),
         }).then((response) => {
-          response.ok ? setOpen(false) : alert("The event could not be created");
+          response.ok ? habitCreated() : alert("The event could not be created");
         });
       }
+
+    function habitCreated() {
+      setOpen(false); 
+      onHabitCreated();
+    }
 }

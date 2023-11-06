@@ -2,8 +2,7 @@
 import CalendarPage from "./calendar/calendar-page";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import HabitPage from "./calendar/habit-creator";
-import HabitList from "./calendar/habit-list";
+import HabitPage from "./habit/habit-page";
 
 export default function Page() {
   const { status } = useSession();
@@ -12,12 +11,7 @@ export default function Page() {
     return(
     <div>
       <div>
-      <div>
-        <HabitList />
-      </div>
-      <div>
         <HabitPage />
-      </div>
       </div>
       <CalendarPage />
     </div>
