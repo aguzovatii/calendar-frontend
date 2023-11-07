@@ -13,7 +13,7 @@ const fetcher: Fetcher<Events, [string, string]> = ([url, token]) =>
     res.json(),
   );
 
-export default function CalendarPage() {
+export default function CalendarPage({ habit }: { habit: string }) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
@@ -31,7 +31,7 @@ export default function CalendarPage() {
 
   const { data, error, isLoading, mutate } = useSWR(
     [
-      process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/calendar",
+      process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/calendar/" + habit,
       session.accessToken,
     ],
     fetcher,
@@ -42,8 +42,9 @@ export default function CalendarPage() {
 
   return (
     <>
+      <h1 className="text-xl">{habit}</h1>
       <HeatMap startDate={startDate} endDate={endDate} events={data!.events} />
-      <EventCreator onEventCreated={() => mutate()} />
+      <EventCreator onEventCreated={() => mutate()} habit={habit} />
       <button onClick={() => signOut()}>Sign out</button>
     </>
   );

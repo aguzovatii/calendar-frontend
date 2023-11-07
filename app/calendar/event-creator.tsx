@@ -4,18 +4,15 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useSession } from "next-auth/react";
 
-interface EmptyFunction {
-  (): void;
-}
-
 export default function EventCreator({
   onEventCreated,
+  habit,
 }: {
   onEventCreated: EmptyFunction;
+  habit: string;
 }) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-  const [name, setName] = useState("");
   const [date, setDate] = useState(today);
   const { data: session } = useSession();
 
@@ -23,17 +20,6 @@ export default function EventCreator({
     let valid = true;
     let errstyle = "2px solid red";
     let initstyle = "1px solid grey";
-
-    if (name.length === 0) {
-      const el = document.getElementById("name");
-      if (el !== null) {
-        el.style.border = errstyle;
-        valid = false;
-        el.onchange = () => {
-          (el.style.border = initstyle), (name: string) => setName(name);
-        };
-      }
-    }
 
     if (date === null) {
       const el = document.getElementById("date");
@@ -56,7 +42,7 @@ export default function EventCreator({
         Authorization: "Bearer " + session!.accessToken,
       },
       body: JSON.stringify({
-        name,
+        habit,
         date_time: date,
       }),
     }).then((response) => {
@@ -66,36 +52,20 @@ export default function EventCreator({
 
   return (
     <form autoComplete="off">
-      {" "}
       <div>
-        {" "}
-        <label>Name: </label>{" "}
-        <input
-          id="name"
-          type="text"
-          value={name}
-          onChange={(e) => {
-            setName(e.currentTarget.value);
-          }}
-        ></input>{" "}
-      </div>{" "}
-      <br />{" "}
-      <div>
-        {" "}
-        <label>Date: </label>{" "}
+        <label>Date: </label>
         <DatePicker
           showTimeInput
           id="date"
           selected={date}
           onChange={(date: Date) => setDate(date)}
           shouldCloseOnSelect={false}
-        />{" "}
-      </div>{" "}
-      <br />{" "}
+        />
+      </div>
+      <br />
       <button type="button" onClick={validateInput}>
-        {" "}
-        Create{" "}
-      </button>{" "}
+        Create
+      </button>
     </form>
   );
 }
