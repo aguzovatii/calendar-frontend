@@ -10,10 +10,6 @@ export default function HabitList({
   currentHabit: string;
   setCurrentHabit: Dispatch<SetStateAction<string>>;
 }) {
-  if (habits.length === 0) {
-    return <div className="h-full">Loading...</div>;
-  }
-
   return (
     <div className="h-full flex flex-col">
       <h1 className="text-xl flex h-7 font-bold leading-9 tracking-tight text-gray-900 ml-2 pl-0">
