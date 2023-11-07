@@ -6,10 +6,11 @@ import { useSession } from "next-auth/react";
 
 export default function EventCreator({
   onEventCreated,
+  habit,
 }: {
   onEventCreated: EmptyFunction;
+  habit: string;
 }) {
-  console.log("eventCreator");
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const [name, setName] = useState("");
@@ -53,7 +54,7 @@ export default function EventCreator({
         Authorization: "Bearer " + session!.accessToken,
       },
       body: JSON.stringify({
-        name,
+        habit,
         date_time: date,
       }),
     }).then((response) => {
@@ -63,20 +64,6 @@ export default function EventCreator({
 
   return (
     <form autoComplete="off">
-      {" "}
-      <div>
-        {" "}
-        <label>Name: </label>{" "}
-        <input
-          id="name"
-          type="text"
-          value={name}
-          onChange={(e) => {
-            setName(e.currentTarget.value);
-          }}
-        ></input>{" "}
-      </div>{" "}
-      <br />{" "}
       <div>
         {" "}
         <label>Date: </label>{" "}
