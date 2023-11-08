@@ -2,7 +2,6 @@ import useSWR, { Fetcher } from "swr";
 import HeatMap from "./calendar-heatmap";
 import EventCreator from "./event-creator";
 import { useSession } from "next-auth/react";
-import { signOut } from "next-auth/react";
 
 interface Events {
   events: Event[];
@@ -45,7 +44,6 @@ export default function CalendarPage({ habit }: { habit: string }) {
       <h1 className="text-xl">{habit}</h1>
       <HeatMap startDate={startDate} endDate={endDate} events={data!.events} />
       <EventCreator onEventCreated={() => mutate()} habit={habit} />
-      <button onClick={() => signOut()}>Sign out</button>
     </>
   );
 }
