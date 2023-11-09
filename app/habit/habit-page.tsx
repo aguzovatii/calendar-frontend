@@ -13,9 +13,9 @@ export default function HabitPage({
   currentHabit,
   setCurrentHabit,
 }: {
-    currentHabit: string;
-    setCurrentHabit: Dispatch<SetStateAction<string>>;
-  }) {
+  currentHabit: string;
+  setCurrentHabit: Dispatch<SetStateAction<string>>;
+}) {
   const { data: session, status } = useSession();
 
   if (status !== "authenticated") {
@@ -43,7 +43,7 @@ export default function HabitPage({
         </div>
       </div>
       <ScrollArea className="h-max flex-1">
-        { (!isLoading ? data! : []).map((habit) => (
+        {(!isLoading ? data! : []).map((habit) => (
           <div
             key={habit.name}
             className="border-l-2 border-slate-300 hover:border-slate-500 ml-3 pl-3 text-slate-600 cursor-pointer pt-2"

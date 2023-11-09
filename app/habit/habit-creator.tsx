@@ -24,8 +24,8 @@ export default function HabitCreator({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger >
-        <Plus color="green" strokeWidth={3} className="w-5 h-5 mt-2 ml-1"/>
+      <DialogTrigger>
+        <Plus color="green" strokeWidth={3} className="w-5 h-5 mt-2 ml-1" />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
