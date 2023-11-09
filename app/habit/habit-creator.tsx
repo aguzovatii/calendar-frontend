@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
+import { Plus } from "lucide-react";
 
 export default function HabitCreator({
   onHabitCreated,
@@ -23,8 +24,8 @@ export default function HabitCreator({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className="m-1.5 h-7 justify-center rounded-md bg-slate-600 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-slate-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-600">
-        Add new habit
+      <DialogTrigger>
+        <Plus color="green" strokeWidth={3} className="w-5 h-5 mt-2 ml-1" />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

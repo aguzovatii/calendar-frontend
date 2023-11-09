@@ -18,8 +18,7 @@ export default function Page() {
         <div className="h-full w-7 bg-slate-800 flex flex-col-reverse">
           <LogOut
             color="white"
-            size={16}
-            className="m-1.5 cursor-pointer"
+            className="h-4 w-4 m-1.5 cursor-pointer"
             onClick={() => signOut()}
           />
         </div>

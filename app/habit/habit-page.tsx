@@ -1,6 +1,6 @@
 import { useSession } from "next-auth/react";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import HabitCreator from "./habit-creator";
-import HabitList from "./habit-list";
 import useSWR, { Fetcher } from "swr";
 import { Dispatch, SetStateAction } from "react";
 
@@ -34,16 +34,27 @@ export default function HabitPage({
 
   return (
     <div className="h-full flex flex-col">
-      <div className="flex flex-1">
-        <HabitList
-          habits={!isLoading ? data! : []}
-          currentHabit={currentHabit}
-          setCurrentHabit={setCurrentHabit}
-        />
+      <div className="h-7 flex flex-row">
+        <h1 className="text-xl flex h-7 font-bold leading-9 tracking-tight text-gray-900 ml-2 pl-0">
+          Habits
+        </h1>
+        <div className="flex h-7">
+          <HabitCreator onHabitCreated={() => mutate()} />
+        </div>
       </div>
-      <div className="h-10 flex flex-col-reverse">
-        <HabitCreator onHabitCreated={() => mutate()} />
-      </div>
+      <ScrollArea className="h-max flex-1">
+        {(!isLoading ? data! : []).map((habit) => (
+          <div
+            key={habit.name}
+            className="border-l-2 border-slate-300 hover:border-slate-500 ml-3 pl-3 text-slate-600 cursor-pointer pt-2"
+            onClick={() => {
+              setCurrentHabit(habit.name);
+            }}
+          >
+            {habit.name}
+          </div>
+        ))}
+      </ScrollArea>
     </div>
   );
 }
