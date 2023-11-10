@@ -18,7 +18,6 @@ export default function HeatMap({
   events: Event[];
 }) {
   const values = getValues(events);
-  const eventsByDate = getEventsByDate(events);
 
   return (
     <>
@@ -34,7 +33,7 @@ export default function HeatMap({
                 "data-tooltip-place": "top",
                 "data-tooltip-content": `${format(value.date)} has count: ${
                   value.count
-                }. Events: ${eventsByDate.get(format(value.date))}`,
+                }`,
               }
             : {
                 "data-tooltip-id": "my-tooltip",
@@ -88,18 +87,6 @@ export default function HeatMap({
       });
     }
     return newValues;
-  }
-
-  function getEventsByDate(events: Event[]): Map<string, string[]> {
-    let newEvents = new Map<string, string[]>();
-    for (let event of events) {
-      let key = format(event.date_time);
-      if (!newEvents.has(key)) {
-        newEvents.set(key, []);
-      }
-      newEvents.get(key)?.push(event.name);
-    }
-    return newEvents;
   }
 
   function format(date: Date): string {
