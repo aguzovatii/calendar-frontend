@@ -5,7 +5,7 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import {z} from "zod";
+import { z } from "zod";
 
 type SignInErrorTypes = "CredentialsSignin" | "default";
 
@@ -127,7 +127,7 @@ export default function Signin() {
     const result = z.string().min(1).safeParse(username);
     const result2 = z.string().min(1).safeParse(password);
 
-    (result.success && result2.success) ? handleClick() : alert("eroareeee");
+    result.success && result2.success ? handleClick() : alert("eroareeee");
   }
 
   function handleClick() {

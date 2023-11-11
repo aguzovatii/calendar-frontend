@@ -3,7 +3,7 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useSession } from "next-auth/react";
-import {z} from "zod";
+import { z } from "zod";
 
 export default function EventCreator({
   onEventCreated,
