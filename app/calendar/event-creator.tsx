@@ -18,8 +18,8 @@ export default function EventCreator({
   const { data: session } = useSession();
 
   function validateInput() {
-    const result = z.date().safeParse(date);
-    result.success ? handleClick() : alert("eroareeee");
+    const validDate = z.date().safeParse(date);
+    validDate.success ? handleClick() : alert("eroareeee");
   }
 
   function handleClick() {

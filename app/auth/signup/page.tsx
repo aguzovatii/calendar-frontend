@@ -124,10 +124,10 @@ export default function Signin() {
   );
 
   function validateInput() {
-    const result = z.string().min(1).safeParse(username);
-    const result2 = z.string().min(1).safeParse(password);
+    const validUsername = z.string().min(1).safeParse(username);
+    const validPassword = z.string().min(1).safeParse(password);
 
-    result.success && result2.success ? handleClick() : alert("eroareeee");
+    validUsername.success && validPassword.success ? handleClick() : alert("eroareeee");
   }
 
   function handleClick() {
