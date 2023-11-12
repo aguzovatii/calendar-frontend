@@ -127,7 +127,9 @@ export default function Signin() {
     const validUsername = z.string().min(1).safeParse(username);
     const validPassword = z.string().min(1).safeParse(password);
 
-    validUsername.success && validPassword.success ? handleClick() : alert("eroareeee");
+    validUsername.success && validPassword.success
+      ? handleClick()
+      : alert("eroareeee");
   }
 
   function handleClick() {
