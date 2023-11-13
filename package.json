@@ -10,7 +10,7 @@
     "@types/node": "20.9.0",
     "@types/react": "18.2.37",
     "@types/react-calendar-heatmap": "^1.6.6",
-    "@types/react-datepicker": "^4.19.2",
+    "@types/react-datepicker": "^4.19.3",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.31",
     "prettier": "^3.0.3",
