@@ -5,6 +5,7 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
+import { z } from "zod";
 
 type SignUpErrorTypes = "CredentialsSignin" | "default";
 
@@ -123,36 +124,12 @@ export default function Signin() {
   );
 
   function validateInput() {
-    let valid = true;
-    let errstyle = "2px solid red";
-    let initstyle = "1px solid grey";
+    const validUsername = z.string().min(1).safeParse(username);
+    const validPassword = z.string().min(1).safeParse(password);
 
-    if (username.length === 0) {
-      const el = document.getElementById("username");
-      if (el !== null) {
-        el.style.border = errstyle;
-        valid = false;
-        el.onchange = () => {
-          (el.style.border = initstyle),
-            (username: string) => setUsername(username);
-        };
-      }
-    }
-
-    if (password.length === 0) {
-      const el = document.getElementById("password");
-      if (el !== null) {
-        el.style.border = errstyle;
-        valid = false;
-        el.onchange = () => {
-          (el.style.border = initstyle),
-            (password: string) => setPassword(password);
-        };
-      }
-    }
-    if (valid) {
-      handleClick();
-    }
+    validUsername.success && validPassword.success
+      ? handleClick()
+      : alert("eroareeee");
   }
 
   function handleClick() {

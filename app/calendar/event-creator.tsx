@@ -3,6 +3,7 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useSession } from "next-auth/react";
+import { z } from "zod";
 
 export default function EventCreator({
   onEventCreated,
@@ -17,21 +18,8 @@ export default function EventCreator({
   const { data: session } = useSession();
 
   function validateInput() {
-    let valid = true;
-    let errstyle = "2px solid red";
-    let initstyle = "1px solid grey";
-
-    if (date === null) {
-      const el = document.getElementById("date");
-      if (el !== null) {
-        el.style.border = errstyle;
-        valid = false;
-        el.onclick = () => {
-          (el.style.border = initstyle), (date: Date) => setDate(date);
-        };
-      }
-    }
-    valid ? handleClick() : alert("Invalid Input");
+    const validDate = z.date().safeParse(date);
+    validDate.success ? handleClick() : alert("eroareeee");
   }
 
   function handleClick() {
