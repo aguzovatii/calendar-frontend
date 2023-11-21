@@ -40,7 +40,9 @@ export default function HabitPage({
           Habits
         </h1>
         <div className="flex h-7">
-          <Badge variant="secondary" className="mt-2 ml-1">{!isLoading && data!.length}</Badge>
+          <Badge variant="secondary" className="mt-2 ml-1">
+            {!isLoading && data!.length}
+          </Badge>
         </div>
         <div className="flex h-7 flex-1 flex-row-reverse">
           <HabitCreator onHabitCreated={() => mutate()} />
