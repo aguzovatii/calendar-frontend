@@ -3,6 +3,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import HabitCreator from "./habit-creator";
 import useSWR, { Fetcher } from "swr";
 import { Dispatch, SetStateAction } from "react";
+import { Badge } from "@/components/ui/badge";
 
 const fetcher: Fetcher<Habit[], [string, string]> = ([url, token]) =>
   fetch(url, { headers: { Authorization: "Bearer " + token } }).then((res) =>
@@ -39,6 +40,9 @@ export default function HabitPage({
           Habits
         </h1>
         <div className="flex h-7">
+          <Badge variant="secondary" className="mt-2 ml-1">{!isLoading && data!.length}</Badge>
+        </div>
+        <div className="flex h-7 flex-1 flex-row-reverse">
           <HabitCreator onHabitCreated={() => mutate()} />
         </div>
       </div>
