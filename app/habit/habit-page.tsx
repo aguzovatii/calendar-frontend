@@ -46,7 +46,7 @@ export default function HabitPage({
         {(!isLoading ? data! : []).map((habit) => (
           <div
             key={habit.name}
-            className="border-l-2 border-slate-300 hover:border-slate-500 ml-3 pl-3 text-slate-600 cursor-pointer pt-2"
+            className={"border-l-2 hover:border-slate-500 ml-3 pl-3 text-slate-600 cursor-pointer pt-2 " + (currentHabit === habit.name ? "border-slate-500" : "border-slate-300")}
             onClick={() => {
               setCurrentHabit(habit.name);
             }}
