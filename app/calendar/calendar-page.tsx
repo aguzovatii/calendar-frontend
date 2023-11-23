@@ -52,7 +52,12 @@ export default function CalendarPage({
     <>
       <div className="flex flex-row">
         <h1 className="text-xl ml-1">{habit}</h1>
-        <Button onClick={deleteHabit} className="ml-1 mt-1 h-6 bg-red-800 hover:bg-red-700">Delete</Button>
+        <Button
+          onClick={deleteHabit}
+          className="ml-1 mt-1 h-6 bg-red-800 hover:bg-red-700"
+        >
+          Delete
+        </Button>
       </div>
       <HeatMap startDate={startDate} endDate={endDate} events={data!.events} />
       <EventCreator onEventCreated={() => mutate()} habit={habit} />
