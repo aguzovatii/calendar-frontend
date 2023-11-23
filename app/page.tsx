@@ -32,7 +32,10 @@ export default function Page() {
           <Separator orientation="vertical" className="h-full" />
           <div className="h-full basis-11/12">
             {currentHabit !== "" ? (
-              <CalendarPage habit={currentHabit} />
+              <CalendarPage
+                habit={currentHabit}
+                setCurrentHabit={setCurrentHabit}
+              />
             ) : (
               <h1>Select a habit to see the details</h1>
             )}
