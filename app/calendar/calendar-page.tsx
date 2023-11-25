@@ -1,7 +1,9 @@
-import useSWR, { Fetcher } from "swr";
+import useSWR, { useSWRConfig, Fetcher } from "swr";
 import HeatMap from "./calendar-heatmap";
 import EventCreator from "./event-creator";
 import { useSession } from "next-auth/react";
+import { Button } from "@/components/ui/button";
+import { Dispatch, SetStateAction } from "react";
 
 interface Events {
   events: Event[];
@@ -12,7 +14,14 @@ const fetcher: Fetcher<Events, [string, string]> = ([url, token]) =>
     res.json(),
   );
 
-export default function CalendarPage({ habit }: { habit: string }) {
+export default function CalendarPage({
+  habit,
+  setCurrentHabit,
+}: {
+  habit: string;
+  setCurrentHabit: Dispatch<SetStateAction<string>>;
+}) {
+  const { mutate: globalMutate } = useSWRConfig();
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
@@ -41,9 +50,40 @@ export default function CalendarPage({ habit }: { habit: string }) {
 
   return (
     <>
-      <h1 className="text-xl">{habit}</h1>
+      <div className="flex flex-row">
+        <h1 className="text-xl ml-1">{habit}</h1>
+        <Button
+          onClick={deleteHabit}
+          className="ml-1 mt-1 h-6 bg-red-800 hover:bg-red-700"
+        >
+          Delete
+        </Button>
+      </div>
       <HeatMap startDate={startDate} endDate={endDate} events={data!.events} />
       <EventCreator onEventCreated={() => mutate()} habit={habit} />
     </>
   );
+
+  function deleteHabit() {
+    fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/habit", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + session!.accessToken,
+      },
+      body: JSON.stringify({
+        name: habit,
+      }),
+    }).then((response) => {
+      response.ok ? clean() : alert("The habit could not be deleted");
+    });
+  }
+
+  function clean() {
+    setCurrentHabit("");
+    globalMutate([
+      process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/habit",
+      session!.accessToken,
+    ]);
+  }
 }
