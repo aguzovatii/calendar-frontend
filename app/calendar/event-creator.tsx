@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useSession } from "next-auth/react";
 import { z } from "zod";
+import { Button } from "@/components/ui/button";
 
 export default function EventCreator({
   onEventCreated,
@@ -17,12 +18,11 @@ export default function EventCreator({
   const [date, setDate] = useState(today);
   const { data: session } = useSession();
 
-  function validateInput() {
-    const validDate = z.date().safeParse(date);
-    validDate.success ? handleClick() : alert("eroareeee");
-  }
-
-  function handleClick() {
+  function handleCreate() {
+    if (!z.date().safeParse(date).success) {
+      alert("Date should be valid");
+      return;
+    }
     fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/event", {
       method: "POST",
       headers: {
@@ -38,8 +38,28 @@ export default function EventCreator({
     });
   }
 
+  function handleDelete() {
+    if (!z.date().safeParse(date).success) {
+      alert("Date should be valid");
+      return;
+    }
+    fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/event", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + session!.accessToken,
+      },
+      body: JSON.stringify({
+        habit,
+        date_time: date,
+      }),
+    }).then((response) => {
+      response.ok ? onEventCreated() : alert("The event could not be deleted");
+    });
+  }
+
   return (
-    <form autoComplete="off">
+    <>
       <div>
         <label>Date: </label>
         <DatePicker
@@ -50,10 +70,18 @@ export default function EventCreator({
           shouldCloseOnSelect={false}
         />
       </div>
-      <br />
-      <button type="button" onClick={validateInput}>
+      <Button
+        onClick={handleCreate}
+        className="bg-green-800 hover:bg-green-700 ml-1 mt-1"
+      >
         Create
-      </button>
-    </form>
+      </Button>
+      <Button
+        onClick={handleDelete}
+        className="bg-red-800 hover:bg-red-700 ml-1 mt-1"
+      >
+        Delete
+      </Button>
+    </>
   );
 }
