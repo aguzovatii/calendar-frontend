@@ -17,10 +17,26 @@ export default function EventCreator({
   today.setHours(0, 0, 0, 0);
   const [date, setDate] = useState(today);
   const { data: session } = useSession();
+  const [error, setError] = useState("");
+  
+  function validateInput() {
+    const isNonEmptyDate = (value: Date | null | undefined): value is Date => value !== null && value !== undefined;
+    const validDate = z.date().nullable().refine(isNonEmptyDate, {
+      message: "Date cannot be empty",
+    }).safeParse(date);
+
+    if (!validDate.success){
+      const errorMessage = validDate.error.errors[0]?.message; 
+      setError(errorMessage);
+      return 0;
+    } 
+
+    setError("");
+    return 1;
+  }
 
   function handleCreate() {
-    if (!z.date().safeParse(date).success) {
-      alert("Date should be valid");
+    if (!validateInput()) {
       return;
     }
     fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/event", {
@@ -39,8 +55,7 @@ export default function EventCreator({
   }
 
   function handleDelete() {
-    if (!z.date().safeParse(date).success) {
-      alert("Date should be valid");
+    if (!validateInput()) {
       return;
     }
     fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/event", {
@@ -69,6 +84,18 @@ export default function EventCreator({
           onChange={(date: Date) => setDate(date)}
           shouldCloseOnSelect={false}
         />
+        {error && (
+          <div className="flex h-8 items-end text-left space-x-1">
+            <>
+              <p
+                aria-live="polite"
+                className="text-sm text-red-500 basis-full"
+              >                  
+              {error}
+               </p>
+            </>
+          </div>
+        )}
       </div>
       <Button
         onClick={handleCreate}

@@ -19,6 +19,9 @@ export default function Signin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorType, setErrorType] = useState<SignInErrorTypes | null>(null);
+  const [errorUsername, setErrorU] = useState("");
+  const [errorPassword, setErrorP] = useState("");
+
 
   if (sessionStatus === "loading") {
     return <div>loading</div>;
@@ -59,6 +62,18 @@ export default function Signin() {
                 }}
               />
             </div>
+            {errorUsername && (
+            <div className="flex h-8 items-end text-center space-x-1">
+              <>
+                <p
+                  aria-live="polite"
+                  className="text-sm text-red-500 basis-full"
+                >
+                  {errorUsername}
+                </p>
+              </>
+            </div>
+          )}
           </div>
 
           <div>
@@ -84,6 +99,18 @@ export default function Signin() {
                 }}
               />
             </div>
+            {errorPassword && (
+            <div className="flex h-8 items-end text-center space-x-1">
+              <>
+                <p
+                  aria-live="polite"
+                  className="text-sm text-red-500 basis-full"
+                >
+                  {errorPassword}
+                </p>
+              </>
+            </div>
+          )}
           </div>
 
           <div>
@@ -123,13 +150,30 @@ export default function Signin() {
     </div>
   );
 
-  function validateInput() {
-    const validUsername = z.string().min(1).safeParse(username);
-    const validPassword = z.string().min(1).safeParse(password);
 
-    validUsername.success && validPassword.success
-      ? handleClick()
-      : alert("eroareeee");
+
+  function validateInput() {
+    const validUsername = z.string().min(1, {message : "Username cannot be empty"}).safeParse(username);
+    const validPassword = z.string().min(1, {message : "Password cannot be empty"}).safeParse(password);
+
+    let valid = 1;
+    if (!validUsername.success){
+      const errorMessage = validUsername.error.errors[0]?.message; 
+      setErrorU(errorMessage);
+      valid = 0;
+    } else
+    setErrorU("");
+
+    if (!validPassword.success){
+      const errorMessage = validPassword.error.errors[0]?.message; 
+      setErrorP(errorMessage);
+      valid = 0;
+    } else
+    setErrorP("");
+
+    if (!valid)
+      return;
+    handleClick();
   }
 
   function handleClick() {
