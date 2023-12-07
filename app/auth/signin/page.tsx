@@ -159,17 +159,17 @@ export default function Signin() {
       .min(1, { message: "Password cannot be empty" })
       .safeParse(password);
 
-    let valid = 1;
+    let valid = true;
     if (!validUsername.success) {
       const errorMessage = validUsername.error.errors[0]?.message;
       setErrorU(errorMessage);
-      valid = 0;
+      valid = false;
     } else setErrorU("");
 
     if (!validPassword.success) {
       const errorMessage = validPassword.error.errors[0]?.message;
       setErrorP(errorMessage);
-      valid = 0;
+      valid = false;
     } else setErrorP("");
 
     if (!valid) return;

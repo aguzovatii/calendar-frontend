@@ -20,24 +20,16 @@ export default function EventCreator({
   const [error, setError] = useState("");
 
   function validateInput() {
-    const isNonEmptyDate = (value: Date | null | undefined): value is Date =>
-      value !== null && value !== undefined;
-    const validDate = z
-      .date()
-      .nullable()
-      .refine(isNonEmptyDate, {
-        message: "Date cannot be empty",
-      })
-      .safeParse(date);
+    const   validDate=z.date({invalid_type_error: "That's not a date!",}).safeParse(date);
 
     if (!validDate.success) {
       const errorMessage = validDate.error.errors[0]?.message;
       setError(errorMessage);
-      return 0;
+      return false;
     }
 
     setError("");
-    return 1;
+    return true;
   }
 
   function handleCreate() {
