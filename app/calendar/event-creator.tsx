@@ -20,7 +20,9 @@ export default function EventCreator({
   const [error, setError] = useState("");
 
   function validateInput() {
-    const   validDate=z.date({invalid_type_error: "That's not a date!",}).safeParse(date);
+    const validDate = z
+      .date({ invalid_type_error: "That's not a date!" })
+      .safeParse(date);
 
     if (!validDate.success) {
       const errorMessage = validDate.error.errors[0]?.message;
