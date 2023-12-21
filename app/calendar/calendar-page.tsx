@@ -59,7 +59,7 @@ export default function CalendarPage({
         >
           Delete
         </Button>
-        <EditHabit habit={habit} setCurrentHabit={setCurrentHabit}/>
+        <EditHabit habit={habit} setCurrentHabit={setCurrentHabit} />
       </div>
       <HeatMap startDate={startDate} endDate={endDate} events={data!.events} />
       <EventCreator onEventCreated={() => mutate()} habit={habit} />
