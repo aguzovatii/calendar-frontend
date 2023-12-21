@@ -34,7 +34,7 @@ export default function EditHabit({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
-        <Button className="ml-1 mt-1 h-6 bg-red-800 hover:bg-red-700">
+        <Button className="ml-1 mt-1 h-6 bg-green-800 hover:bg-green-700">
           Edit
         </Button>
       </DialogTrigger>
