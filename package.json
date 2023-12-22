@@ -26,7 +26,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "js-base64": "^3.7.5",
-    "lucide-react": "^0.299.0",
+    "lucide-react": "^0.300.0",
     "next": "^14.0.4",
     "next-auth": "^4.24.5",
     "react": "^18.2.0",
