@@ -4,7 +4,7 @@ import EventCreator from "./event-creator";
 import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Dispatch, SetStateAction } from "react";
-import EditHabit from "./edit-habit";
+import HabitEditor from "./edit-habit";
 
 interface Events {
   events: Event[];
@@ -59,7 +59,7 @@ export default function CalendarPage({
         >
           Delete
         </Button>
-        <EditHabit habit={habit} setCurrentHabit={setCurrentHabit} />
+        <HabitEditor habit={habit} setCurrentHabit={setCurrentHabit} />
       </div>
       <HeatMap startDate={startDate} endDate={endDate} events={data!.events} />
       <EventCreator onEventCreated={() => mutate()} habit={habit} />

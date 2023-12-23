@@ -14,14 +14,14 @@ import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 import { Dispatch, SetStateAction } from "react";
 
-export default function EditHabit({
+export default function HabitEditor({
   habit,
   setCurrentHabit,
 }: {
   habit: string;
   setCurrentHabit: Dispatch<SetStateAction<string>>;
 }) {
-  const [newHabitName, editHabitName] = useState(habit);
+  const [newHabitName, setNewHabitName] = useState(habit);
   const [open, setOpen] = useState(false);
   const { mutate: globalMutate } = useSWRConfig();
 
@@ -52,7 +52,7 @@ export default function EditHabit({
               className="col-span-3"
               value={newHabitName}
               onChange={(e) => {
-                editHabitName(e.currentTarget.value);
+                setNewHabitName(e.currentTarget.value);
               }}
             />
           </div>
@@ -71,15 +71,14 @@ export default function EditHabit({
   );
 
   function editHabit() {
-    fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/habit", {
+    fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/habit/" + habit, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + session!.accessToken,
       },
       body: JSON.stringify({
-        name: habit,
-        newName: newHabitName,
+        name: newHabitName,
       }),
     }).then((response) => {
       response.ok ? edit() : alert("The habit could not be modificated");
@@ -87,8 +86,7 @@ export default function EditHabit({
   }
 
   function edit() {
-    habit = newHabitName;
-    setCurrentHabit("");
+    setCurrentHabit(newHabitName);
     globalMutate([
       process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/habit",
       session!.accessToken,
