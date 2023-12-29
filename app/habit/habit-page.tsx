@@ -64,7 +64,15 @@ export default function HabitPage({
             }}
           >
             {habit.name}
-            <Dot color={"" + (habit.state === "Pending" ? "orange" : "") + (habit.state === "Done" ? "green" : "") + (habit.state === "None" ? "gray" : "")} className="w-6 h-6"/>
+            <Dot
+              color={
+                "" +
+                (habit.state === "Pending" ? "orange" : "") +
+                (habit.state === "Done" ? "green" : "") +
+                (habit.state === "None" ? "gray" : "")
+              }
+              className="w-6 h-6"
+            />
           </div>
         ))}
       </ScrollArea>

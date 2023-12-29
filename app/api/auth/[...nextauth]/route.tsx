@@ -50,10 +50,12 @@ const handler = NextAuth({
       credentials: {
         username: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" },
-        timeZone: { label: "TimeZone", type: "text"},
+        timeZone: { label: "TimeZone", type: "text" },
       },
       async authorize(
-        credentials: Record<"username" | "password" | "timeZone", string> | undefined,
+        credentials:
+          | Record<"username" | "password" | "timeZone", string>
+          | undefined,
       ): Promise<User | null> {
         if (credentials === undefined) {
           return new Promise((resolve) => {

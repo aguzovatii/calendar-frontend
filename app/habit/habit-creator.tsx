@@ -68,7 +68,6 @@ export default function HabitCreator({
       },
       body: JSON.stringify({
         name: habitName,
-        state: "Pending",
       }),
     }).then((response) => {
       response.ok ? habitCreated() : alert("The habit could not be created");
