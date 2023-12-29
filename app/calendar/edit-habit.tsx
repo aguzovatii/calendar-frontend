@@ -79,6 +79,7 @@ export default function HabitEditor({
       },
       body: JSON.stringify({
         name: newHabitName,
+        state: "Pending",
       }),
     }).then((response) => {
       response.ok ? edit() : alert("The habit could not be modificated");
