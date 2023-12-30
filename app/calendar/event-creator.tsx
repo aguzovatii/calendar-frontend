@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useSession } from "next-auth/react";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
+import { useSWRConfig } from "swr";
 
 export default function EventCreator({
   onEventCreated,
@@ -18,6 +19,7 @@ export default function EventCreator({
   const [date, setDate] = useState(today);
   const { data: session } = useSession();
   const [error, setError] = useState("");
+  const { mutate: globalMutate } = useSWRConfig();
 
   function validateInput() {
     const validDate = z
@@ -49,7 +51,9 @@ export default function EventCreator({
         date_time: date,
       }),
     }).then((response) => {
-      response.ok ? onEventCreated() : alert("The event could not be created");
+      response.ok
+        ? handleSuccessfulOperation()
+        : alert("The event could not be created");
     });
   }
 
@@ -68,8 +72,18 @@ export default function EventCreator({
         date_time: date,
       }),
     }).then((response) => {
-      response.ok ? onEventCreated() : alert("The event could not be deleted");
+      response.ok
+        ? handleSuccessfulOperation()
+        : alert("The event could not be deleted");
     });
+  }
+
+  function handleSuccessfulOperation() {
+    onEventCreated();
+    globalMutate([
+      process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/habit",
+      session!.accessToken,
+    ]);
   }
 
   return (
