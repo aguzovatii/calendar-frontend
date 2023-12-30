@@ -4,6 +4,7 @@ import HabitCreator from "./habit-creator";
 import useSWR, { Fetcher } from "swr";
 import { Dispatch, SetStateAction } from "react";
 import { Badge } from "@/components/ui/badge";
+import { Dot } from "lucide-react";
 
 const fetcher: Fetcher<Habit[], [string, string]> = ([url, token]) =>
   fetch(url, { headers: { Authorization: "Bearer " + token } }).then((res) =>
@@ -53,7 +54,7 @@ export default function HabitPage({
           <div
             key={habit.name}
             className={
-              "border-l-2 hover:border-slate-500 ml-3 pl-3 text-slate-600 cursor-pointer pt-2 " +
+              "border-l-2 hover:border-slate-500 ml-3 pl-3 text-slate-600 cursor-pointer pt-2 flex flex-row" +
               (currentHabit === habit.name
                 ? "border-slate-500"
                 : "border-slate-300")
@@ -63,6 +64,15 @@ export default function HabitPage({
             }}
           >
             {habit.name}
+            <Dot
+              color={
+                "" +
+                (habit.state === "Pending" ? "orange" : "") +
+                (habit.state === "Done" ? "green" : "") +
+                (habit.state === "None" ? "gray" : "")
+              }
+              className="w-6 h-6"
+            />
           </div>
         ))}
       </ScrollArea>

@@ -5,6 +5,7 @@ interface Event {
 
 interface Habit {
   name: string;
+  state: string;
 }
 
 interface EmptyFunction {
