@@ -34,7 +34,7 @@ export default function HabitEditor({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger className="ml-1 mt-1 h-6 bg-green-800 hover:bg-green-700 rounded-md text-white w-20 text-sm font-medium text-primary-foreground h-10">
-          Edit
+        Edit
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
