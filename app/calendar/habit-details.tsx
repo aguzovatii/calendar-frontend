@@ -64,15 +64,12 @@ export default function HabitDetails({
   );
 
   function deleteHabit() {
-    fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/habit", {
+    fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/habit/" + habit, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + session!.accessToken,
       },
-      body: JSON.stringify({
-        name: habit,
-      }),
     }).then((response) => {
       response.ok ? clean() : alert("The habit could not be deleted");
     });
