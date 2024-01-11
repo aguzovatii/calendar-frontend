@@ -1,65 +1,35 @@
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { useState } from "react";
-import { useSession } from "next-auth/react";
 import { Plus } from "lucide-react";
+import { useSession } from "next-auth/react";
+import HabitDialog from "./habit-dialog";
+import { DialogTrigger } from "@/components/ui/dialog";
+import { useState } from "react";
 
 export default function HabitCreator({
-  onHabitCreated,
+  onHabitCreatedHandler,
 }: {
-  onHabitCreated: EmptyFunction;
+  onHabitCreatedHandler: () => void;
 }) {
-  const { data: session } = useSession();
-  const [open, setOpen] = useState(false);
-  const [habitName, setHabitName] = useState("");
+  const [openHabitDialog, setOpenHabitDialog] = useState(false);
+  const { data: session, status } = useSession();
+
+  if (status !== "authenticated") {
+    return <div>{status}</div>;
+  }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <HabitDialog
+      onSubmitEventHandler={createHabit}
+      open={openHabitDialog}
+      onOpenChange={setOpenHabitDialog}
+      dialogTitle="Add new habit"
+    >
       <DialogTrigger>
         <Plus color="green" strokeWidth={3} className="w-6 h-6 mt-2 mr-1" />
       </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Add new habit</DialogTitle>
-        </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
-            <Input
-              id="name"
-              className="col-span-3"
-              value={habitName}
-              onChange={(e) => {
-                setHabitName(e.currentTarget.value);
-              }}
-            />
-          </div>
-        </div>
-        <DialogFooter>
-          <Button
-            type="submit"
-            onClick={addHabit}
-            className="m-1.5 h-7 justify-center rounded-md bg-slate-600 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-slate-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-600"
-          >
-            Done
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+    </HabitDialog>
   );
 
-  function addHabit() {
+  function createHabit(name: string, description: string) {
     fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/habit", {
       method: "POST",
       headers: {
@@ -67,7 +37,8 @@ export default function HabitCreator({
         Authorization: "Bearer " + session!.accessToken,
       },
       body: JSON.stringify({
-        name: habitName,
+        name: name,
+        description: description,
       }),
     }).then((response) => {
       response.ok ? habitCreated() : alert("The habit could not be created");
@@ -75,8 +46,7 @@ export default function HabitCreator({
   }
 
   function habitCreated() {
-    setOpen(false);
-    setHabitName("");
-    onHabitCreated();
+    setOpenHabitDialog(false);
+    onHabitCreatedHandler();
   }
 }

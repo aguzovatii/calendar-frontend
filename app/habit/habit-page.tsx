@@ -1,10 +1,10 @@
 import { useSession } from "next-auth/react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import HabitCreator from "./habit-creator";
 import useSWR, { Fetcher } from "swr";
 import { Dispatch, SetStateAction } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Dot } from "lucide-react";
+import HabitCreator from "./habit-creator";
 
 const fetcher: Fetcher<Habit[], [string, string]> = ([url, token]) =>
   fetch(url, { headers: { Authorization: "Bearer " + token } }).then((res) =>
@@ -33,6 +33,7 @@ export default function HabitPage({
   );
 
   if (error) return <div>failed to load</div>;
+  if (isLoading) return <div>loading</div>;
 
   return (
     <div className="h-full flex flex-col">
@@ -46,7 +47,7 @@ export default function HabitPage({
           </Badge>
         </div>
         <div className="flex h-7 flex-1 flex-row-reverse">
-          <HabitCreator onHabitCreated={() => mutate()} />
+          <HabitCreator onHabitCreatedHandler={mutate} />
         </div>
       </div>
       <ScrollArea className="h-max flex-1">
