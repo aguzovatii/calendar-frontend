@@ -35,7 +35,7 @@
     "react-calendar-heatmap": "^1.9.0",
     "react-datepicker": "^4.25.0",
     "react-dom": "^18.2.0",
-    "react-tooltip": "^5.25.1",
+    "react-tooltip": "^5.25.2",
     "swr": "^2.2.4",
     "tailwind-merge": "^2.2.0",
     "tailwindcss-animate": "^1.0.7",
