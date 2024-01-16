@@ -8,7 +8,7 @@
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.7",
     "@types/node": "20.11.3",
-    "@types/react": "18.2.47",
+    "@types/react": "18.2.48",
     "@types/react-calendar-heatmap": "^1.6.7",
     "@types/react-datepicker": "^4.19.5",
     "autoprefixer": "^10.4.16",
