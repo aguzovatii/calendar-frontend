@@ -51,13 +51,31 @@ export default function WelcomePage() {
 
       <div className="grid grid-rows-1 grid-cols-8 basis-1/2 h-full relative">
         <div className="col-start-4 col-span-4 row-start-1 top-[5%] absolute">
-          <Image src={img1} alt="" priority={false} width="2048" height="2048"/>
+          <Image
+            src={img1}
+            alt=""
+            priority={false}
+            width="2048"
+            height="2048"
+          />
         </div>
         <div className="col-start-1 col-span-4 row-start-1 top-[25%] absolute">
-          <Image src={img2} alt="" priority={false} width="2048" height="2048"/>
+          <Image
+            src={img2}
+            alt=""
+            priority={false}
+            width="2048"
+            height="2048"
+          />
         </div>
         <div className="2xl:col-start-4 col-span-4 row-start-1 top-[45%] absolute">
-          <Image src={img3} alt="" priority={false} width="2048" height="2048"/>
+          <Image
+            src={img3}
+            alt=""
+            priority={false}
+            width="2048"
+            height="2048"
+          />
         </div>
       </div>
     </div>
