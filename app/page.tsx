@@ -46,7 +46,7 @@ export default function Page() {
   }
 
   if (status === "unauthenticated") {
-    redirect("/auth/signin");
+    redirect("/welcome");
   }
 
   return <div>{status}</div>;
