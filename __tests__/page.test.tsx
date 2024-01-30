@@ -9,7 +9,7 @@ import useSwr from "swr";
 jest.mock("next-auth/react");
 jest.mock("swr");
 
-it("App Router: Works with Client Components (React State)", () => {
+it("HabitPage has the 'Habits' title", () => {
 
   (useSession as jest.Mock).mockReturnValue({
     data: {
