@@ -8,7 +8,7 @@ import { signOut, useSession } from "next-auth/react";
 
 export default function Page() {
   const [currentHabit, setCurrentHabit] = useState("");
-  const { status } = useSession({required: true,});
+  const { status } = useSession({ required: true });
 
   if (status === "loading") {
     return "Loading...";
@@ -38,8 +38,8 @@ export default function Page() {
               setCurrentHabit={setCurrentHabit}
             />
           ) : (
-              <h1>Select a habit to see the details</h1>
-            )}
+            <h1>Select a habit to see the details</h1>
+          )}
         </div>
       </div>
     </div>
