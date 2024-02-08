@@ -6,12 +6,10 @@ import { DialogTrigger } from "@/components/ui/dialog";
 
 export default function HabitEditor({
   habit,
-  habitDescription,
   onHabitChangeHandler,
 }: {
-  habit: string;
-  habitDescription: string;
-  onHabitChangeHandler(habit: string): void;
+  habit: HabitDetails;
+  onHabitChangeHandler(): void;
 }) {
   const [open, setOpen] = useState(false);
   const { mutate: globalMutate } = useSWRConfig();
@@ -23,8 +21,8 @@ export default function HabitEditor({
       open={open}
       onOpenChange={setOpen}
       onSubmitEventHandler={editHabit}
-      defaultHabitName={habit}
-      defaultHabitDescription={habitDescription}
+      defaultHabitName={habit.name}
+      defaultHabitDescription={habit.description}
       dialogTitle="Edit habit"
     >
       <DialogTrigger className="ml-1 mt-1 h-6 bg-green-800 hover:bg-green-700 rounded-md text-white w-20 text-sm font-medium text-primary-foreground h-10">
@@ -34,7 +32,7 @@ export default function HabitEditor({
   );
 
   function editHabit(name: string, description: string) {
-    fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/habit/" + habit, {
+    fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/habit/" + habit.id, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -46,13 +44,13 @@ export default function HabitEditor({
       }),
     }).then((response) => {
       response.ok
-        ? onSuccessHandler(name)
+        ? onSuccessHandler()
         : alert("The habit could not be modified");
     });
   }
 
-  function onSuccessHandler(newHabitName: string) {
-    onHabitChangeHandler(newHabitName);
+  function onSuccessHandler() {
+    onHabitChangeHandler();
     setOpen(false);
     globalMutate([
       process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/habit",

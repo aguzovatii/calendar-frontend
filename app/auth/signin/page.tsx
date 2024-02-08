@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { z } from "zod";
+import { useRouter } from "next/navigation";
 
 type SignInErrorTypes = "CredentialsSignin" | "default";
 
@@ -27,7 +28,11 @@ export default function Signin() {
   }
 
   if (sessionStatus === "authenticated") {
-    redirect("/");
+    return (
+      <Suspense>
+        <Redirect />
+      </Suspense>
+    );
   }
 
   const error = errorType && (errors[errorType] ?? errors.default);
@@ -201,4 +206,17 @@ export default function Signin() {
       }
     });
   }
+}
+
+function Redirect() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push(
+      searchParams.has("callbackUrl") ? searchParams.get("callbackUrl")! : "/",
+    );
+  }, [searchParams, router]);
+
+  return <></>;
 }

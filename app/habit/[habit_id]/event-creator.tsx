@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -40,17 +41,22 @@ export default function EventCreator({
     if (!validateInput()) {
       return;
     }
-    fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/event", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + session!.accessToken,
+    fetch(
+      process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL +
+        "/habit/" +
+        habit +
+        "/event",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + session!.accessToken,
+        },
+        body: JSON.stringify({
+          date_time: date,
+        }),
       },
-      body: JSON.stringify({
-        habit,
-        date_time: date,
-      }),
-    }).then((response) => {
+    ).then((response) => {
       response.ok
         ? handleSuccessfulOperation()
         : alert("The event could not be created");
@@ -61,17 +67,22 @@ export default function EventCreator({
     if (!validateInput()) {
       return;
     }
-    fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/event", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + session!.accessToken,
+    fetch(
+      process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL +
+        "/habit/" +
+        habit +
+        "/event",
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + session!.accessToken,
+        },
+        body: JSON.stringify({
+          date_time: date,
+        }),
       },
-      body: JSON.stringify({
-        habit,
-        date_time: date,
-      }),
-    }).then((response) => {
+    ).then((response) => {
       response.ok
         ? handleSuccessfulOperation()
         : alert("The event could not be deleted");
