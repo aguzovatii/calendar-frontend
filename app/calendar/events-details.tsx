@@ -23,16 +23,12 @@ export default function EventsDetails({ habit }: { habit: string }) {
   let endDate = new Date(today);
   endDate.setMonth(endDate.getMonth() + 6);
 
-  const { data: session, status } = useSession();
-
-  if (status !== "authenticated") {
-    return <div>{status}</div>;
-  }
+  const { data: session } = useSession();
 
   const { data, error, isLoading, mutate } = useSWR(
     [
       process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/calendar/" + habit,
-      session.accessToken,
+      session!.accessToken,
     ],
     fetcher,
   );

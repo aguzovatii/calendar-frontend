@@ -18,16 +18,12 @@ export default function HabitPage({
   currentHabit: string;
   setCurrentHabit: Dispatch<SetStateAction<string>>;
 }) {
-  const { data: session, status } = useSession();
-
-  if (status !== "authenticated") {
-    return <div>{status}</div>;
-  }
+  const { data: session } = useSession();
 
   const { data, error, isLoading, mutate } = useSWR(
     [
       process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/habit",
-      session.accessToken,
+      session!.accessToken,
     ],
     fetcher,
   );

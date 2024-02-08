@@ -10,11 +10,7 @@ export default function HabitCreator({
   onHabitCreatedHandler: () => void;
 }) {
   const [openHabitDialog, setOpenHabitDialog] = useState(false);
-  const { data: session, status } = useSession();
-
-  if (status !== "authenticated") {
-    return <div>{status}</div>;
-  }
+  const { data: session } = useSession();
 
   return (
     <HabitDialog

@@ -16,11 +16,7 @@ export default function HabitEditor({
   const [open, setOpen] = useState(false);
   const { mutate: globalMutate } = useSWRConfig();
 
-  const { data: session, status } = useSession();
-
-  if (status !== "authenticated") {
-    return <div>{status}</div>;
-  }
+  const { data: session } = useSession();
 
   return (
     <HabitDialog
