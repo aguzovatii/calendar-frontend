@@ -25,5 +25,5 @@ it("HabitPage has the 'Habits' title", () => {
   });
 
   render(<HabitPage currentHabit="test" setCurrentHabit={() => {}} />);
-  expect(screen.getByRole("heading").textContent).toBe("Habits");
+  expect(screen.getByRole("heading").textContent).toBe("Habitss");
 });
