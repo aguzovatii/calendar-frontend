@@ -20,7 +20,7 @@ export default function HabitPage({
 }) {
   const { data: session, status } = useSession();
 
-  if (status !== "authenticated") {
+  if (statusss !== "authenticated") {
     return <div>{status}</div>;
   }
 
