@@ -8,7 +8,7 @@ import Link from "next/link";
 export default function WelcomePage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: { [key: string]: string | undefined };
 }) {
   return (
     <div className="grid grid-cols-2 gap-2 h-full">
@@ -38,7 +38,7 @@ export default function WelcomePage({
               className="bg-gradient-to-r from-[#1D93C6] to-[#77AD86]"
               href={
                 searchParams.callbackUrl
-                  ? "/auth/signup?callbackUrl=" + searchParams.callbackUrl
+                  ? "/auth/signup?callbackUrl=" + encodeURIComponent(searchParams.callbackUrl)
                   : "/auth/signup"
               }
             >
@@ -48,7 +48,7 @@ export default function WelcomePage({
               className="bg-gradient-to-r from-[#1D93C6] to-[#77AD86]"
               href={
                 searchParams.callbackUrl
-                  ? "/auth/signin?callbackUrl=" + searchParams.callbackUrl
+                  ? "/auth/signin?callbackUrl=" + encodeURIComponent(searchParams.callbackUrl)
                   : "/auth/signin"
               }
             >
