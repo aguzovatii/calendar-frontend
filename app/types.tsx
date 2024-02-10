@@ -1,11 +1,17 @@
 interface Event {
   date_time: Date;
-  id: string;
 }
 
 interface Habit {
+  id: string;
   name: string;
   state: string;
+}
+
+interface HabitDetails {
+  id: string;
+  name: string;
+  description: string;
 }
 
 interface EmptyFunction {

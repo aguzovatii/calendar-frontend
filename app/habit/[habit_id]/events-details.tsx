@@ -1,10 +1,9 @@
 import useSWR, { Fetcher } from "swr";
-import HeatMap from "./calendar-heatmap";
 import EventCreator from "./event-creator";
 import { useSession } from "next-auth/react";
+import HeatMap from "@/app/heatmap/heatmap";
 
 interface Events {
-  description: string;
   events: Event[];
 }
 
@@ -27,7 +26,10 @@ export default function EventsDetails({ habit }: { habit: string }) {
 
   const { data, error, isLoading, mutate } = useSWR(
     [
-      process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/calendar/" + habit,
+      process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL +
+        "/habit/" +
+        habit +
+        "/event",
       session!.accessToken,
     ],
     fetcher,

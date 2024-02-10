@@ -1,24 +1,20 @@
 import { useSession } from "next-auth/react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import useSWR, { Fetcher } from "swr";
-import { Dispatch, SetStateAction } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Dot } from "lucide-react";
-import HabitCreator from "./habit-creator";
+import HabitCreator from "./creator";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const fetcher: Fetcher<Habit[], [string, string]> = ([url, token]) =>
   fetch(url, { headers: { Authorization: "Bearer " + token } }).then((res) =>
     res.json(),
   );
 
-export default function HabitPage({
-  currentHabit,
-  setCurrentHabit,
-}: {
-  currentHabit: string;
-  setCurrentHabit: Dispatch<SetStateAction<string>>;
-}) {
+export default function HabitSidebar() {
   const { data: session } = useSession();
+  const pathname = usePathname();
 
   const { data, error, isLoading, mutate } = useSWR(
     [
@@ -39,7 +35,7 @@ export default function HabitPage({
         </h1>
         <div className="flex h-7">
           <Badge variant="secondary" className="mt-2 ml-1">
-            {!isLoading && data!.length}
+            {data!.length}
           </Badge>
         </div>
         <div className="flex h-7 flex-1 flex-row-reverse">
@@ -47,18 +43,16 @@ export default function HabitPage({
         </div>
       </div>
       <ScrollArea className="h-max flex-1">
-        {(!isLoading ? data! : []).map((habit) => (
-          <div
-            key={habit.name}
+        {data!.map((habit) => (
+          <Link
+            key={habit.id}
             className={
-              "border-l-2 hover:border-slate-500 ml-3 pl-3 text-slate-600 cursor-pointer pt-2 flex flex-row" +
-              (currentHabit === habit.name
+              "border-l-2 hover:border-slate-500 ml-3 pl-3 text-slate-600 cursor-pointer pt-2 flex flex-row " +
+              (pathname === "/habit/" + habit.id
                 ? "border-slate-500"
                 : "border-slate-300")
             }
-            onClick={() => {
-              setCurrentHabit(habit.name);
-            }}
+            href={"/habit/" + habit.id}
           >
             {habit.name}
             <Dot
@@ -70,7 +64,7 @@ export default function HabitPage({
               }
               className="w-6 h-6"
             />
-          </div>
+          </Link>
         ))}
       </ScrollArea>
     </div>
