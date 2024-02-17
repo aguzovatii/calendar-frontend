@@ -18,6 +18,11 @@
   fill: #1e6823;
 }
 
+.react-calendar-heatmap .today-border {
+  stroke-width: 0.5px;
+  stroke: rgb(156 163 175);
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
