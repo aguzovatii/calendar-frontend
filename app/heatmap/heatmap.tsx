@@ -8,6 +8,10 @@ interface Value {
   count: number;
 }
 
+const yearFormatter = new Intl.DateTimeFormat("en", { year: "numeric" });
+const monthFormatter = new Intl.DateTimeFormat("en", { month: "2-digit" });
+const dayFormatter = new Intl.DateTimeFormat("en", { day: "2-digit" });
+
 export default function HeatMap({
   startDate,
   endDate,
@@ -90,11 +94,9 @@ export default function HeatMap({
   }
 
   function format(date: Date): string {
-    let year = new Intl.DateTimeFormat("en", { year: "numeric" }).format(date);
-    let month = new Intl.DateTimeFormat("en", { month: "2-digit" }).format(
-      date,
-    );
-    let day = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(date);
+    let year = yearFormatter.format(date);
+    let month = monthFormatter.format(date);
+    let day = dayFormatter.format(date);
     return day + "-" + month + "-" + year;
   }
 }
