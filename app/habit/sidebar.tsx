@@ -29,44 +29,44 @@ export default function HabitSidebar() {
 
   return (
     <div className="h-full flex flex-col">
-      <div className="h-7 flex flex-row">
-        <h1 className="text-xl flex h-7 font-bold leading-9 tracking-tight text-gray-900 ml-2 pl-0">
-          Habits
-        </h1>
-        <div className="flex h-7">
-          <Badge variant="secondary" className="mt-2 ml-1">
-            {data!.length}
-          </Badge>
+      <div className="grow border rounded-md m-2 shadow-md">
+        <div className="h-7 flex flex-row">
+          <h1 className="text-xl font-bold text-gray-900 ml-2">Habits</h1>
+          <div className="flex h-7">
+            <Badge variant="secondary" className="mt-1 ml-1">
+              {data!.length}
+            </Badge>
+          </div>
+          <div className="flex h-7 flex-1 flex-row-reverse">
+            <HabitCreator onHabitCreatedHandler={mutate} />
+          </div>
         </div>
-        <div className="flex h-7 flex-1 flex-row-reverse">
-          <HabitCreator onHabitCreatedHandler={mutate} />
-        </div>
-      </div>
-      <ScrollArea className="h-max flex-1">
-        {data!.map((habit) => (
-          <Link
-            key={habit.id}
-            className={
-              "border-l-2 hover:border-slate-500 ml-3 pl-3 text-slate-600 cursor-pointer pt-2 flex flex-row " +
-              (pathname === "/habit/" + habit.id
-                ? "border-slate-500"
-                : "border-slate-300")
-            }
-            href={"/habit/" + habit.id}
-          >
-            {habit.name}
-            <Dot
-              color={
-                "" +
-                (habit.state === "Pending" ? "orange" : "") +
-                (habit.state === "Done" ? "green" : "") +
-                (habit.state === "None" ? "gray" : "")
+        <ScrollArea className="h-max flex-1">
+          {data!.map((habit) => (
+            <Link
+              key={habit.id}
+              className={
+                "border-l-2 hover:border-slate-500 ml-3 pl-3 text-slate-600 cursor-pointer pt-2 flex flex-row " +
+                (pathname === "/habit/" + habit.id
+                  ? "border-slate-500"
+                  : "border-slate-300")
               }
-              className="w-6 h-6"
-            />
-          </Link>
-        ))}
-      </ScrollArea>
+              href={"/habit/" + habit.id}
+            >
+              {habit.name}
+              <Dot
+                color={
+                  "" +
+                  (habit.state === "Pending" ? "orange" : "") +
+                  (habit.state === "Done" ? "green" : "") +
+                  (habit.state === "None" ? "gray" : "")
+                }
+                className="w-6 h-6"
+              />
+            </Link>
+          ))}
+        </ScrollArea>
+      </div>
     </div>
   );
 }

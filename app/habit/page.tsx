@@ -1,3 +1,11 @@
 export default function Page() {
-  return <h1>Select a habit to see the details</h1>;
+  return (
+    <div className="h-full flex flex-col">
+      <div className="grow border rounded-md mt-2 mr-2 mb-2 shadow-md">
+        <h1 className="text-xl ml-1 text-gray-900">
+          Select a habit to see the details
+        </h1>
+      </div>
+    </div>
+  );
 }

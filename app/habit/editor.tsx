@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useSession } from "next-auth/react";
 import HabitDialog from "./habit-dialog";
 import { DialogTrigger } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { SquarePen } from "lucide-react";
 
 export default function HabitEditor({
   habit,
@@ -25,8 +27,10 @@ export default function HabitEditor({
       defaultHabitDescription={habit.description}
       dialogTitle="Edit habit"
     >
-      <DialogTrigger className="ml-1 mt-1 h-6 bg-green-800 hover:bg-green-700 rounded-md text-white w-20 text-sm font-medium text-primary-foreground h-10">
-        Edit
+      <DialogTrigger asChild>
+        <Button variant="outline" size="icon" className="h-6 mt-1 ml-1">
+          <SquarePen className="h-4 w-4" />
+        </Button>
       </DialogTrigger>
     </HabitDialog>
   );

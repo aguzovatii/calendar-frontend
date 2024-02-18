@@ -1,12 +1,27 @@
 "use client";
 
 import { useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { useSession } from "next-auth/react";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { useSWRConfig } from "swr";
+import { CalendarIcon, Minus, Plus } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function EventCreator({
   onEventCreated,
@@ -17,7 +32,7 @@ export default function EventCreator({
 }) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-  const [date, setDate] = useState(today);
+  const [date, setDate] = useState<Date | undefined>(today);
   const { data: session } = useSession();
   const [error, setError] = useState("");
   const { mutate: globalMutate } = useSWRConfig();
@@ -98,38 +113,60 @@ export default function EventCreator({
   }
 
   return (
-    <>
-      <div>
-        <label>Date: </label>
-        <DatePicker
-          showTimeInput
-          id="date"
-          selected={date}
-          onChange={(date: Date) => setDate(date)}
-          shouldCloseOnSelect={false}
-        />
-        {error && (
-          <div className="flex h-8 items-end text-left space-x-1">
-            <>
-              <p aria-live="polite" className="text-sm text-red-500 basis-full">
-                {error}
-              </p>
-            </>
+    <div className="m-1 ml-2 flex flew-row">
+      <Card className="w-[350px]">
+        <CardHeader>
+          <CardTitle>Edit events</CardTitle>
+          <CardDescription>Add or delete events</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant={"outline"}
+                  className={cn(
+                    "w-full justify-start text-left font-normal",
+                    !date && "text-muted-foreground",
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {date ? format(date, "PPP") : <span>Pick a date</span>}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                  mode="single"
+                  selected={date}
+                  onSelect={setDate}
+                  className="rounded-md border"
+                />
+              </PopoverContent>
+            </Popover>
+
+            {error && (
+              <div className="flex h-8 items-end text-left space-x-1">
+                <>
+                  <p
+                    aria-live="polite"
+                    className="text-sm text-red-500 basis-full"
+                  >
+                    {error}
+                  </p>
+                </>
+              </div>
+            )}
           </div>
-        )}
-      </div>
-      <Button
-        onClick={handleCreate}
-        className="bg-green-800 hover:bg-green-700 ml-1 mt-1"
-      >
-        Create
-      </Button>
-      <Button
-        onClick={handleDelete}
-        className="bg-red-800 hover:bg-red-700 ml-1 mt-1"
-      >
-        Delete
-      </Button>
-    </>
+        </CardContent>
+        <CardFooter className="flex justify-between">
+          <Button variant="outline" onClick={handleDelete}>
+            <Minus className="h-4 w-4 mr-2" /> Delete
+          </Button>
+          <Button variant="outline" onClick={handleCreate}>
+            <Plus className="h-4 w-4 mr-2" /> Add
+          </Button>
+        </CardFooter>
+      </Card>
+    </div>
   );
 }

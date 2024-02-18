@@ -16,16 +16,17 @@ export default function HeatMap({
   startDate,
   endDate,
   events,
+  today,
 }: {
   startDate: Date;
   endDate: Date;
   events: Event[];
+  today: Date;
 }) {
   const values = getValues(events);
 
   return (
-    <>
-      {" "}
+    <div className="grow border rounded-md m-1 mr-2 p-2">
       <CalendarHeatmap
         startDate={startDate}
         endDate={endDate}
@@ -45,17 +46,23 @@ export default function HeatMap({
                 "data-tooltip-content": "0",
               };
         }}
-        showWeekdayLabels={true}
-        weekdayLabels={["", "Tue", "", "Thu", "", "Sat", ""]}
         classForValue={(value) => {
+          const todayBorder: string =
+            value && today.getTime() === value.date.getTime()
+              ? "today-border "
+              : "";
+
           if (!value || value.count === 0) {
-            return "color-empty";
+            return todayBorder + "color-empty";
           }
-          return `color-scale-${Math.min(Math.floor(value.count / 3), 4)}`;
+          return (
+            todayBorder +
+            `color-scale-${Math.min(Math.floor(value.count / 3), 4)}`
+          );
         }}
-      />{" "}
-      <Tooltip id="my-tooltip" />{" "}
-    </>
+      />
+      <Tooltip id="my-tooltip" />
+    </div>
   );
 
   function getValues(events: Event[]): Value[] {
