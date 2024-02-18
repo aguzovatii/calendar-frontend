@@ -27,5 +27,5 @@ it("HabitSidebar has the 'Habits' title", () => {
   });
 
   render(<HabitSidebar />);
-  expect(screen.getByRole("heading").textContent).toBe("Habits");
+  expect(screen.getByRole("heading", { level: 1 }).textContent).toBe("Habits");
 });
