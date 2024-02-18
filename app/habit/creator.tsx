@@ -1,9 +1,15 @@
-import { CalendarPlus, ListPlus, Plus, PlusSquare } from "lucide-react";
+import { CalendarPlus } from "lucide-react";
 import { useSession } from "next-auth/react";
 import HabitDialog from "./habit-dialog";
 import { DialogTrigger } from "@/components/ui/dialog";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function HabitCreator({
   onHabitCreatedHandler,
@@ -20,11 +26,20 @@ export default function HabitCreator({
       onOpenChange={setOpenHabitDialog}
       dialogTitle="Add new habit"
     >
-      <DialogTrigger asChild>
-        <Button variant="outline" size="icon" className="h-6 mt-1 mr-1">
-          <CalendarPlus className="h-4 w-4" />
-        </Button>
-      </DialogTrigger>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <DialogTrigger asChild>
+              <Button variant="outline" size="icon" className="h-6 mt-1 mr-1">
+                <CalendarPlus className="h-4 w-4" />
+              </Button>
+            </DialogTrigger>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>New habit</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
     </HabitDialog>
   );
 

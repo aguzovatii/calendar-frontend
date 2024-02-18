@@ -5,6 +5,12 @@ import { useRouter } from "next/navigation";
 import HabitEditor from "../editor";
 import RichTextViewer from "@/app/rich-text-editor/rich-text-viewer";
 import { Trash2 } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const fetcher: Fetcher<HabitDetails, [string, string]> = ([url, token]) =>
   fetch(url, { headers: { Authorization: "Bearer " + token } }).then((res) =>
@@ -31,14 +37,23 @@ export default function HabitDetails({ habit }: { habit: string }) {
     <>
       <div className="flex flex-row ml-1">
         <h1 className="text-xl ml-1 text-gray-900">{data!.name}</h1>
-        <Button
-          variant="outline"
-          size="icon"
-          className="h-6 mt-1 ml-1"
-          onClick={deleteHabit}
-        >
-          <Trash2 className="h-4 w-4" />
-        </Button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-6 mt-1 ml-1"
+                onClick={deleteHabit}
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Delete habit</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
         <HabitEditor
           habit={data!}
           onHabitChangeHandler={() => {
