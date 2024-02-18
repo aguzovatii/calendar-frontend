@@ -52,12 +52,14 @@ export default function HabitSidebar() {
               href={"/habit/" + habit.id}
             >
               <div className="flex flex-col justify-center">
-              <HabitState
-                state={habit.state}
-                className="mr-2 h-3 w-3 shrink-0"
-              />
+                <HabitState
+                  state={habit.state}
+                  className="mr-2 h-3 w-3 shrink-0"
+                />
               </div>
-              <h2 className="text-lg flex shrink text-gray-900">{habit.name}</h2>
+              <h2 className="text-lg flex shrink text-gray-900">
+                {habit.name}
+              </h2>
             </Link>
           ))}
         </ScrollArea>
