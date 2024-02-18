@@ -2,7 +2,7 @@ import { useSession } from "next-auth/react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import useSWR, { Fetcher } from "swr";
 import { Badge } from "@/components/ui/badge";
-import { Dot } from "lucide-react";
+import { CheckCircleIcon, CircleDashed, CircleIcon } from "lucide-react";
 import HabitCreator from "./creator";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -29,7 +29,7 @@ export default function HabitSidebar() {
 
   return (
     <div className="h-full flex flex-col">
-      <div className="grow border rounded-md m-2 shadow-md">
+      <div className="h-full border rounded-md m-2 shadow-md flex flex-col">
         <div className="h-7 flex flex-row">
           <h1 className="text-xl font-bold text-gray-900 ml-2">Habits</h1>
           <div className="flex h-7">
@@ -41,32 +41,47 @@ export default function HabitSidebar() {
             <HabitCreator onHabitCreatedHandler={mutate} />
           </div>
         </div>
-        <ScrollArea className="h-max flex-1">
+        <ScrollArea className="h-48 grow">
           {data!.map((habit) => (
             <Link
               key={habit.id}
               className={
-                "border-l-2 hover:border-slate-500 ml-3 pl-3 text-slate-600 cursor-pointer pt-2 flex flex-row " +
-                (pathname === "/habit/" + habit.id
-                  ? "border-slate-500"
-                  : "border-slate-300")
+                "ml-2 text-slate-600 hover:underline cursor-pointer pt-2 flex flex-row " +
+                (pathname === "/habit/" + habit.id && "font-bold")
               }
               href={"/habit/" + habit.id}
             >
-              {habit.name}
-              <Dot
-                color={
-                  "" +
-                  (habit.state === "Pending" ? "orange" : "") +
-                  (habit.state === "Done" ? "green" : "") +
-                  (habit.state === "None" ? "gray" : "")
-                }
-                className="w-6 h-6"
+              <div className="flex flex-col justify-center">
+              <HabitState
+                state={habit.state}
+                className="mr-2 h-3 w-3 shrink-0"
               />
+              </div>
+              <h2 className="text-lg flex shrink text-gray-900">{habit.name}</h2>
             </Link>
           ))}
         </ScrollArea>
       </div>
     </div>
   );
+}
+
+export function HabitState({
+  state,
+  className = "",
+}: {
+  state: string;
+  className?: string;
+}) {
+  switch (state) {
+    case "Pending": {
+      return <CircleIcon size={12} className={className} />;
+    }
+    case "Done": {
+      return <CheckCircleIcon size={12} className={className} />;
+    }
+    case "None": {
+      return <CircleDashed size={12} className={className} />;
+    }
+  }
 }

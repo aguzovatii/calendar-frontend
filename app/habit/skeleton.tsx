@@ -1,6 +1,5 @@
 "use client";
 import { LogOut } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
 import { signOut, useSession } from "next-auth/react";
 import HabitSidebar from "./sidebar";
 import { Button } from "@/components/ui/button";
@@ -36,11 +35,11 @@ export default function HabitPageSkeleton({
           </Button>
         </div>
       </div>
-      <div className="grow flex flex-row flex-1">
-        <div className="h-full basis-1/12">
+      <div className="flex flex-row grow">
+        <div className="h-full basis-2/12">
           <HabitSidebar />
         </div>
-        <div className="h-full basis-11/12">{children}</div>
+        <div className="h-full basis-10/12">{children}</div>
       </div>
     </div>
   );
