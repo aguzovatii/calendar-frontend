@@ -49,7 +49,7 @@ export default function HabitDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       {children}
-      <DialogContent>
+      <DialogContent onCloseAutoFocus={(e) => e.preventDefault()}>
         <DialogHeader>
           <DialogTitle>{dialogTitle}</DialogTitle>
         </DialogHeader>
