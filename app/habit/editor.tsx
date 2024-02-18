@@ -43,7 +43,7 @@ export default function HabitEditor({
             </DialogTrigger>
           </TooltipTrigger>
           <TooltipContent>
-            <p>Edit Habit</p>
+            <p>Edit habit</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
