@@ -44,7 +44,7 @@
     "react-calendar-heatmap": "^1.9.0",
     "react-day-picker": "^8.10.0",
     "react-dom": "^18.2.0",
-    "react-tooltip": "^5.26.2",
+    "react-tooltip": "^5.26.3",
     "swr": "^2.2.5",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
