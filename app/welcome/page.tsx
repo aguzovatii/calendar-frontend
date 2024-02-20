@@ -12,8 +12,8 @@ export default function WelcomePage({
 }) {
   return (
     <div className="grid grid-cols-2 gap-2 h-full">
-      <div className="grid grid-rows-3 basis-1/2 h-full">
-        <div></div>
+      <div className="flex flex-col basis-1/2 h-full">
+        <div className="grow"></div>
         <div className="grid grid-rows-4 items-center justify-items-center">
           <div>
             <p className="font-medium text-6xl text-[#77AD86] blur-[1.5px]">
@@ -58,6 +58,7 @@ export default function WelcomePage({
             </Link>
           </div>
         </div>
+        <div className="grow"></div>
       </div>
 
       <div className="grid grid-rows-1 grid-cols-8 basis-1/2 h-full relative">
