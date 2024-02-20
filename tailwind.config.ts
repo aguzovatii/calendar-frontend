@@ -9,10 +9,21 @@ const config: Config = {
       center: true,
       padding: "2rem",
       screens: {
-        "2xl": "1400px",
+       // '2xl': '1400px',
+        //'desktop': '2400px',
       },
     },
+    screens: {
+      'sm': '200px',
+      'md': '300px',
+      'lg': '600px', 
+      'xl': '1000px',
+      '2xl': '1850px',
+    },
     extend: {
+      screens: {
+        '3xl': '2000px',
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
