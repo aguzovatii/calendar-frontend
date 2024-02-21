@@ -16,7 +16,7 @@ export default function WelcomePage({
         <div className="basis:0 md:grow"></div>
         <div className="grid grid-rows-4 items-center justify-items-center">
           <div>
-            <p className="font-medium md:text-3xl lg:text-5xl xl:text-6xl text-[#77AD86]">
+            <p className="font-medium text-3xl lg:text-5xl xl:text-6xl text-[#77AD86]">
               Welcome
             </p>
           </div>
