@@ -11,16 +11,16 @@ export default function WelcomePage({
   searchParams: { [key: string]: string | undefined };
 }) {
   return (
-    <div className="grid md:grid-cols-1 md:grid-rows-2 lg:gap-4 xl:grid-rows-1 xl:grid-cols-2 xl:gap-2 h-full xl:h-[45rem] 2xl:h-full">
-      <div className="grid md:grid-rows-3 xl:grid-rows-3 xl:basis-1/2 xl:gap-2 2xl:gap-0 lg:h-full h-full">
+    <div className="grid md:grid-cols-1 md:grid-rows-2 lg:gap-4 xl:grid-rows-1 xl:grid-cols-2 xl:gap-2 h-full">
+      <div className="grid md:grid-rows-3 xl:grid-rows-3 xl:basis-1/2 xl:gap-2 2xl:gap-0 h-full">
         <div className="grid md:row-start-2 md:row-span-1 md:rows-4 md:gap-2 lg:gap-3 xl:row-start-2 xl:row-span-1 xl:grid-rows-4 items-center justify-items-center">
           <div>
-            <p className="font-medium md:text-3xl lg:text-5xl xl:text-6xl 2xl:text-7xl text-[#77AD86]">
+            <p className="font-medium md:text-3xl lg:text-5xl xl:text-6xl text-[#77AD86]">
               Welcome
             </p>
           </div>
           <div>
-            <p className="font-medium md:text-1xl lg:text-2xl xl:text-3xl 2xl:text-5xl text-black xl:ml-15 xl:mt-2">
+            <p className="font-medium md:text-1xl lg:text-2xl xl:text-3xl text-black xl:ml-15 xl:mt-2">
               This is a calendar for your habits
             </p>
           </div>
