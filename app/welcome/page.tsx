@@ -11,30 +11,31 @@ export default function WelcomePage({
   searchParams: { [key: string]: string | undefined };
 }) {
   return (
-    <div className="grid md:grid-cols-1 md:grid-rows-2 lg:gap-4 xl:grid-rows-1 xl:grid-cols-2 xl:gap-2 h-full">
-      <div className="grid md:grid-rows-3 xl:grid-rows-3 xl:basis-1/2 xl:gap-2 2xl:gap-0 h-full">
-        <div className="grid md:row-start-2 md:row-span-1 md:rows-4 md:gap-2 lg:gap-3 xl:row-start-2 xl:row-span-1 xl:grid-rows-4 items-center justify-items-center">
+    <div className="flex flex-col xl:flex-row h-full">
+      <div className="flex flex-col md:basis-1/2 xl:basis-full">
+        <div className="basis:0 md:grow"></div>
+        <div className="grid grid-rows-4 items-center justify-items-center">
           <div>
             <p className="font-medium md:text-3xl lg:text-5xl xl:text-6xl text-[#77AD86]">
               Welcome
             </p>
           </div>
           <div>
-            <p className="font-medium md:text-1xl lg:text-2xl xl:text-3xl text-black xl:ml-15 xl:mt-2">
+            <p className="font-medium md:text-1xl lg:text-2xl xl:text-3xl">
               This is a calendar for your habits
             </p>
           </div>
           <div>
             <Link
               href="https://calendar-team.github.io/calendar-docs/"
-              className="font-medium md:text-sm lg:text-1xl xl:text-2xl 2xl:text-3xl text-black xl:ml-20 hover:underline"
+              className="font-medium md:text-sm lg:text-1xl xl:text-2xl text-black hover:underline"
             >
               Feel free to learn more about this app
             </Link>
           </div>
           <div className="flex justify-center space-x-4 relative">
             <Link
-              className="bg-[#134e4a] hover:bg-[#0f766e] focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg md:text-xs lg:text-xs xl:text-sm 2xl:text-2xl md:px-3 lg:px-5 md:py-1 lg:py-1.5 xl:py-2.5 2xl:py-4 text-white"
+              className="bg-[#134e4a] hover:bg-[#0f766e] focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg md:text-xs lg:text-xs xl:text-sm px-3 lg:px-5 py-1 lg:py-1.5 xl:py-2.5 text-white"
               href={
                 searchParams.callbackUrl
                   ? "/auth/signup?callbackUrl=" +
@@ -45,7 +46,7 @@ export default function WelcomePage({
               Get Started
             </Link>
             <Link
-              className="bg-[#134e4a] hover:bg-[#0f766e] focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg md:text-xs lg:text-xs xl:text-sm 2xl:text-2xl md:px-3 lg:px-5 md:py-1 lg:py-1.5 xl:py-2.5 2xl:py-4 text-white"
+              className="bg-[#134e4a] hover:bg-[#0f766e] focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg md:text-xs lg:text-xs xl:text-sm px-3 lg:px-5 py-1 lg:py-1.5 xl:py-2.5 text-white"
               href={
                 searchParams.callbackUrl
                   ? "/auth/signin?callbackUrl=" +
@@ -57,16 +58,17 @@ export default function WelcomePage({
             </Link>
           </div>
         </div>
+        <div className="basis-0 md:grow"></div>
       </div>
 
-      <div className="grid grid-rows-1 lg:grid-cols-3 xl:grid-cols-8 xl:basis-1/2 xl:h-full relative">
-        <div className="invisible lg:visible lg:col-start-1 lg:col-span-1 xl:col-start-4 xl:col-span-4 xl:row-start-1 xl:top-[5%] absolute">
+      <div className="grid grid-rows-1 md:grid-cols-3 xl:grid-cols-8 basis-1/2 xl:basis-full relative">
+        <div className="invisible md:visible md:col-start-1 md:col-span-1 xl:col-start-4 xl:col-span-4 xl:row-start-1 xl:top-[5%] absolute">
           <Image src={img1} alt="" priority={true} width="2048" height="2048" />
         </div>
-        <div className="lg:col-start-2 lg:col-span-1 xl:col-start-1 xl:col-span-4 xl:row-start-1 xl:top-[25%] absolute">
+        <div className="md:col-start-2 md:col-span-1 xl:col-start-1 xl:col-span-4 xl:row-start-1 xl:top-[25%] absolute">
           <Image src={img2} alt="" priority={true} width="2048" height="2048" />
         </div>
-        <div className="invisible lg:visible lg:col-start-3 lg:col-span-1 xl:col-start-4 xl:col-span-4 xl:row-start-1 xl:top-[45%] absolute">
+        <div className="invisible md:visible md:col-start-3 md:col-span-1 xl:col-start-4 xl:col-span-4 xl:row-start-1 xl:top-[45%] absolute">
           <Image src={img3} alt="" priority={true} width="2048" height="2048" />
         </div>
       </div>
