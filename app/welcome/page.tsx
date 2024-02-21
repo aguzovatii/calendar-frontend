@@ -16,26 +16,26 @@ export default function WelcomePage({
         <div className="grow"></div>
         <div className="grid grid-rows-4 items-center justify-items-center">
           <div>
-            <p className="font-medium text-3xl lg:text-5xl xl:text-6xl text-[#77AD86]">
+            <p className="font-medium text-3xl md:text-5xl xl:text-6xl text-[#77AD86]">
               Welcome
             </p>
           </div>
           <div>
-            <p className="font-medium md:text-1xl lg:text-2xl xl:text-3xl">
+            <p className="font-medium md:text-1xl md:text-2xl xl:text-3xl">
               This is a calendar for your habits
             </p>
           </div>
           <div>
             <Link
               href="https://calendar-team.github.io/calendar-docs/"
-              className="font-medium md:text-sm lg:text-1xl xl:text-2xl text-black hover:underline"
+              className="font-medium text-sm md:text-1xl xl:text-2xl text-black hover:underline"
             >
               Feel free to learn more about this app
             </Link>
           </div>
           <div className="flex justify-center space-x-4 relative">
             <Link
-              className="bg-[#134e4a] hover:bg-[#0f766e] focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg md:text-xs lg:text-xs xl:text-sm px-3 lg:px-5 py-1 lg:py-1.5 xl:py-2.5 text-white"
+              className="bg-[#134e4a] hover:bg-[#0f766e] focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-xs md:text-xs xl:text-sm px-3 md:px-5 py-1 md:py-1.5 xl:py-2.5 text-white"
               href={
                 searchParams.callbackUrl
                   ? "/auth/signup?callbackUrl=" +
@@ -46,7 +46,7 @@ export default function WelcomePage({
               Get Started
             </Link>
             <Link
-              className="bg-[#134e4a] hover:bg-[#0f766e] focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg md:text-xs lg:text-xs xl:text-sm px-3 lg:px-5 py-1 lg:py-1.5 xl:py-2.5 text-white"
+              className="bg-[#134e4a] hover:bg-[#0f766e] focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-xs md:text-xs xl:text-sm px-3 md:px-5 py-1 md:py-1.5 xl:py-2.5 text-white"
               href={
                 searchParams.callbackUrl
                   ? "/auth/signin?callbackUrl=" +
