@@ -31,7 +31,7 @@ export default function HabitSidebar() {
     <div className="h-full flex flex-col">
       <div className="h-full border rounded-md m-2 shadow-md flex flex-col">
         <div className="h-7 flex flex-row">
-          <h1 className="text-xl font-bold text-gray-900 ml-2">Habits</h1>
+          <h1 className="text-xl font-bold ml-2">Habits</h1>
           <div className="flex h-7">
             <Badge variant="secondary" className="mt-1 ml-1">
               {data!.length}
@@ -46,7 +46,7 @@ export default function HabitSidebar() {
             <Link
               key={habit.id}
               className={
-                "ml-2 text-slate-600 hover:underline cursor-pointer pt-2 flex flex-row " +
+                "ml-2 hover:underline pt-2 flex flex-row " +
                 (pathname === "/habit/" + habit.id && "font-bold")
               }
               href={"/habit/" + habit.id}
@@ -57,9 +57,7 @@ export default function HabitSidebar() {
                   className="mr-2 h-3 w-3 shrink-0"
                 />
               </div>
-              <h2 className="text-lg flex shrink text-gray-900">
-                {habit.name}
-              </h2>
+              <h2 className="text-lg flex shrink">{habit.name}</h2>
             </Link>
           ))}
         </ScrollArea>
