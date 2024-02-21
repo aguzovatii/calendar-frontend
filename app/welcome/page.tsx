@@ -12,8 +12,8 @@ export default function WelcomePage({
 }) {
   return (
     <div className="flex flex-col xl:flex-row h-full">
-      <div className="flex flex-col md:basis-1/2 xl:basis-full">
-        <div className="basis:0 md:grow"></div>
+      <div className="flex flex-col mb-16 md:mb-0 md:basis-1/2 xl:basis-full">
+        <div className="grow"></div>
         <div className="grid grid-rows-4 items-center justify-items-center">
           <div>
             <p className="font-medium text-3xl lg:text-5xl xl:text-6xl text-[#77AD86]">
@@ -58,7 +58,7 @@ export default function WelcomePage({
             </Link>
           </div>
         </div>
-        <div className="basis-0 md:grow"></div>
+        <div className="grow"></div>
       </div>
 
       <div className="grid grid-rows-1 grid-cols-3 xl:grid-cols-8 basis-1/2 xl:basis-full relative">
