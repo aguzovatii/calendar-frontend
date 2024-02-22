@@ -36,7 +36,7 @@ export default function HabitDetails({ habit }: { habit: string }) {
   return (
     <>
       <div className="flex flex-row ml-1">
-        <h1 className="text-xl ml-1 text-gray-900">{data!.name}</h1>
+        <h1 className="text-xl ml-1">{data!.name}</h1>
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>

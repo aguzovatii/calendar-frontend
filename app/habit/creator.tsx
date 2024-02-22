@@ -24,7 +24,7 @@ export default function HabitCreator({
       onSubmitEventHandler={createHabit}
       open={openHabitDialog}
       onOpenChange={setOpenHabitDialog}
-      dialogTitle="Add new habit"
+      dialogTitle="New habit"
     >
       <TooltipProvider>
         <Tooltip>

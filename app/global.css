@@ -23,6 +23,10 @@
   stroke: rgb(156 163 175);
 }
 
+.react-calendar-heatmap .color-empty1 {
+  fill: hsl(var(--accent));
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

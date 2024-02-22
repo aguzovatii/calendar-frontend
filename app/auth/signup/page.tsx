@@ -1,228 +1,179 @@
 "use client";
 
-import Link from "next/link";
-import { useState } from "react";
+import { Suspense, useEffect } from "react";
 import { signIn } from "next-auth/react";
 import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import LinkWithCallback from "../link-with-callback";
 
-type SignUpErrorTypes = "CredentialsSignin" | "default";
+const formSchema = z.object({
+  username: z.string().min(1).max(50),
+  password: z.string().min(1).max(50),
+  timeZone: z.string(),
+});
 
-const errors: Record<SignUpErrorTypes, string> = {
-  CredentialsSignin: "Sign up failed.",
-  default: "Unable to sign up. Please try again later.",
-};
-
-export default function Signin() {
+export default function Signup() {
   const { status: sessionStatus } = useSession();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [errorType, setErrorType] = useState<SignUpErrorTypes | null>(null);
-  const [errorUsername, setErrorU] = useState("");
-  const [errorPassword, setErrorP] = useState("");
   const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const form = useForm<z.infer<typeof formSchema> & { serverError: string }>({
+    mode: "all",
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: "",
+      password: "",
+      timeZone: timeZone,
+    },
+  });
 
   if (sessionStatus === "loading") {
     return <div>loading</div>;
   }
 
   if (sessionStatus === "authenticated") {
-    redirect("/");
+    return (
+      <Suspense>
+        <Redirect />
+      </Suspense>
+    );
   }
 
-  const error = errorType && (errors[errorType] ?? errors.default);
-
-  return (
-    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-          Sign up
-        </h2>
-      </div>
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-6" autoComplete="off">
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Username
-            </label>
-            <div className="mt-2">
-              <input
-                id="username"
-                name="username"
-                type="text"
-                required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-600 sm:text-sm sm:leading-6"
-                value={username}
-                onChange={(e) => {
-                  setUsername(e.currentTarget.value);
-                }}
-              />
-            </div>
-            {errorUsername && (
-              <div className="flex h-8 items-end text-center space-x-1">
-                <>
-                  <p
-                    aria-live="polite"
-                    className="text-sm text-red-500 basis-full"
-                  >
-                    {errorUsername}
-                  </p>
-                </>
-              </div>
-            )}
-          </div>
-
-          <div>
-            <div className="flex items-center justify-between">
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Password
-              </label>
-            </div>
-            <div className="mt-2">
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-600 sm:text-sm sm:leading-6"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.currentTarget.value);
-                }}
-              />
-            </div>
-            {errorPassword && (
-              <div className="flex h-8 items-end text-center space-x-1">
-                <>
-                  <p
-                    aria-live="polite"
-                    className="text-sm text-red-500 basis-full"
-                  >
-                    {errorPassword}
-                  </p>
-                </>
-              </div>
-            )}
-          </div>
-
-          <div>
-            <div className="flex items-center justify-between">
-              <label
-                htmlFor="timeZone"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                TimeZone
-              </label>
-            </div>
-            <div className="mt-2">
-              <input
-                id="timeZone"
-                name="timeZone"
-                type="text"
-                required
-                disabled
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-600 sm:text-sm sm:leading-6"
-                value={timeZone}
-              />
-            </div>
-          </div>
-
-          <div>
-            <button
-              type="button"
-              className="flex w-full justify-center rounded-md bg-slate-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-slate-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-600"
-              onClick={validateInput}
-            >
-              Sign up
-            </button>
-          </div>
-
-          {error && (
-            <div className="flex h-8 items-end text-center space-x-1">
-              <>
-                <p
-                  aria-live="polite"
-                  className="text-sm text-red-500 basis-full"
-                >
-                  {error}
-                </p>
-              </>
-            </div>
-          )}
-        </form>
-
-        <p className="mt-10 text-center text-sm text-gray-500">
-          Already a member?{" "}
-          <Link
-            className="font-semibold leading-6 text-slate-600 hover:text-slate-500"
-            href="/auth/signin"
-          >
-            Sign in
-          </Link>
-        </p>
-      </div>
-    </div>
-  );
-
-  function validateInput() {
-    const validUsername = z
-      .string()
-      .min(1, { message: "Username cannot be empty" })
-      .safeParse(username);
-    const validPassword = z
-      .string()
-      .min(1, { message: "Password cannot be empty" })
-      .safeParse(password);
-
-    let valid = true;
-    if (!validUsername.success) {
-      const errorMessage = validUsername.error.errors[0]?.message;
-      setErrorU(errorMessage);
-      valid = false;
-    } else setErrorU("");
-
-    if (!validPassword.success) {
-      const errorMessage = validPassword.error.errors[0]?.message;
-      setErrorP(errorMessage);
-      valid = false;
-    } else setErrorP("");
-
-    if (!valid) return;
-    handleClick();
-  }
-
-  function handleClick() {
+  function onSubmit(values: z.infer<typeof formSchema>) {
     signIn("signup", {
       redirect: false,
-      username: username,
-      password: password,
-      timeZone: timeZone,
+      username: values.username,
+      password: values.password,
+      timeZone: values.timeZone,
     }).then((response) => {
       if (response === undefined) {
-        setErrorType("default");
+        form.setError("serverError", {
+          message: "Unable to sign up. Please try again later.",
+        });
         return;
       }
 
       if (response.ok) {
-        setErrorType(null);
+        form.clearErrors("serverError");
         return;
       }
 
       if (response.error == "CredentialsSignin") {
-        setErrorType("CredentialsSignin");
+        form.setError("serverError", { message: "Sign up failed." });
         return;
       } else {
-        setErrorType("default");
+        form.setError("serverError", {
+          message: "Unable to sign in. Please try again later.",
+        });
         return;
       }
     });
   }
+
+  return (
+    <div className="grid place-items-center h-full">
+      <Card className="w-[380px]">
+        <CardHeader>
+          <CardTitle>Sign up</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Username</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input type="password" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="timeZone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>TimeZone</FormLabel>
+                    <FormControl>
+                      <Input disabled {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit" variant="outline" className="w-full">
+                Sign up
+              </Button>
+              {form.formState.errors.serverError && (
+                <div className="grid place-items-center">
+                  <FormMessage>
+                    {form.formState.errors.serverError.message}
+                  </FormMessage>
+                </div>
+              )}
+            </form>
+          </Form>
+        </CardContent>
+        <CardFooter className="grid place-items-center">
+          <div>
+            Already a member?{" "}
+            <LinkWithCallback
+              href="/auth/signin"
+              className="font-semibold hover:underline"
+            >
+              Sign in
+            </LinkWithCallback>
+          </div>
+        </CardFooter>
+      </Card>
+    </div>
+  );
+}
+
+function Redirect() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push(
+      searchParams.has("callbackUrl") ? searchParams.get("callbackUrl")! : "/",
+    );
+  }, [searchParams, router]);
+
+  return <></>;
 }

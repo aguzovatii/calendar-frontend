@@ -1,16 +1,25 @@
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import {
   Dialog,
   DialogContent,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
 import { ReactNode, useEffect, useState } from "react";
 import RichTextEditor from "../rich-text-editor/rich-text-editor";
 import { Dispatch, SetStateAction } from "react";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 interface HabitDialogSubmitFunction {
   (habitName: string, habitDescription: string): void;
@@ -18,6 +27,10 @@ interface HabitDialogSubmitFunction {
 
 const EMPTY_HABIT_DESCRIPTION =
   '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}';
+
+const formSchema = z.object({
+  name: z.string().min(1),
+});
 
 export default function HabitDialog({
   open,
@@ -36,15 +49,26 @@ export default function HabitDialog({
   dialogTitle: string;
   children: ReactNode;
 }) {
-  const [habitName, setHabitName] = useState(defaultHabitName);
   const [habitDescription, setHabitDescription] = useState(
     defaultHabitDescription,
   );
+  const form = useForm<z.infer<typeof formSchema> & { serverError: string }>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: defaultHabitName,
+    },
+  });
 
   useEffect(() => {
-    setHabitName(defaultHabitName);
+    form.setValue("name", defaultHabitName);
     setHabitDescription(defaultHabitDescription);
   }, [defaultHabitName, defaultHabitDescription]);
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    onSubmitEventHandler(values.name, habitDescription);
+    setHabitDescription(defaultHabitDescription);
+    form.reset();
+  }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -53,40 +77,39 @@ export default function HabitDialog({
         <DialogHeader>
           <DialogTitle>{dialogTitle}</DialogTitle>
         </DialogHeader>
-        <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="name" className="text-right">
-            Name
-          </Label>
-          <Input
-            id="name"
-            className="col-span-3 focus-visible:ring-0 focus-visible:border-lime-500"
-            value={habitName}
-            onChange={(e) => {
-              setHabitName(e.currentTarget.value);
-            }}
-          />
-        </div>
-        <div className="grid gap-4 py-4">
-          <div className="bg-white relative rounded-sm">
-            <RichTextEditor
-              defaultEditorState={habitDescription}
-              onStateChange={setHabitDescription}
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
-        </div>
-        <DialogFooter>
-          <Button
-            type="submit"
-            onClick={() => {
-              onSubmitEventHandler(habitName, habitDescription);
-              setHabitName(defaultHabitName);
-              setHabitDescription(defaultHabitDescription);
-            }}
-            className="m-1.5 h-7 justify-center rounded-md bg-slate-600 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-slate-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-600"
-          >
-            Done
-          </Button>
-        </DialogFooter>
+            <div className="relative">
+              <RichTextEditor
+                defaultEditorState={habitDescription}
+                onStateChange={setHabitDescription}
+              />
+            </div>
+            <Button type="submit" variant="outline" className="w-full">
+              Done
+            </Button>
+            {form.formState.errors.serverError && (
+              <div className="grid place-items-center">
+                <FormMessage>
+                  {form.formState.errors.serverError.message}
+                </FormMessage>
+              </div>
+            )}
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );

@@ -53,7 +53,7 @@ export default function HeatMap({
               : "";
 
           if (!value || value.count === 0) {
-            return todayBorder + "color-empty";
+            return todayBorder + "color-empty1";
           }
           return (
             todayBorder +
