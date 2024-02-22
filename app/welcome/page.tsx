@@ -11,31 +11,31 @@ export default function WelcomePage({
   searchParams: { [key: string]: string | undefined };
 }) {
   return (
-    <div className="grid grid-cols-2 gap-2 h-full">
-      <div className="grid grid-rows-3 basis-1/2 h-full">
-        <div></div>
+    <div className="flex flex-col xl:flex-row h-full">
+      <div className="flex flex-col mb-16 md:mb-0 md:basis-1/2 xl:basis-full">
+        <div className="grow"></div>
         <div className="grid grid-rows-4 items-center justify-items-center">
           <div>
-            <p className="font-medium text-6xl text-[#77AD86] blur-[1.5px]">
+            <p className="font-medium text-3xl md:text-5xl xl:text-6xl text-[#77AD86]">
               Welcome
             </p>
           </div>
           <div>
-            <p className="font-medium text-3xl text-black ml-15 mt-2">
+            <p className="font-medium md:text-1xl md:text-2xl xl:text-3xl">
               This is a calendar for your habits
             </p>
           </div>
           <div>
-            <a
+            <Link
               href="https://calendar-team.github.io/calendar-docs/"
-              className="font-medium text-2xl text-black ml-20"
+              className="font-medium text-sm md:text-1xl xl:text-2xl hover:underline"
             >
               Feel free to learn more about this app
-            </a>
+            </Link>
           </div>
-          <div className="flex justify-center space-x-4">
+          <div className="flex justify-center space-x-4 relative">
             <Link
-              className="bg-gradient-to-r from-[#1D93C6] to-[#77AD86]"
+              className="bg-[#134e4a] hover:bg-[#0f766e] focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-xs md:text-xs xl:text-sm px-3 md:px-5 py-1 md:py-1.5 xl:py-2.5 text-white"
               href={
                 searchParams.callbackUrl
                   ? "/auth/signup?callbackUrl=" +
@@ -46,7 +46,7 @@ export default function WelcomePage({
               Get Started
             </Link>
             <Link
-              className="bg-gradient-to-r from-[#1D93C6] to-[#77AD86]"
+              className="bg-[#134e4a] hover:bg-[#0f766e] focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-xs md:text-xs xl:text-sm px-3 md:px-5 py-1 md:py-1.5 xl:py-2.5 text-white"
               href={
                 searchParams.callbackUrl
                   ? "/auth/signin?callbackUrl=" +
@@ -58,16 +58,17 @@ export default function WelcomePage({
             </Link>
           </div>
         </div>
+        <div className="grow"></div>
       </div>
 
-      <div className="grid grid-rows-1 grid-cols-8 basis-1/2 h-full relative">
-        <div className="col-start-4 col-span-4 row-start-1 top-[5%] absolute">
+      <div className="grid grid-rows-1 grid-cols-3 md:basis-1/2 xl:grid-cols-8 xl:basis-full relative">
+        <div className="col-start-1 col-span-1 xl:col-start-4 xl:col-span-4 xl:row-start-1 xl:top-[5%] absolute">
           <Image src={img1} alt="" priority={true} width="2048" height="2048" />
         </div>
-        <div className="col-start-1 col-span-4 row-start-1 top-[25%] absolute">
+        <div className="col-start-2 col-span-1 xl:col-start-1 xl:col-span-4 xl:row-start-1 xl:top-[25%] absolute">
           <Image src={img2} alt="" priority={true} width="2048" height="2048" />
         </div>
-        <div className="2xl:col-start-4 col-span-4 row-start-1 top-[45%] absolute">
+        <div className="col-start-3 col-span-1 xl:col-start-4 xl:col-span-4 xl:row-start-1 xl:top-[45%] absolute">
           <Image src={img3} alt="" priority={true} width="2048" height="2048" />
         </div>
       </div>
