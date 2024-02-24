@@ -28,7 +28,7 @@ export default function WelcomePage({
           <div>
             <Link
               href="https://calendar-team.github.io/calendar-docs/"
-              className="font-medium text-sm md:text-1xl xl:text-2xl hover:underline"
+              className="font-medium text-sm md:text-1xl xl:text-2xl underline"
             >
               Feel free to learn more about this app
             </Link>
@@ -63,13 +63,13 @@ export default function WelcomePage({
 
       <div className="grid grid-rows-1 grid-cols-3 md:basis-1/2 xl:grid-cols-8 xl:basis-full relative">
         <div className="col-start-1 col-span-1 xl:col-start-4 xl:col-span-4 xl:row-start-1 xl:top-[5%] absolute">
-          <Image src={img1} alt="" priority={true} width="2048" height="2048" />
+          <Image className="dark:brightness-75" src={img1} alt="" priority={true} width="2048" height="2048" />
         </div>
         <div className="col-start-2 col-span-1 xl:col-start-1 xl:col-span-4 xl:row-start-1 xl:top-[25%] absolute">
-          <Image src={img2} alt="" priority={true} width="2048" height="2048" />
+          <Image className="dark:brightness-75" src={img2} alt="" priority={true} width="2048" height="2048" />
         </div>
         <div className="col-start-3 col-span-1 xl:col-start-4 xl:col-span-4 xl:row-start-1 xl:top-[45%] absolute">
-          <Image src={img3} alt="" priority={true} width="2048" height="2048" />
+          <Image className="dark:brightness-75" src={img3} alt="" priority={true} width="2048" height="2048" />
         </div>
       </div>
     </div>
