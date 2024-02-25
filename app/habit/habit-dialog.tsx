@@ -73,7 +73,10 @@ export default function HabitDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       {children}
-      <DialogContent onCloseAutoFocus={(e) => e.preventDefault()}>
+      <DialogContent
+        onCloseAutoFocus={(e) => e.preventDefault()}
+        className="overflow-y-scroll max-h-screen"
+      >
         <DialogHeader>
           <DialogTitle>{dialogTitle}</DialogTitle>
         </DialogHeader>

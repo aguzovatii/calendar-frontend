@@ -28,8 +28,8 @@ export default function HabitSidebar() {
   if (isLoading) return <div>loading</div>;
 
   return (
-    <div className="h-full flex flex-col">
-      <div className="h-full border rounded-md m-2 shadow-md flex flex-col">
+    <div className="h-full w-full flex flex-col">
+      <div className="h-full m-2 shadow-md flex flex-col">
         <div className="h-7 flex flex-row">
           <h1 className="text-xl font-bold ml-2">Habits</h1>
           <div className="flex h-7">
