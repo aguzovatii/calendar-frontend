@@ -4,6 +4,7 @@ import img1 from "./sport.svg";
 import img2 from "./calendar.svg";
 import img3 from "./coding.svg";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default function WelcomePage({
   searchParams,
@@ -34,28 +35,32 @@ export default function WelcomePage({
             </Link>
           </div>
           <div className="flex justify-center space-x-4 relative">
-            <Link
-              className="bg-[#134e4a] hover:bg-[#0f766e] focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-xs md:text-xs xl:text-sm px-3 md:px-5 py-1 md:py-1.5 xl:py-2.5 text-white"
-              href={
-                searchParams.callbackUrl
-                  ? "/auth/signup?callbackUrl=" +
-                    encodeURIComponent(searchParams.callbackUrl)
-                  : "/auth/signup"
-              }
-            >
-              Get Started
-            </Link>
-            <Link
-              className="bg-[#134e4a] hover:bg-[#0f766e] focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-xs md:text-xs xl:text-sm px-3 md:px-5 py-1 md:py-1.5 xl:py-2.5 text-white"
-              href={
-                searchParams.callbackUrl
-                  ? "/auth/signin?callbackUrl=" +
-                    encodeURIComponent(searchParams.callbackUrl)
-                  : "/auth/signin"
-              }
-            >
-              Sign in
-            </Link>
+            <Button variant="outline" className="px-0">
+              <Link
+                className="font-semibold text-xs md:text-xs xl:text-sm px-1 md:px-5 py-1 md:py-1.5 xl:py-2.5"
+                href={
+                  searchParams.callbackUrl
+                    ? "/auth/signup?callbackUrl=" +
+                      encodeURIComponent(searchParams.callbackUrl)
+                    : "/auth/signup"
+                }
+              >
+                Get Started
+              </Link>
+            </Button>
+            <Button variant="outline" className="px-0">
+              <Link
+                className="font-semibold text-xs md:text-xs xl:text-sm px-3 md:px-5 py-1 md:py-1.5 xl:py-2.5"
+                href={
+                  searchParams.callbackUrl
+                    ? "/auth/signin?callbackUrl=" +
+                      encodeURIComponent(searchParams.callbackUrl)
+                    : "/auth/signin"
+                }
+              >
+                Sign in
+              </Link>
+            </Button>
           </div>
         </div>
         <div className="grow"></div>
