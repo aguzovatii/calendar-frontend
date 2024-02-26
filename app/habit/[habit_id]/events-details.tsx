@@ -39,7 +39,7 @@ export default function EventsDetails({ habit }: { habit: string }) {
   if (isLoading) return <div>loading...</div>;
 
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-col lg:flex-row">
       <EventCreator onEventCreated={() => mutate()} habit={habit} />
       <HeatMap
         startDate={startDate}

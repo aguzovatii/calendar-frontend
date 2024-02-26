@@ -2,6 +2,7 @@
 import CalendarHeatmap from "react-calendar-heatmap";
 import { Tooltip } from "react-tooltip";
 import "react-calendar-heatmap/dist/styles.css";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 interface Value {
   date: Date;
@@ -26,43 +27,46 @@ export default function HeatMap({
   const values = getValues(events);
 
   return (
-    <div className="grow border rounded-md m-1 mr-2 p-2">
-      <CalendarHeatmap
-        startDate={startDate}
-        endDate={endDate}
-        values={values}
-        tooltipDataAttrs={(value: Value) => {
-          return value.date != null
-            ? {
-                "data-tooltip-id": "my-tooltip",
-                "data-tooltip-place": "top",
-                "data-tooltip-content": `${format(value.date)} has count: ${
-                  value.count
-                }`,
-              }
-            : {
-                "data-tooltip-id": "my-tooltip",
-                "data-tooltip-place": "top",
-                "data-tooltip-content": "0",
-              };
-        }}
-        classForValue={(value) => {
-          const todayBorder: string =
-            value && today.getTime() === value.date.getTime()
-              ? "today-border "
-              : "";
+    <ScrollArea className="grow border rounded-md m-2 p-2 min-w-56 lg:m-1 lg:mr-2 max-h-[228px]">
+      <div className="w-full min-w-[1300px] flex w-max">
+        <CalendarHeatmap
+          startDate={startDate}
+          endDate={endDate}
+          values={values}
+          tooltipDataAttrs={(value: Value) => {
+            return value.date != null
+              ? {
+                  "data-tooltip-id": "my-tooltip",
+                  "data-tooltip-place": "top",
+                  "data-tooltip-content": `${format(value.date)} has count: ${
+                    value.count
+                  }`,
+                }
+              : {
+                  "data-tooltip-id": "my-tooltip",
+                  "data-tooltip-place": "top",
+                  "data-tooltip-content": "0",
+                };
+          }}
+          classForValue={(value) => {
+            const todayBorder: string =
+              value && today.getTime() === value.date.getTime()
+                ? "today-border "
+                : "";
 
-          if (!value || value.count === 0) {
-            return todayBorder + "color-empty1";
-          }
-          return (
-            todayBorder +
-            `color-scale-${Math.min(Math.floor(value.count / 3), 4)}`
-          );
-        }}
-      />
-      <Tooltip id="my-tooltip" />
-    </div>
+            if (!value || value.count === 0) {
+              return todayBorder + "color-empty1";
+            }
+            return (
+              todayBorder +
+              `color-scale-${Math.min(Math.floor(value.count / 3), 4)}`
+            );
+          }}
+        />
+        <Tooltip id="my-tooltip" />
+      </div>
+      <ScrollBar orientation="horizontal" />
+    </ScrollArea>
   );
 
   function getValues(events: Event[]): Value[] {

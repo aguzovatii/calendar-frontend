@@ -90,13 +90,13 @@ export default function Signup() {
 
   return (
     <div className="grid place-items-center h-full">
-      <Card className="w-[380px]">
-        <CardHeader>
-          <CardTitle>Sign up</CardTitle>
+      <Card className="w-full max-w-[380px] border-0 sm:border shadow-none sm:shadow-sm">
+        <CardHeader className="p-0 sm:p-6">
+          <CardTitle className="text-center">Sign up</CardTitle>
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
                 control={form.control}
                 name="username"

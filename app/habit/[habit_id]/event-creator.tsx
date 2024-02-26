@@ -113,8 +113,8 @@ export default function EventCreator({
   }
 
   return (
-    <div className="m-1 ml-2 flex flew-row">
-      <Card className="w-[350px]">
+    <div className="m-1 ml-2 mr-2 flex flew-row">
+      <Card className="w-64">
         <CardHeader>
           <CardTitle>Edit events</CardTitle>
           <CardDescription>Add or delete events</CardDescription>
