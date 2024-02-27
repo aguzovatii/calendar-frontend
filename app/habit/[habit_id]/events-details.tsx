@@ -2,6 +2,7 @@ import useSWR, { Fetcher } from "swr";
 import EventCreator from "./event-creator";
 import { useSession } from "next-auth/react";
 import HeatMap from "@/app/heatmap/heatmap";
+import { Event } from "../../types";
 
 interface Events {
   events: Event[];

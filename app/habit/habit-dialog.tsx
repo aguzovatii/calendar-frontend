@@ -20,13 +20,11 @@ import {
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { EMPTY_HABIT_DESCRIPTION } from "../types";
 
 interface HabitDialogSubmitFunction {
   (habitName: string, habitDescription: string): void;
 }
-
-const EMPTY_HABIT_DESCRIPTION =
-  '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}';
 
 const formSchema = z.object({
   name: z.string().min(1),

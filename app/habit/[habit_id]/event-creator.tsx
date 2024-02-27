@@ -22,6 +22,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { EmptyFunction } from "@/app/types";
 
 export default function EventCreator({
   onEventCreated,
@@ -113,7 +114,7 @@ export default function EventCreator({
   }
 
   return (
-    <div className="m-1 ml-2 mr-2 flex flew-row">
+    <div className="m-2 flex flew-row">
       <Card className="w-64">
         <CardHeader>
           <CardTitle>Edit events</CardTitle>
