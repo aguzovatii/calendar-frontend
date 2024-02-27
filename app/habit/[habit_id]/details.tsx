@@ -11,6 +11,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { HabitDetails } from "@/app/types";
 
 const fetcher: Fetcher<HabitDetails, [string, string]> = ([url, token]) =>
   fetch(url, { headers: { Authorization: "Bearer " + token } }).then((res) =>
@@ -61,7 +62,7 @@ export default function HabitDetails({ habit }: { habit: string }) {
           }}
         />
       </div>
-      <RichTextViewer editorState={data!.description} className="m-2" />
+      <RichTextViewer editorState={data!.description} />
     </>
   );
 

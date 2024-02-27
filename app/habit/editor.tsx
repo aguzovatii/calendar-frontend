@@ -11,6 +11,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { HabitDetails } from "../types";
 
 export default function HabitEditor({
   habit,

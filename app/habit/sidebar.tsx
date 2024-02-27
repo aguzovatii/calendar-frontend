@@ -6,6 +6,7 @@ import { CheckCircleIcon, CircleDashed, CircleIcon } from "lucide-react";
 import HabitCreator from "./creator";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Habit } from "../types";
 
 const fetcher: Fetcher<Habit[], [string, string]> = ([url, token]) =>
   fetch(url, { headers: { Authorization: "Bearer " + token } }).then((res) =>
