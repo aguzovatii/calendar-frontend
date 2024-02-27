@@ -28,7 +28,7 @@ export default function HeatMap({
   const values = getValues(events);
 
   return (
-    <ScrollArea className="grow border rounded-md m-2 mt-0 lg:ml-0 lg:mt-2 p-2 min-w-56 max-h-[228px]">
+    <ScrollArea className="grow border rounded-md m-2 ml-0 p-2 min-w-56 max-h-[228px]">
       <div className="w-full min-w-[1300px]">
         <CalendarHeatmap
           startDate={startDate}
