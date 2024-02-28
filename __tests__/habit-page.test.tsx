@@ -19,7 +19,7 @@ it("HabitSidebar has the 'Habits' title", () => {
   });
 
   (useRouter as jest.Mock).mockReturnValue({
-    push: () => {}
+    push: () => {},
   });
 
   (useSwr as jest.Mock).mockReturnValue({
