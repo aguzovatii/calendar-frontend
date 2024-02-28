@@ -10,6 +10,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function HabitCreator({
   onHabitCreatedHandler,
@@ -18,6 +20,7 @@ export default function HabitCreator({
 }) {
   const [openHabitDialog, setOpenHabitDialog] = useState(false);
   const { data: session } = useSession();
+  const router = useRouter();
 
   return (
     <HabitDialog
@@ -54,13 +57,24 @@ export default function HabitCreator({
         name: name,
         description: description,
       }),
-    }).then((response) => {
-      response.ok ? habitCreated() : alert("The habit could not be created");
-    });
+    })
+      .then((response) => {
+        return response.ok
+          ? response.json()
+          : Promise.reject("The habit could not be created");
+      })
+      .then((body) => habitCreated(body.id))
+      .catch((error) => alert(error));
   }
 
-  function habitCreated() {
+  function habitCreated(habitId: string) {
     setOpenHabitDialog(false);
     onHabitCreatedHandler();
+    toast("Habit created successfully", {
+      action: {
+        label: "View",
+        onClick: () => router.push(`/habit/${habitId}`),
+      },
+    });
   }
 }

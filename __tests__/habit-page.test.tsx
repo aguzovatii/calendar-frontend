@@ -4,9 +4,11 @@
 import HabitSidebar from "@/app/habit/sidebar";
 import { render, screen } from "@testing-library/react";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import useSwr from "swr";
 
 jest.mock("next-auth/react");
+jest.mock("next/navigation");
 jest.mock("swr");
 
 it("HabitSidebar has the 'Habits' title", () => {
@@ -14,6 +16,10 @@ it("HabitSidebar has the 'Habits' title", () => {
     data: {
       accessToken: "test",
     },
+  });
+
+  (useRouter as jest.Mock).mockReturnValue({
+    push: () => {},
   });
 
   (useSwr as jest.Mock).mockReturnValue({
