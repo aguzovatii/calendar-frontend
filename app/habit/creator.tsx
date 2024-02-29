@@ -63,7 +63,7 @@ export default function HabitCreator({
           ? response.json()
           : Promise.reject("The habit could not be created");
       })
-      .then((responseBody) => habitCreated(responseBody.id))
+      .then((body) => habitCreated(body.id))
       .catch((error) => alert(error));
   }
 

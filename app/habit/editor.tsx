@@ -72,6 +72,7 @@ export default function HabitEditor({
   function onSuccessHandler() {
     onHabitChangeHandler();
     setOpen(false);
+
     globalMutate([
       process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/habit",
       session!.accessToken,
