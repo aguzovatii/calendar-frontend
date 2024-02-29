@@ -65,14 +65,13 @@ export default function HabitEditor({
     }).then((response) => {
       response.ok
         ? onSuccessHandler()
-        : alert("The habit could not be modified!");
+        : alert("The habit could not be modified");
     });
   }
 
   function onSuccessHandler() {
     onHabitChangeHandler();
     setOpen(false);
-
     globalMutate([
       process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/habit",
       session!.accessToken,
