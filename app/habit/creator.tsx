@@ -1,4 +1,4 @@
-import { CalendarPlus } from "lucide-react";
+import { CalendarPlusIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import HabitDialog from "./habit-dialog";
 import { DialogTrigger } from "@/components/ui/dialog";
@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/tooltip";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import AnimatedButton from "@/components/ui/animated-button";
 
 export default function HabitCreator({
   onHabitCreatedHandler,
@@ -34,7 +35,7 @@ export default function HabitCreator({
           <TooltipTrigger asChild>
             <DialogTrigger asChild>
               <Button variant="outline" size="icon" className="h-6 mt-1 mr-1">
-                <CalendarPlus className="h-4 w-4" />
+                <CalendarPlusIcon className="h-4 w-4" />
               </Button>
             </DialogTrigger>
           </TooltipTrigger>
@@ -63,18 +64,31 @@ export default function HabitCreator({
           ? response.json()
           : Promise.reject("The habit could not be created");
       })
-      .then((body) => habitCreated(body.id))
+      .then((body) => habitCreated(body.name, body.id))
       .catch((error) => alert(error));
   }
 
-  function habitCreated(habitId: string) {
+  function habitCreated(habitName: string, habitId: string) {
     setOpenHabitDialog(false);
     onHabitCreatedHandler();
-    toast("Habit created successfully", {
-      action: {
-        label: "View",
-        onClick: () => router.push(`/habit/${habitId}`),
-      },
-    });
+    toast.custom(
+      (t) => (
+        <div className="border rounded-md p-4 w-[356px] flex flex-row">
+          <div className="grow flex flex-col">
+            <p className="font-bold">Habit created successfully</p>
+            <p className="font-light line-clamp-1">{habitName}</p>
+          </div>
+          <AnimatedButton
+            onClick={() => {
+              router.push(`/habit/${habitId}`);
+              toast.dismiss(t);
+            }}
+          >
+            View
+          </AnimatedButton>
+        </div>
+      ),
+      { duration: 10000 },
+    );
   }
 }
