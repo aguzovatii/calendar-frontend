@@ -1,5 +1,6 @@
 import { Providers } from "@/app/providers";
 import ThemeSwitcher from "../theme-switcher";
+import { GlowingStarsBackgroundCard } from "components/ui/glowing-stars";
 
 export default function RootLayout({
   children,
@@ -20,7 +21,9 @@ export default function RootLayout({
             <ThemeSwitcher />
           </div>
         </div>
-        <div className="grow h-48">{children}</div>
+        <GlowingStarsBackgroundCard className="grow relative">
+          {children}
+        </GlowingStarsBackgroundCard>
       </div>
     </Providers>
   );

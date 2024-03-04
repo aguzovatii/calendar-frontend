@@ -20,7 +20,7 @@
 
 .react-calendar-heatmap .today-border {
   stroke-width: 0.5px;
-  stroke: rgb(156 163 175);
+  stroke: #9ca3af;
 }
 
 .react-calendar-heatmap .color-empty1 {
