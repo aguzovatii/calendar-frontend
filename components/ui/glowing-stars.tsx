@@ -30,8 +30,8 @@ export const GlowingStarsBackgroundCard = ({
 };
 
 export const Illustration = ({ mouseEnter }: { mouseEnter: boolean }) => {
-  const stars = 108;
-  const columns = 18;
+  const stars = 200;
+  const columns = 20;
 
   const [glowingStars, setGlowingStars] = useState<number[]>([]);
 
