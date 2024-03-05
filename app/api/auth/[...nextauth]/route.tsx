@@ -87,18 +87,30 @@ const handler = NextAuth({
           },
         )
           .then((response) => {
-            return response.ok ? response.json() : { token: "" };
+            return response.ok
+              ? response.json()
+              : response.text().then((error) => {
+                  return Promise.reject({
+                    code: response.status,
+                    reason: error,
+                  });
+                });
           })
           .then((jwt: { token: string }) => {
-            if (jwt.token.length === 0) {
-              return null;
-            }
-
             return {
               id: credentials.username,
               jwt: jwt.token,
               name: credentials.username,
             };
+          })
+          .catch((reason: { code: number; reason: string }) => {
+            console.log(
+              `Failed to signup with backend. Response code = ${reason.code}. Response message = ${JSON.stringify(reason)}`,
+            );
+            if (reason.code !== 401) {
+              throw new Error();
+            }
+            return null;
           });
       },
     }),
