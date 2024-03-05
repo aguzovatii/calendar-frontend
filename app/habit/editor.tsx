@@ -11,15 +11,15 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { HabitDetails } from "../types";
+import { HabitDetails, RecurrenceApiType } from "../types";
 
 export default function HabitEditor({
   habit,
   onHabitChangeHandler,
 }: {
-  habit: HabitDetails;
-  onHabitChangeHandler(): void;
-}) {
+    habit: HabitDetails;
+    onHabitChangeHandler(): void;
+  }) {
   const [open, setOpen] = useState(false);
   const { mutate: globalMutate } = useSWRConfig();
 
@@ -33,6 +33,7 @@ export default function HabitEditor({
       defaultHabitName={habit.name}
       defaultHabitDescription={habit.description}
       dialogTitle="Edit habit"
+      defaultRec={habit.recurrence}
     >
       <TooltipProvider>
         <Tooltip>
@@ -51,8 +52,8 @@ export default function HabitEditor({
     </HabitDialog>
   );
 
-  function editHabit(name: string, description: string) {
-    fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/habit/" + habit.id, {
+  async function editHabit(name: string, description: string, rec: RecurrenceApiType): Promise<void> {
+    const response = await fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/habit/" + habit.id, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -61,12 +62,18 @@ export default function HabitEditor({
       body: JSON.stringify({
         name: name,
         description: description,
+        recurrence: rec,
       }),
-    }).then((response) => {
-      response.ok
-        ? onSuccessHandler()
-        : alert("The habit could not be modified");
     });
+
+    if (!response.ok) {
+      const error = await response.json();
+      const message = error.message ?? "Failed to create new habit. Please try again later.";
+      return Promise.reject(message);
+    }
+
+    onSuccessHandler();
+    return Promise.resolve();
   }
 
   function onSuccessHandler() {

@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/tooltip";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { RecurrenceApiType } from "../types";
 
 export default function HabitCreator({
   onHabitCreatedHandler,
@@ -46,8 +47,8 @@ export default function HabitCreator({
     </HabitDialog>
   );
 
-  function createHabit(name: string, description: string) {
-    fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/habit", {
+  async function createHabit(name: string, description: string, rec: RecurrenceApiType): Promise<void> {
+    const response = await fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/habit", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -56,15 +57,20 @@ export default function HabitCreator({
       body: JSON.stringify({
         name: name,
         description: description,
+        recurrence: rec,
       }),
-    })
-      .then((response) => {
-        return response.ok
-          ? response.json()
-          : Promise.reject("The habit could not be created");
-      })
-      .then((body) => habitCreated(body.id))
-      .catch((error) => alert(error));
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      const message = error.message ?? "Failed to create new habit. Please try again later.";
+      return Promise.reject(message);
+    }
+
+    const body = await response.json();
+    habitCreated(body.id);
+    
+    return Promise.resolve();
   }
 
   function habitCreated(habitId: string) {

@@ -11,12 +11,11 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { HabitDetails } from "@/app/types";
+import { HabitDetails, HabitDetailsSchema } from "@/app/types";
 
-const fetcher: Fetcher<HabitDetails, [string, string]> = ([url, token]) =>
-  fetch(url, { headers: { Authorization: "Bearer " + token } }).then((res) =>
-    res.json(),
-  );
+const fetcher: Fetcher<HabitDetails, [string, string]> = ([url, token]) => fetch(url, { headers: { Authorization: "Bearer " + token } })
+  .then((res) => res.json())
+  .then((val) => HabitDetailsSchema.parse(val));
 
 export default function HabitDetails({ habit }: { habit: string }) {
   const router = useRouter();
