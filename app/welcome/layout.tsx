@@ -1,6 +1,6 @@
 import { Providers } from "@/app/providers";
 import ThemeSwitcher from "../theme-switcher";
-import { GlowingStarsBackgroundCard } from "components/ui/glowing-stars";
+import ParticleRing from "@/components/ui/ParticleRing";
 
 export default function RootLayout({
   children,
@@ -21,9 +21,7 @@ export default function RootLayout({
             <ThemeSwitcher />
           </div>
         </div>
-        <GlowingStarsBackgroundCard className="grow relative">
-          {children}
-        </GlowingStarsBackgroundCard>
+        <ParticleRing>{children}</ParticleRing>
       </div>
     </Providers>
   );

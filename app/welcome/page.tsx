@@ -5,7 +5,6 @@ import img2 from "./calendar.svg";
 import img3 from "./coding.svg";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { GlowingStarsBackgroundCard } from "components/ui/glowing-stars";
 
 export default function WelcomePage({
   searchParams,
