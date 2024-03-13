@@ -3,7 +3,7 @@ import CalendarHeatmap from "react-calendar-heatmap";
 import { Tooltip } from "react-tooltip";
 import "react-calendar-heatmap/dist/styles.css";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { Event } from "../types";
+import { Task } from "../habit/[habit_id]/tasks-details";
 
 interface Value {
   date: Date;
@@ -17,18 +17,18 @@ const dayFormatter = new Intl.DateTimeFormat("en", { day: "2-digit" });
 export default function HeatMap({
   startDate,
   endDate,
-  events,
+  tasks,
   today,
 }: {
   startDate: Date;
   endDate: Date;
-  events: Event[];
+  tasks: Task[];
   today: Date;
 }) {
-  const values = getValues(events);
+  const values = getValues(tasks);
 
   return (
-    <ScrollArea className="grow border rounded-md m-2 mt-0 lg:ml-0 lg:mt-2 p-2 min-w-56 max-h-[228px]">
+    <ScrollArea className="grow border rounded-md mt-2 p-2 min-w-56">
       <div className="w-full min-w-[1300px]">
         <CalendarHeatmap
           startDate={startDate}
@@ -70,9 +70,12 @@ export default function HeatMap({
     </ScrollArea>
   );
 
-  function getValues(events: Event[]): Value[] {
-    for (let event of events) {
-      event.date_time = new Date(event.date_time);
+  function getValues(tasks: Task[]): Value[] {
+    tasks = tasks.filter(
+      (task) => task.done_on != null && task.state === "Done",
+    );
+    for (let task of tasks) {
+      task.done_on = new Date(task.done_on);
     }
 
     let newValues = [];
@@ -84,8 +87,8 @@ export default function HeatMap({
     ) {
       map.set(format(date), 0);
     }
-    for (let event of events) {
-      let date = new Date(event.date_time);
+    for (let task of tasks) {
+      let date = new Date(task.done_on);
       date.setHours(0, 0, 0, 0);
 
       const key = format(date);

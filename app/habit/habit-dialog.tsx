@@ -20,7 +20,7 @@ import {
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { EMPTY_HABIT_DESCRIPTION } from "../types";
+import { EMPTY_DESCRIPTION } from "../types";
 
 interface HabitDialogSubmitFunction {
   (habitName: string, habitDescription: string): void;
@@ -35,7 +35,7 @@ export default function HabitDialog({
   onOpenChange,
   onSubmitEventHandler,
   defaultHabitName = "",
-  defaultHabitDescription = EMPTY_HABIT_DESCRIPTION,
+  defaultHabitDescription = EMPTY_DESCRIPTION,
   dialogTitle,
   children,
 }: {
