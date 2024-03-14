@@ -42,6 +42,7 @@ import { CalendarIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useSWRConfig } from "swr";
 import { z } from "zod";
 
 const monthDays = Array.from({ length: 31 }, (_, i) => i + 1);
@@ -53,6 +54,7 @@ export default function TaskDefCreator({
   habitId: string;
   onTaskDefCreatedHandler: EmptyFunction;
 }) {
+  const { mutate: globalMutate } = useSWRConfig();
   const { data: session } = useSession();
   const [open, setOpen] = useState(false);
 
@@ -160,6 +162,10 @@ export default function TaskDefCreator({
         onTaskDefCreatedHandler();
         setOpen(false);
         form.reset();
+        globalMutate([
+          process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/habit",
+          session!.accessToken,
+        ]);
       })
       .catch((reason) => {
         form.setError("serverError", {

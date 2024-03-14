@@ -11,6 +11,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { Trash2Icon } from "lucide-react";
 import { useSession } from "next-auth/react";
+import { useSWRConfig } from "swr";
 
 export default function TaskDefinitionDetails({
   task: taskDef,
@@ -21,6 +22,7 @@ export default function TaskDefinitionDetails({
   habitId: string;
   onTaskDefDeleteHandler: EmptyFunction;
 }) {
+  const { mutate: globalMutate } = useSWRConfig();
   const { data: session } = useSession();
 
   const recurrence = (() => {
@@ -76,6 +78,10 @@ export default function TaskDefinitionDetails({
       })
       .then(() => {
         onTaskDefDeleteHandler();
+        globalMutate([
+          process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/habit",
+          session!.accessToken,
+        ]);
       })
       .catch((reason) => {
         alert(reason);

@@ -1,4 +1,4 @@
-import useSWR, { Fetcher } from "swr";
+import useSWR, { Fetcher, useSWRConfig } from "swr";
 import { useSession } from "next-auth/react";
 import HeatMap from "@/app/heatmap/heatmap";
 import { ColumnDef } from "@tanstack/react-table";
@@ -21,6 +21,7 @@ const fetcher: Fetcher<Task[], [string, string]> = ([url, token]) =>
   );
 
 export default function TasksDetails({ habitId }: { habitId: string }) {
+  const { mutate: globalMutate } = useSWRConfig();
   const columns: ColumnDef<Task>[] = [
     {
       accessorKey: "name",
@@ -155,6 +156,10 @@ export default function TasksDetails({ habitId }: { habitId: string }) {
       })
       .then(() => {
         mutate();
+        globalMutate([
+          process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/habit",
+          session!.accessToken,
+        ]);
       })
       .catch((reason) => {
         alert(`Error: ${reason}`);
