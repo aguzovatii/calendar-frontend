@@ -1,6 +1,6 @@
 import { Toaster } from "@/components/ui/sonner";
 import "./global.css";
-import ThemeProvider from "./theme-provider";
+import { ThemeProvider } from "next-themes";
 
 export default function RootLayout({
   children,
@@ -10,7 +10,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full" suppressHydrationWarning>
       <body className="h-full">
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider attribute="class">{children}</ThemeProvider>
         <Toaster />
       </body>
     </html>
