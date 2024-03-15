@@ -11,7 +11,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { HabitDetails } from "@/app/types";
+import type { HabitDetails } from "@/app/types";
 
 const fetcher: Fetcher<HabitDetails, [string, string]> = ([url, token]) =>
   fetch(url, { headers: { Authorization: "Bearer " + token } }).then((res) =>
