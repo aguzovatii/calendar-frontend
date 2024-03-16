@@ -30,8 +30,8 @@ export default function Page({ params }: { params: { habit_id: string } }) {
   } = useSWR(
     [
       process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL +
-      "/habit/" +
-      params.habit_id,
+        "/habit/" +
+        params.habit_id,
       session!.accessToken,
     ],
     fetcher,
@@ -95,8 +95,8 @@ export default function Page({ params }: { params: { habit_id: string } }) {
   function deleteHabit() {
     fetch(
       process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL +
-      "/habit/" +
-      params.habit_id,
+        "/habit/" +
+        params.habit_id,
       {
         method: "DELETE",
         headers: {
