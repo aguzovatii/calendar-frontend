@@ -5,12 +5,6 @@ import HabitDialog from "./habit-dialog";
 import { DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { SquarePen } from "lucide-react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { HabitDetails } from "../types";
 
 export default function HabitEditor({
@@ -34,20 +28,12 @@ export default function HabitEditor({
       defaultHabitDescription={habit.description}
       dialogTitle="Edit habit"
     >
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <DialogTrigger asChild>
-              <Button variant="outline" size="icon" className="h-6 mt-1 ml-1">
-                <SquarePen className="h-4 w-4" />
-              </Button>
-            </DialogTrigger>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Edit habit</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+      <DialogTrigger asChild>
+        <Button variant="outline">
+          <SquarePen className="h-4 w-4" />
+          <div className="ml-1">Edit Habit</div>
+        </Button>
+      </DialogTrigger>
     </HabitDialog>
   );
 

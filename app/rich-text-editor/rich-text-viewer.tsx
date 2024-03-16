@@ -8,7 +8,7 @@ import { EditorRefPlugin } from "@lexical/react/LexicalEditorRefPlugin";
 import RichTextEditorConfig from "./config";
 import { useEffect, useRef } from "react";
 import { LexicalEditor } from "lexical";
-import { EMPTY_HABIT_DESCRIPTION } from "../types";
+import { EMPTY_DESCRIPTION } from "../types";
 
 export default function RichTextViewer({
   editorState,
@@ -38,7 +38,7 @@ export default function RichTextViewer({
           <ContentEditable
             className={
               "outline-none py-[15px] px-2.5 overflow-hidden text-ellipsis border rounded-md " +
-              (editorState === EMPTY_HABIT_DESCRIPTION ? "hidden " : "m-2 mb-0")
+              (editorState === EMPTY_DESCRIPTION ? "hidden " : "")
             }
           />
         }
