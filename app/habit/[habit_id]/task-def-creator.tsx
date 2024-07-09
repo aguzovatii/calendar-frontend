@@ -2,6 +2,7 @@ import RichTextEditor from "@/app/rich-text-editor/rich-text-editor";
 import {
   EMPTY_DESCRIPTION,
   EmptyFunction,
+  EndVariants,
   RecurrenceApiType,
   RecurrenceType,
   TaskDef,
@@ -33,6 +34,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { cn } from "@/lib/utils";
@@ -92,9 +94,13 @@ export default function TaskDefCreator({
             from: today,
           },
         },
+        ends_on: {
+          type: EndVariants.Never,
+        },
       },
     },
   );
+  const { watch } = form;
 
   function onSubmit(task: TaskDef) {
     const recurrence: RecurrenceApiType = (() => {
@@ -143,6 +149,7 @@ export default function TaskDefCreator({
           name: task.name,
           description: task.description,
           recurrence: recurrence,
+          ends_on: task.ends_on,
         }),
       },
     )
@@ -655,6 +662,77 @@ export default function TaskDefCreator({
                         </div>
                       </TabsContent>
                     </Tabs>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="ends_on"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Ends</FormLabel>
+                  <FormControl>
+                    <div className="flex flex-row items-top mt-2">
+                      <RadioGroup
+                        defaultValue={EndVariants.Never}
+                        onValueChange={(v) =>
+                          field.onChange(
+                            v === EndVariants.Never
+                              ? { type: v }
+                              : { type: v, value: { after: 1 } },
+                          )
+                        }
+                      >
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem
+                            value={EndVariants.Never}
+                            id={EndVariants.Never}
+                          />
+                          <Label>Never</Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem
+                            value={EndVariants.After}
+                            id={EndVariants.After}
+                          />
+                          <Label>After</Label>
+                          <FormField
+                            control={form.control}
+                            name="ends_on.value.after"
+                            render={({ field: _ }) => (
+                              <FormItem>
+                                <FormControl>
+                                  <Input
+                                    value={
+                                      field.value.type === EndVariants.After
+                                        ? field.value.value.after
+                                        : 1
+                                    }
+                                    type="number"
+                                    className="ml-2 max-w-24"
+                                    disabled={
+                                      watch("ends_on.type") !==
+                                      EndVariants.After
+                                    }
+                                    onChange={(e) =>
+                                      field.onChange({
+                                        ...field.value,
+                                        value: {
+                                          after: e.target.value,
+                                        },
+                                      })
+                                    }
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <Label className="ml-2">times</Label>
+                        </div>
+                      </RadioGroup>
+                    </div>
                   </FormControl>
                 </FormItem>
               )}
