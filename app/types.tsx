@@ -110,10 +110,22 @@ const RecurrenceApiSchema = z.object({
 
 export type RecurrenceApiType = z.infer<typeof RecurrenceApiSchema>;
 
+const EndVariantsEnum = z.enum(["Never", "After"]);
+export const EndVariants = EndVariantsEnum.enum;
+
+const EndsSchema = z.union([
+  z.object({ type: z.literal(EndVariants.Never) }),
+  z.object({
+    type: z.literal(EndVariants.After),
+    value: z.object({ after: z.coerce.number().int().positive() }),
+  }),
+]);
+
 export const TaskDefSchema = z.object({
   name: z.string().min(1),
   description: z.string(),
   recurrence: RecurrenceSchema,
+  ends_on: EndsSchema,
 });
 
 export type TaskDef = z.infer<typeof TaskDefSchema>;
