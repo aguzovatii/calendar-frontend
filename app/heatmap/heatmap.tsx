@@ -1,5 +1,7 @@
 "use client";
-import CalendarHeatmap from "react-calendar-heatmap";
+import CalendarHeatmap, {
+  ReactCalendarHeatmapValue,
+} from "react-calendar-heatmap";
 import { Tooltip } from "react-tooltip";
 import "react-calendar-heatmap/dist/styles.css";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
@@ -34,16 +36,18 @@ export default function HeatMap({
           startDate={startDate}
           endDate={endDate}
           values={values}
-          tooltipDataAttrs={(value: Value) => {
-            return value.date != null
+          tooltipDataAttrs={(
+            value: ReactCalendarHeatmapValue<Date> | undefined,
+          ) => {
+            return value != undefined && value.date != null
               ? {
+                  id: "my-tooltip",
                   "data-tooltip-id": "my-tooltip",
                   "data-tooltip-place": "top",
-                  "data-tooltip-content": `${format(value.date)} has count: ${
-                    value.count
-                  }`,
+                  "data-tooltip-content": `${format(new Date(value.date))} has count: ${value.count}`,
                 }
               : {
+                  id: "my-tooltip",
                   "data-tooltip-id": "my-tooltip",
                   "data-tooltip-place": "top",
                   "data-tooltip-content": "0",
