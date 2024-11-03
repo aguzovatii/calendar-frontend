@@ -2,7 +2,7 @@ name: Deployment to K8S
 
 on:
   push:
-    # branches: ["master"]
+    branches: ["master"]
 
 jobs:
   build:
