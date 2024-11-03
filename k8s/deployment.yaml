@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: calendar-frontend
+  name: calendar-frontend
+  namespace: calendar-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: calendar-frontend
+  template:
+    metadata:
+      labels:
+        app: calendar-frontend
+    spec:
+      containers:
+        - image: ghcr.io/calendar-team/calendar-frontend
+          name: calendar-frontend
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+          env:
+            - name: NEXTAUTH_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: nextauth-secret
+                  key: nextauth-secret
+      imagePullSecrets:
+        - name: ghcr-secret
