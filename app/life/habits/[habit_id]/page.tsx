@@ -114,6 +114,6 @@ export default function Page({ params }: { params: { habit_id: string } }) {
       process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/habit",
       session!.accessToken,
     ]);
-    router.push("/habit");
+    router.push("/habits");
   }
 }

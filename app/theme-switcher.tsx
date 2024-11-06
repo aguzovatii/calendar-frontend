@@ -25,7 +25,7 @@ export default function ThemeSwitcher() {
   const currentTheme = theme === "system" ? systemTheme : theme;
 
   return (
-    <div>
+    <>
       {currentTheme === "dark" ? (
         <TooltipProvider>
           <Tooltip>
@@ -33,7 +33,7 @@ export default function ThemeSwitcher() {
               <Button
                 variant="outline"
                 size="icon"
-                className="h-6 mt-2 mr-2"
+                className="h-6"
                 onClick={() => setTheme("light")}
               >
                 <SunIcon className="h-4 w-4" />
@@ -51,7 +51,7 @@ export default function ThemeSwitcher() {
               <Button
                 variant="outline"
                 size="icon"
-                className="h-6 mt-2 mr-2"
+                className="h-6"
                 onClick={() => setTheme("dark")}
               >
                 <MoonIcon className="h-4 w-4" />
@@ -63,6 +63,6 @@ export default function ThemeSwitcher() {
           </Tooltip>
         </TooltipProvider>
       )}
-    </div>
+    </>
   );
 }

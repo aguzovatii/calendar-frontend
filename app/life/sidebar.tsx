@@ -3,7 +3,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import useSWR, { Fetcher } from "swr";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircleIcon, CircleDashed, CircleIcon } from "lucide-react";
-import HabitCreator from "./creator";
+import HabitCreator from "./habits/creator";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Habit } from "../types";
@@ -30,7 +30,10 @@ export default function HabitSidebar() {
 
   return (
     <div className="h-full w-full flex flex-col">
-      <div className="h-full m-2 flex flex-col">
+      <div className="h-full m-2 flex flex-col space-y-4">
+        <div className="h-7 flex flex-row">
+          <h1 className="text-xl font-bold ml-2">To do</h1>
+        </div>
         <div className="h-7 flex flex-row">
           <h1 className="text-xl font-bold ml-2">Habits</h1>
           <div className="flex h-7">
@@ -50,7 +53,7 @@ export default function HabitSidebar() {
                 "ml-2 hover:underline pt-2 flex flex-row " +
                 (pathname === "/habit/" + habit.id && "font-bold")
               }
-              href={"/habit/" + habit.id}
+              href={"/habits/" + habit.id}
             >
               <div className="flex flex-col justify-center">
                 <HabitState

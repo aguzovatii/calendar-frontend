@@ -7,7 +7,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { ReactNode, useEffect, useState } from "react";
-import RichTextEditor from "../rich-text-editor/rich-text-editor";
+import RichTextEditor from "../../rich-text-editor/rich-text-editor";
 import { Dispatch, SetStateAction } from "react";
 import {
   Form,
@@ -20,7 +20,7 @@ import {
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { EMPTY_DESCRIPTION } from "../types";
+import { EMPTY_DESCRIPTION } from "../../types";
 
 interface HabitDialogSubmitFunction {
   (habitName: string, habitDescription: string): void;

@@ -10,13 +10,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import ThemeSwitcher from "../theme-switcher";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 export default function HabitPageSkeleton({
   children,
@@ -31,7 +25,7 @@ export default function HabitPageSkeleton({
 
   return (
     <div className="h-full flex flex-col">
-      <div className="h-8 flex flex-row">
+      <div className="flex flex-row border-b">
         <Sheet>
           <SheetTrigger asChild>
             <Button
@@ -59,7 +53,7 @@ export default function HabitPageSkeleton({
           </h1>
         </div>
         <div className="grow"></div>
-        <div className="basis-6 flex flex-row">
+        <div className="basis-6 h-10 items-center space-x-2 mr-2 flex flex-row">
           <ThemeSwitcher />
           <TooltipProvider>
             <Tooltip>
@@ -67,7 +61,7 @@ export default function HabitPageSkeleton({
                 <Button
                   variant="outline"
                   size="icon"
-                  className="h-6 mt-2 mr-2"
+                  className="h-6"
                   onClick={() => signOut()}
                 >
                   <LogOut className="h-4 w-4" />

@@ -6,14 +6,7 @@ import { DataTable } from "./data-table";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDownIcon, CheckIcon, XIcon } from "lucide-react";
 import { format } from "date-fns";
-
-export type Task = {
-  id: string;
-  name: string;
-  state: string;
-  due_on: Date;
-  done_on: Date;
-};
+import { Task } from "@/app/types";
 
 const fetcher: Fetcher<Task[], [string, string]> = ([url, token]) =>
   fetch(url, { headers: { Authorization: "Bearer " + token } }).then((res) =>
@@ -125,23 +118,16 @@ export default function TasksDetails({ habitId }: { habitId: string }) {
 
   function changeState(task: Task, state: "Done" | "Cancelled") {
     task.state = "Done";
-    fetch(
-      process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL +
-        "/habit/" +
-        habitId +
-        "/tasks/" +
-        task.id,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + session!.accessToken,
-        },
-        body: JSON.stringify({
-          state: state,
-        }),
+    fetch(process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/tasks/" + task.id, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + session!.accessToken,
       },
-    )
+      body: JSON.stringify({
+        state: state,
+      }),
+    })
       .then((response) => {
         return response.ok
           ? Promise.resolve()
