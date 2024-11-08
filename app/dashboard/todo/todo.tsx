@@ -41,11 +41,7 @@ export default function Todo({ date, today }: { date: Date; today: Date }) {
         </div>
         <div className="w-full flex flex-col space-y-4">
           {tasks!
-            .filter(
-              (task: Task) =>
-                task.state === "Pending" ||
-                task.due_on.getTime() === today.getTime(),
-            )
+            .filter((task: Task) => task.due_on.getTime() === today.getTime())
             .map((task: Task) => (
               <Checkbox
                 task={task}
