@@ -27,7 +27,7 @@ export default function Page({ params }: { params: { date: string } }) {
   console.log(date);
 
   return (
-    <SidebarProvider>
+    <>
       <AppSidebar date={date} />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
@@ -57,6 +57,6 @@ export default function Page({ params }: { params: { date: string } }) {
           </div>
         </div>
       </SidebarInset>
-    </SidebarProvider>
+    </>
   );
 }
