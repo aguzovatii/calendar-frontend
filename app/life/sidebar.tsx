@@ -53,7 +53,7 @@ export default function HabitSidebar() {
                 "ml-2 hover:underline pt-2 flex flex-row " +
                 (pathname === "/habit/" + habit.id && "font-bold")
               }
-              href={"/habits/" + habit.id}
+              href={"/life/habits/" + habit.id}
             >
               <div className="flex flex-col justify-center">
                 <HabitState
