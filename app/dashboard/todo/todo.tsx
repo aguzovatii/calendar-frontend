@@ -23,7 +23,7 @@ export default function Todo({ date, today }: { date: Date; today: Date }) {
     mutate,
   } = useSWR(
     [
-      process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/tasks",
+      `${process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL}/tasks/${format(date, "dd-MM-yyyy")}`,
       session!.accessToken,
     ],
     fetcher,
