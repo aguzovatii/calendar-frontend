@@ -15,18 +15,23 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { useRouter } from "next/navigation";
 
 export function ProjectSwitcher({
+  projectIndex,
   projects,
 }: {
   projects: {
     name: string;
     logo: React.ElementType;
     plan: string;
+    path: string;
   }[];
+  projectIndex: number;
 }) {
   const { isMobile } = useSidebar();
-  const [activeProject, setActiveProject] = React.useState(projects[0]);
+  const project = projects[projectIndex];
+  const router = useRouter();
 
   return (
     <SidebarMenu>
@@ -38,13 +43,11 @@ export function ProjectSwitcher({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                <activeProject.logo className="size-4" />
+                <project.logo className="size-4" />
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">
-                  {activeProject.name}
-                </span>
-                <span className="truncate text-xs">{activeProject.plan}</span>
+                <span className="truncate font-semibold">{project.name}</span>
+                <span className="truncate text-xs">{project.plan}</span>
               </div>
               <ChevronsUpDown className="ml-auto" />
             </SidebarMenuButton>
@@ -61,7 +64,7 @@ export function ProjectSwitcher({
             {projects.map((project, index) => (
               <DropdownMenuItem
                 key={project.name}
-                onClick={() => setActiveProject(project)}
+                onClick={() => router.push(project.path)}
                 className="gap-2 p-2"
               >
                 <div className="flex size-6 items-center justify-center rounded-sm border">

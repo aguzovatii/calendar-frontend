@@ -1,6 +1,7 @@
 import { Providers } from "@/app/providers";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { cookies } from "next/headers";
+import Session from "./todo/session";
 
 export default async function RootLayout({
   children,
@@ -12,7 +13,9 @@ export default async function RootLayout({
 
   return (
     <SidebarProvider defaultOpen={defaultOpen}>
-      <Providers>{children}</Providers>
+      <Providers>
+        <Session>{children}</Session>
+      </Providers>
     </SidebarProvider>
   );
 }

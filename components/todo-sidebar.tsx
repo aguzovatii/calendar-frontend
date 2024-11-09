@@ -13,6 +13,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { DatePicker } from "@/components/date-picker";
+import { AppSidebar } from "./app-sidebar";
 
 // This is sample data.
 const data = {
@@ -37,23 +38,10 @@ const data = {
   ],
 };
 
-export function AppSidebar({
-  projectIndex,
-  children,
-}: {
-  projectIndex: number;
-  children: React.ReactNode;
-}) {
+export function TodoSidebar({ date }: { date: Date }) {
   return (
-    <Sidebar collapsible="icon">
-      <SidebarHeader>
-        <ProjectSwitcher projectIndex={projectIndex} projects={data.projects} />
-      </SidebarHeader>
-      <SidebarContent>{children}</SidebarContent>
-      <SidebarFooter>
-        <NavUser user={data.user} />
-      </SidebarFooter>
-      <SidebarRail />
-    </Sidebar>
+    <AppSidebar projectIndex={0}>
+      <DatePicker date={date} />
+    </AppSidebar>
   );
 }

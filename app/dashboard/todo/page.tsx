@@ -1,6 +1,6 @@
 "use client";
 
-import { AppSidebar } from "@/components/app-sidebar";
+import { TodoSidebar } from "@/components/todo-sidebar";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -12,6 +12,7 @@ import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 import { format } from "date-fns";
 import Session from "./session";
+import Todo from "./todo";
 
 export default function Page() {
   const date = new Date();
@@ -19,7 +20,7 @@ export default function Page() {
 
   return (
     <>
-      <AppSidebar date={date} />
+      <TodoSidebar date={date} />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-4">
@@ -44,7 +45,7 @@ export default function Page() {
         </header>
         <div className="flex w-full h-full justify-center">
           <div className="flex flex-col w-[920px]">
-            <Session date={date} today={date} />
+            <Todo date={date} today={date} />
           </div>
         </div>
       </SidebarInset>
