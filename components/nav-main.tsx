@@ -1,6 +1,12 @@
 "use client";
 
-import { ChevronRight, type LucideIcon } from "lucide-react";
+import {
+  CheckCircleIcon,
+  ChevronRight,
+  CircleDashed,
+  CircleIcon,
+  type LucideIcon,
+} from "lucide-react";
 
 import {
   Collapsible,
@@ -9,65 +15,87 @@ import {
 } from "@/components/ui/collapsible";
 import {
   SidebarGroup,
-  SidebarGroupLabel,
   SidebarMenu,
+  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
+import Link from "next/link";
+import HabitCreator from "@/app/dashboard/habits/creator";
 
 export function NavMain({
-  items,
+  items: item,
 }: {
   items: {
     title: string;
     url: string;
-    icon?: LucideIcon;
-    isActive?: boolean;
+    icon: LucideIcon;
+    itemsChangeHandler: () => void;
     items?: {
       title: string;
       url: string;
+      isActive: boolean;
+      state: string;
     }[];
-  }[];
+  };
 }) {
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Platform</SidebarGroupLabel>
       <SidebarMenu>
-        {items.map((item) => (
-          <Collapsible
-            key={item.title}
-            asChild
-            defaultOpen={item.isActive}
-            className="group/collapsible"
-          >
-            <SidebarMenuItem>
-              <CollapsibleTrigger asChild>
-                <SidebarMenuButton tooltip={item.title}>
-                  {item.icon && <item.icon />}
-                  <span>{item.title}</span>
-                  <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                </SidebarMenuButton>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <SidebarMenuSub>
-                  {item.items?.map((subItem) => (
-                    <SidebarMenuSubItem key={subItem.title}>
-                      <SidebarMenuSubButton asChild>
-                        <a href={subItem.url}>
-                          <span>{subItem.title}</span>
-                        </a>
-                      </SidebarMenuSubButton>
-                    </SidebarMenuSubItem>
-                  ))}
-                </SidebarMenuSub>
-              </CollapsibleContent>
-            </SidebarMenuItem>
-          </Collapsible>
-        ))}
+        <SidebarMenuItem>
+          <SidebarMenuButton asChild tooltip={item.title}>
+            <Link href={item.url}>
+              <item.icon />
+              <span>{item.title}</span>
+            </Link>
+          </SidebarMenuButton>
+          {item.items?.length ? (
+            <>
+              <HabitCreator onHabitCreatedHandler={item.itemsChangeHandler} />
+              <SidebarMenuSub>
+                {item.items?.map((subItem) => (
+                  <SidebarMenuSubItem key={subItem.title}>
+                    <SidebarMenuSubButton asChild isActive={subItem.isActive}>
+                      <Link href={subItem.url}>
+                        <div className="flex flex-col justify-center">
+                          <HabitState
+                            state={subItem.state}
+                            className="mr-2 h-3 w-3 shrink-0"
+                          />
+                        </div>
+                        <span>{subItem.title}</span>
+                      </Link>
+                    </SidebarMenuSubButton>
+                  </SidebarMenuSubItem>
+                ))}
+              </SidebarMenuSub>
+            </>
+          ) : null}
+        </SidebarMenuItem>
       </SidebarMenu>
     </SidebarGroup>
   );
+}
+
+export function HabitState({
+  state,
+  className = "",
+}: {
+  state: string;
+  className?: string;
+}) {
+  switch (state) {
+    case "Pending": {
+      return <CircleIcon size={12} className={className} />;
+    }
+    case "Done": {
+      return <CheckCircleIcon size={12} className={className} />;
+    }
+    case "None": {
+      return <CircleDashed size={12} className={className} />;
+    }
+  }
 }

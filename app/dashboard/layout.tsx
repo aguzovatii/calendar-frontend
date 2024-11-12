@@ -1,14 +1,14 @@
 import { Providers } from "@/app/providers";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { cookies } from "next/headers";
-import Session from "./todo/session";
+import Session from "./todos/session";
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const cookieStore = await cookies();
+  const cookieStore = cookies();
   const defaultOpen = cookieStore.get("sidebar:state")?.value === "true";
 
   return (

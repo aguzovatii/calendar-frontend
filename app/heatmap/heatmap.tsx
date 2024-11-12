@@ -5,7 +5,7 @@ import CalendarHeatmap, {
 import { Tooltip } from "react-tooltip";
 import "react-calendar-heatmap/dist/styles.css";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { Task } from "../habit/[habit_id]/tasks-details";
+import { Task } from "../types";
 
 interface Value {
   date: Date;

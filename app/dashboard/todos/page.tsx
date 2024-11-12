@@ -11,8 +11,8 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 import { format } from "date-fns";
-import Session from "./session";
 import Todo from "./todo";
+import Link from "next/link";
 
 export default function Page() {
   const date = new Date();
@@ -29,12 +29,14 @@ export default function Page() {
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="/dashboard/todo">To do</BreadcrumbLink>
+                  <BreadcrumbLink asChild>
+                    <Link href="/dashboard/todos">To do</Link>
+                  </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem>
                   <BreadcrumbLink
-                    href={"/dashboard/todo?day=" + format(date, "dd-MM-yyyy")}
+                    href={"/dashboard/todos/" + format(date, "dd-MM-yyyy")}
                   >
                     {format(date, "PP")}
                   </BreadcrumbLink>

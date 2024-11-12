@@ -5,7 +5,7 @@ import HabitDialog from "./habit-dialog";
 import { DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { SquarePen } from "lucide-react";
-import { HabitDetails } from "../types";
+import { HabitDetails } from "@/app/types";
 
 export default function HabitEditor({
   habit,

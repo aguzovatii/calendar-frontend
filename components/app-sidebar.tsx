@@ -12,7 +12,6 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { DatePicker } from "@/components/date-picker";
 
 // This is sample data.
 const data = {
@@ -26,7 +25,7 @@ const data = {
       name: "To do",
       logo: ListTodo,
       plan: "Your tasks",
-      path: "/dashboard/todo",
+      path: "/dashboard/todos",
     },
     {
       name: "Habits",

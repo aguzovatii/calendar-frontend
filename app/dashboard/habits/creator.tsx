@@ -1,4 +1,4 @@
-import { CalendarPlusIcon } from "lucide-react";
+import { CalendarPlusIcon, PlusIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import HabitDialog from "./habit-dialog";
 import { DialogTrigger } from "@/components/ui/dialog";
@@ -13,6 +13,7 @@ import {
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import AnimatedButton from "@/components/ui/animated-button";
+import { SidebarMenuAction } from "@/components/ui/sidebar";
 
 export default function HabitCreator({
   onHabitCreatedHandler,
@@ -34,9 +35,9 @@ export default function HabitCreator({
         <Tooltip>
           <TooltipTrigger asChild>
             <DialogTrigger asChild>
-              <Button variant="outline" size="icon" className="h-6 mt-1 mr-1">
-                <CalendarPlusIcon className="h-4 w-4" />
-              </Button>
+              <SidebarMenuAction>
+                <PlusIcon />
+              </SidebarMenuAction>
             </DialogTrigger>
           </TooltipTrigger>
           <TooltipContent>
@@ -80,7 +81,7 @@ export default function HabitCreator({
           </div>
           <AnimatedButton
             onClick={() => {
-              router.push(`/habit/${habitId}`);
+              router.push(`/dashboard/habits/${habitId}`);
               toast.dismiss(t);
             }}
           >
