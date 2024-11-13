@@ -16,6 +16,8 @@ import Link from "next/link";
 
 export default function Page({ params }: { params: { date: string } }) {
   const date = parse(params.date, "dd-MM-yyyy", new Date());
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
   if (isNaN(date.getTime())) {
     return <div>Error</div>;
@@ -52,7 +54,7 @@ export default function Page({ params }: { params: { date: string } }) {
         </header>
         <div className="flex w-full h-full justify-center">
           <div className="flex flex-col w-[920px]">
-            <Todo date={date} today={date} />
+            <Todo date={date} today={today} />
           </div>
         </div>
       </SidebarInset>

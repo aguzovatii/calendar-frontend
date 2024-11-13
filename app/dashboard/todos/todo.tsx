@@ -1,10 +1,12 @@
 "use client";
 
 import useSWR, { Fetcher } from "swr";
-import Checkbox from "./checkbox";
+import Checkbox from "./task-checkbox";
 import { Task, TaskArraySchema } from "@/app/types";
 import { useSession } from "next-auth/react";
 import { format } from "date-fns";
+import TaskCheckbox from "./task-checkbox";
+import FutureTaskCheckbox from "./future-task-checkbox";
 
 const fetcher: Fetcher<Task[], [string, string]> = ([url, token]) =>
   fetch(url, { headers: { Authorization: "Bearer " + token } }).then((res) =>
@@ -40,14 +42,18 @@ export default function Todo({ date, today }: { date: Date; today: Date }) {
         </div>
         <div className="w-full flex flex-col space-y-4">
           {tasks!
-            .filter((task: Task) => task.due_on.getTime() === today.getTime())
-            .map((task: Task) => (
-              <Checkbox
-                task={task}
-                key={task.id}
-                onTaskStateChange={() => mutate()}
-              />
-            ))}
+            .filter((task: Task) => task.due_on.getTime() === date.getTime())
+            .map((task: Task) =>
+              task.is_future ? (
+                <FutureTaskCheckbox task={task} key={task.id} />
+              ) : (
+                <TaskCheckbox
+                  task={task}
+                  key={task.id}
+                  onTaskStateChange={() => mutate()}
+                />
+              ),
+            )}
         </div>
       </div>
     </div>

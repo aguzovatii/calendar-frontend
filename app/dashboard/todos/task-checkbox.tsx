@@ -39,7 +39,7 @@ const lineVariants = {
   },
 };
 
-export default function Checkbox({
+export default function TaskCheckbox({
   task,
   onTaskStateChange,
 }: {
@@ -52,7 +52,7 @@ export default function Checkbox({
   const opacity = useTransform(pathLength, [0.05, 0.15], [0, 1]);
 
   return (
-    <div className="flex flex-row space-x-2">
+    <div className="flex flex-row w-full border rounded-md p-2">
       <motion.svg
         xmlns="http://www.w3.org/2000/svg"
         width="30"
@@ -107,9 +107,7 @@ export default function Checkbox({
             }}
             initial={false}
           >
-            <p className="truncate">
-              {task.name} ({format(task.due_on, "P")})
-            </p>
+            <p className="truncate">{task.name}</p>
           </motion.label>
           <motion.div
             className="absolute top-1/2 h-0.5"

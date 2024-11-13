@@ -152,6 +152,7 @@ export const TaskSchema = z.object({
   state: z.enum(["Pending", "Done", "Cancelled"]),
   due_on: z.coerce.date(),
   done_on: z.coerce.date(),
+  is_future: z.boolean(),
 });
 
 export const TaskArraySchema = z.array(TaskSchema);
