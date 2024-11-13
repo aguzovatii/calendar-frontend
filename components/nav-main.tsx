@@ -52,27 +52,25 @@ export function NavMain({
               <span>{item.title}</span>
             </Link>
           </SidebarMenuButton>
+          <HabitCreator onHabitCreatedHandler={item.itemsChangeHandler} />
           {item.items?.length ? (
-            <>
-              <HabitCreator onHabitCreatedHandler={item.itemsChangeHandler} />
-              <SidebarMenuSub>
-                {item.items?.map((subItem) => (
-                  <SidebarMenuSubItem key={subItem.title}>
-                    <SidebarMenuSubButton asChild isActive={subItem.isActive}>
-                      <Link href={subItem.url}>
-                        <div className="flex flex-col justify-center">
-                          <HabitState
-                            state={subItem.state}
-                            className="mr-2 h-3 w-3 shrink-0"
-                          />
-                        </div>
-                        <span>{subItem.title}</span>
-                      </Link>
-                    </SidebarMenuSubButton>
-                  </SidebarMenuSubItem>
-                ))}
-              </SidebarMenuSub>
-            </>
+            <SidebarMenuSub>
+              {item.items?.map((subItem) => (
+                <SidebarMenuSubItem key={subItem.title}>
+                  <SidebarMenuSubButton asChild isActive={subItem.isActive}>
+                    <Link href={subItem.url}>
+                      <div className="flex flex-col justify-center">
+                        <HabitState
+                          state={subItem.state}
+                          className="mr-2 h-3 w-3 shrink-0"
+                        />
+                      </div>
+                      <span>{subItem.title}</span>
+                    </Link>
+                  </SidebarMenuSubButton>
+                </SidebarMenuSubItem>
+              ))}
+            </SidebarMenuSub>
           ) : null}
         </SidebarMenuItem>
       </SidebarMenu>

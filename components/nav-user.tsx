@@ -1,6 +1,6 @@
 "use client";
 
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { ChevronsUpDown, LogOut } from "lucide-react";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -21,15 +21,8 @@ import {
 } from "@/components/ui/sidebar";
 import ThemeSwitcher from "@/app/theme-switcher";
 
-export function NavUser({
-  user,
-}: {
-  user: {
-    name: string;
-    email: string;
-    avatar: string;
-  };
-}) {
+export function NavUser() {
+  const { data: session } = useSession();
   const { isMobile } = useSidebar();
 
   return (
@@ -43,11 +36,16 @@ export function NavUser({
             >
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarFallback className="rounded-lg">
-                  {user.name.substring(0, 2)}
+                  {session!.username.substring(
+                    0,
+                    Math.min(2, session!.username.length),
+                  )}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">{user.name}</span>
+                <span className="truncate font-semibold">
+                  {session!.username}
+                </span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -62,11 +60,16 @@ export function NavUser({
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarFallback className="rounded-lg">
-                    {user.name.substring(0, 2)}
+                    {session!.username.substring(
+                      0,
+                      Math.min(2, session!.username.length),
+                    )}
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">{user.name}</span>
+                  <span className="truncate font-semibold">
+                    {session!.username}
+                  </span>
                 </div>
               </div>
             </DropdownMenuLabel>

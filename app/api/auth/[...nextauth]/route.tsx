@@ -122,12 +122,14 @@ const handler = NextAuth({
     async jwt({ token, user }: { token: JWT; user: User }) {
       if (user) {
         token.accessToken = user.jwt;
+        token.username = user.name!;
       }
 
       return token;
     },
     async session({ session, token }: { session: Session; token: JWT }) {
       session.accessToken = token.accessToken;
+      session.username = token.username;
       return session;
     },
   },

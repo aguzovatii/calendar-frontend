@@ -15,11 +15,6 @@ import {
 
 // This is sample data.
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   projects: [
     {
       name: "To do",
@@ -50,7 +45,7 @@ export function AppSidebar({
       </SidebarHeader>
       <SidebarContent>{children}</SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
