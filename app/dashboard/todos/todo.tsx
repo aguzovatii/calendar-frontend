@@ -9,8 +9,7 @@ import { format } from "date-fns";
 const fetcher: Fetcher<Task[], [string, string]> = ([url, token]) =>
   fetch(url, { headers: { Authorization: "Bearer " + token } }).then((res) =>
     res.json().then((t) => {
-      const res = TaskArraySchema.safeParse(t);
-      return res.data!;
+      return TaskArraySchema.parse(t);
     }),
   );
 
