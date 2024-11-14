@@ -17,7 +17,7 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
-import HabitCreator from "@/app/app/habits/creator";
+import HabitCreator from "@/app/dashboard/habits/creator";
 
 export function NavMain({
   items: item,
