@@ -1,6 +1,6 @@
 import { Task } from "../../types";
 
-export default function FutureTaskCheckbox({ task }: { task: Task }) {
+export default function FutureTaskWithCheckbox({ task }: { task: Task }) {
   return (
     <div className="flex flex-row w-full border rounded-md p-2">
       <svg

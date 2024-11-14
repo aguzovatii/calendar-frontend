@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { EmptyFunction, Task } from "../../types";
-import { format } from "date-fns";
 import { useSession } from "next-auth/react";
 
 const tickVariants = {
@@ -39,7 +38,7 @@ const lineVariants = {
   },
 };
 
-export default function TaskCheckbox({
+export default function TaskWithCheckbox({
   task,
   onTaskStateChange,
 }: {

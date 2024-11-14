@@ -81,7 +81,7 @@ export default function HabitCreator({
           </div>
           <AnimatedButton
             onClick={() => {
-              router.push(`/dashboard/habits/${habitId}`);
+              router.push(`/app/habits/${habitId}`);
               toast.dismiss(t);
             }}
           >

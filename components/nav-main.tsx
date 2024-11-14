@@ -2,21 +2,14 @@
 
 import {
   CheckCircleIcon,
-  ChevronRight,
   CircleDashed,
   CircleIcon,
   type LucideIcon,
 } from "lucide-react";
 
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import {
   SidebarGroup,
   SidebarMenu,
-  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
@@ -24,7 +17,7 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
-import HabitCreator from "@/app/dashboard/habits/creator";
+import HabitCreator from "@/app/app/habits/creator";
 
 export function NavMain({
   items: item,

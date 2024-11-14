@@ -10,13 +10,18 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
-import { format } from "date-fns";
-import Todo from "./todo";
+import { format, parse } from "date-fns";
 import Link from "next/link";
+import TasksList from "../tasks-list";
 
-export default function Page() {
-  const date = new Date();
-  date.setHours(0, 0, 0, 0);
+export default function Page({ params }: { params: { date: string } }) {
+  const date = parse(params.date, "dd-MM-yyyy", new Date());
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  if (isNaN(date.getTime())) {
+    return <div>Error</div>;
+  }
 
   return (
     <>
@@ -30,15 +35,15 @@ export default function Page() {
               <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
                   <BreadcrumbLink asChild>
-                    <Link href="/dashboard/todos">To do</Link>
+                    <Link href="/app/todos">To do</Link>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem>
-                  <BreadcrumbLink
-                    href={"/dashboard/todos/" + format(date, "dd-MM-yyyy")}
-                  >
-                    {format(date, "PP")}
+                  <BreadcrumbLink>
+                    <Link href={"/app/todos/" + format(date, "dd-MM-yyyy")}>
+                      {format(date, "PP")}
+                    </Link>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
               </BreadcrumbList>
@@ -47,7 +52,7 @@ export default function Page() {
         </header>
         <div className="flex w-full h-full justify-center">
           <div className="flex flex-col w-[920px]">
-            <Todo date={date} today={date} />
+            <TasksList date={date} today={today} />
           </div>
         </div>
       </SidebarInset>

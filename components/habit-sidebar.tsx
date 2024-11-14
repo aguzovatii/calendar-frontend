@@ -16,7 +16,7 @@ const fetcher: Fetcher<Habit[], [string, string]> = ([url, token]) =>
 
 const menuTemplate = {
   title: "Habits",
-  url: "/dashboard/habits",
+  url: "/app/habits",
   icon: AudioWaveformIcon,
   itemsChangeHandler: () => {},
   items: [
@@ -48,7 +48,7 @@ export function HabitSidebar() {
   menuData.items = data!.map((habit) => {
     return {
       title: habit.name,
-      url: "/dashboard/habits/" + habit.id,
+      url: "/app/habits/" + habit.id,
       isActive: pathName.includes(habit.id),
       state: habit.state,
     };
