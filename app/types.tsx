@@ -145,3 +145,16 @@ export const HabitDetailsSchema = z.object({
 });
 
 export type HabitDetails = z.infer<typeof HabitDetailsSchema>;
+
+export const TaskSchema = z.object({
+  id: z.string().min(1),
+  name: z.string().min(1),
+  state: z.enum(["Pending", "Done", "Cancelled"]),
+  due_on: z.coerce.date(),
+  done_on: z.coerce.date(),
+  is_future: z.boolean(),
+});
+
+export const TaskArraySchema = z.array(TaskSchema);
+
+export type Task = z.infer<typeof TaskSchema>;

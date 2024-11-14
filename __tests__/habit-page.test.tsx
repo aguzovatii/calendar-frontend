@@ -1,25 +1,39 @@
 /**
  * @jest-environment jsdom
  */
-import HabitSidebar from "@/app/habit/sidebar";
+import Page from "@/app/app/habits/page";
+import { useIsMobile } from "@/components/hooks/use-mobile";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { render, screen } from "@testing-library/react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import useSwr from "swr";
 
 jest.mock("next-auth/react");
 jest.mock("next/navigation");
 jest.mock("swr");
+jest.mock("@/components/hooks/use-mobile");
 
-it("HabitSidebar has the 'Habits' title", () => {
+it("Habits page has the 'Select a habit to see the details' message", () => {
+  (useIsMobile as jest.Mock).mockReturnValue({
+    data: false,
+  });
+
   (useSession as jest.Mock).mockReturnValue({
     data: {
       accessToken: "test",
+      username: "test",
     },
   });
 
   (useRouter as jest.Mock).mockReturnValue({
     push: () => {},
+  });
+
+  (usePathname as jest.Mock).mockReturnValue({
+    includes: (_path: String) => {
+      return true;
+    },
   });
 
   (useSwr as jest.Mock).mockReturnValue({
@@ -32,6 +46,12 @@ it("HabitSidebar has the 'Habits' title", () => {
     mutate: () => {},
   });
 
-  render(<HabitSidebar />);
-  expect(screen.getByRole("heading", { level: 1 }).textContent).toBe("Habits");
+  render(
+    <SidebarProvider>
+      <Page />
+    </SidebarProvider>,
+  );
+  expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(
+    "Select a habit to see the details",
+  );
 });
