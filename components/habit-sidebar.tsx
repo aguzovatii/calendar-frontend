@@ -5,13 +5,7 @@ import { AppSidebar } from "./app-sidebar";
 import useSWR, { Fetcher } from "swr";
 import { Habit } from "@/app/types";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
-import {
-  AudioWaveformIcon,
-  CheckCircleIcon,
-  CircleDashed,
-  CircleIcon,
-} from "lucide-react";
+import { AudioWaveformIcon } from "lucide-react";
 import { NavMain } from "./nav-main";
 import { usePathname } from "next/navigation";
 
