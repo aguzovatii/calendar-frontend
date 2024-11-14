@@ -21,7 +21,7 @@ export default function ThemeSwitcher() {
     <>
       {currentTheme === "dark" ? (
         <div
-          className="flex flex-row gap-2 w-full"
+          className="flex flex-row gap-2 w-full cursor-default"
           onClick={() => setTheme("light")}
         >
           <SunIcon />
@@ -29,10 +29,10 @@ export default function ThemeSwitcher() {
         </div>
       ) : (
         <div
-          className="flex flex-row gap-2 w-full"
+          className="flex flex-row gap-2 w-full cursor-default"
           onClick={() => setTheme("dark")}
         >
-          <MoonIcon className="h-4 w-4" />
+          <MoonIcon />
           Dark theme
         </div>
       )}

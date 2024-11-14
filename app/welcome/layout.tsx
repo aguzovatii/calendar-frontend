@@ -10,15 +10,17 @@ export default function RootLayout({
   return (
     <Providers>
       <div className="h-full flex flex-col overflow-hidden">
-        <div className="h-8 flex flex-row">
+        <div className="flex flex-row">
           <div className="basis-6">
             <h1 className="text-xl flex h-7 font-bold leading-9 tracking-tight ml-2 pl-0">
               Calendar
             </h1>
           </div>
           <div className="grow"></div>
-          <div className="basis-6 flex flex-row">
-            <ThemeSwitcher />
+          <div className="flex flex-row">
+            <div className="m-2 px-1 rounded-md hover:bg-accent hover:text-accent-foreground">
+              <ThemeSwitcher />
+            </div>
           </div>
         </div>
         <div className="h-full w-full absolute overflow-hidden -z-20">
