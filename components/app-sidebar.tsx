@@ -19,13 +19,13 @@ const data = {
       name: "To do",
       logo: ListTodo,
       plan: "Your tasks",
-      path: "/app/todos",
+      path: "/dashboard/todos",
     },
     {
       name: "Habits",
       logo: AudioWaveform,
       plan: "Your habits",
-      path: "/app/habits",
+      path: "/dashboard/habits",
     },
   ],
 };

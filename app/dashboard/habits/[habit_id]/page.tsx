@@ -63,13 +63,15 @@ export default function Page({ params }: { params: { habit_id: string } }) {
               <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
                   <BreadcrumbLink asChild>
-                    <Link href="/app/habits">Habits</Link>
+                    <Link href="/dashboard/habits">Habits</Link>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem>
                   <BreadcrumbLink asChild>
-                    <Link href={"/app/habits/" + habit!.id}>{habit!.name}</Link>
+                    <Link href={"/dashboard/habits/" + habit!.id}>
+                      {habit!.name}
+                    </Link>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
               </BreadcrumbList>
@@ -156,6 +158,6 @@ export default function Page({ params }: { params: { habit_id: string } }) {
       process.env.NEXT_PUBLIC_CALENDAR_BACKEND_URL + "/habit",
       session!.accessToken,
     ]);
-    router.push("/app/habits");
+    router.push("/dashboard/habits");
   }
 }

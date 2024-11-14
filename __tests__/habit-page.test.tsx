@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import Page from "@/app/app/habits/page";
+import Page from "@/app/dashboard/habits/page";
 import { useIsMobile } from "@/components/hooks/use-mobile";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { render, screen } from "@testing-library/react";

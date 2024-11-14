@@ -37,7 +37,7 @@ export function DatePicker({ date }: { date: Date }) {
             mode="single"
             selected={date}
             onSelect={(newDate) => {
-              router.push("/app/todos/" + format(newDate!, "dd-MM-yyyy"));
+              router.push("/dashboard/todos/" + format(newDate!, "dd-MM-yyyy"));
             }}
             showOutsideDays
             fixedWeeks
@@ -50,7 +50,7 @@ export function DatePicker({ date }: { date: Date }) {
         mode="single"
         selected={date}
         onSelect={(newDate) => {
-          router.push("/app/todos/" + format(newDate!, "dd-MM-yyyy"));
+          router.push("/dashboard/todos/" + format(newDate!, "dd-MM-yyyy"));
         }}
         showOutsideDays
         fixedWeeks

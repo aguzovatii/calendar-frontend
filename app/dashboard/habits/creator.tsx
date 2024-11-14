@@ -1,9 +1,8 @@
-import { CalendarPlusIcon, PlusIcon } from "lucide-react";
+import { PlusIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import HabitDialog from "./habit-dialog";
 import { DialogTrigger } from "@/components/ui/dialog";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import {
   Tooltip,
   TooltipContent,

@@ -10,18 +10,13 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
-import { format, parse } from "date-fns";
+import { format } from "date-fns";
+import TasksList from "./tasks-list";
 import Link from "next/link";
-import TasksList from "../tasks-list";
 
-export default function Page({ params }: { params: { date: string } }) {
-  const date = parse(params.date, "dd-MM-yyyy", new Date());
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  if (isNaN(date.getTime())) {
-    return <div>Error</div>;
-  }
+export default function Page() {
+  const date = new Date();
+  date.setHours(0, 0, 0, 0);
 
   return (
     <>
@@ -35,13 +30,15 @@ export default function Page({ params }: { params: { date: string } }) {
               <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
                   <BreadcrumbLink asChild>
-                    <Link href="/app/todos">To do</Link>
+                    <Link href="/dashboard/todos">To do</Link>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem>
-                  <BreadcrumbLink>
-                    <Link href={"/app/todos/" + format(date, "dd-MM-yyyy")}>
+                  <BreadcrumbLink asChild>
+                    <Link
+                      href={"/dashboard/todos/" + format(date, "dd-MM-yyyy")}
+                    >
                       {format(date, "PP")}
                     </Link>
                   </BreadcrumbLink>
@@ -52,7 +49,7 @@ export default function Page({ params }: { params: { date: string } }) {
         </header>
         <div className="flex w-full h-full justify-center">
           <div className="flex flex-col w-[920px]">
-            <TasksList date={date} today={today} />
+            <TasksList date={date} today={date} />
           </div>
         </div>
       </SidebarInset>
